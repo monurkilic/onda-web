@@ -12,59 +12,40 @@ const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
 export default function Home({ properties }) {
+  // WhatsApp mesajını hazırlayan yardımcı fonksiyon
+  const getWhatsAppLink = (title) => {
+    const message = encodeURIComponent(`Merhaba Onur Bey, ondayatirim.com'daki "${title}" ilanı hakkında bilgi alabilir miyim?`);
+    return `https://wa.me/905XXXXXXXXX?text=${message}`; // Buraya kendi numaranı yazmalısın (Örn: 905321234567)
+  };
+
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', paddingBottom: '100px'}}>
-      <nav style={{padding: '50px 20px', textAlign: 'center', borderBottom: '1px solid #d4af3711'}}>
-        <h1 style={{fontSize: '2.5rem', color: '#d4af37', fontStyle: 'italic', margin: 0, letterSpacing: '5px'}}>ONDA YATIRIM</h1>
-        <p style={{color: '#8e8e8e', fontSize: '0.8rem', letterSpacing: '3px', marginTop: '10px'}}>GÜVENİN YENİ DALGASI</p>
-      </nav>
+    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: "'Playfair Display', serif", paddingBottom: '100px'}}>
+      
+      {/* Şık ve Minimal Header */}
+      <header style={{padding: '80px 20px', textAlign: 'center', borderBottom: '1px solid rgba(212, 175, 55, 0.1)'}}>
+        <h1 style={{fontSize: '3.5rem', color: '#d4af37', fontWeight: '300', margin: 0, letterSpacing: '8px', textTransform: 'uppercase'}}>ONDA</h1>
+        <div style={{width: '40px', height: '1px', background: '#d4af37', margin: '20px auto'}}></div>
+        <p style={{color: '#8e8e8e', fontSize: '0.9rem', letterSpacing: '4px', textTransform: 'uppercase'}}>Yatırım & Gayrimenkul</p>
+      </header>
 
-      <main style={{maxWidth: '1200px', margin: '0 auto', padding: '60px 20px'}}>
-        <div style={{display: 'grid', gridTemplateColumns: '1fr', gap: '60px'}}>
+      <main style={{maxWidth: '1200px', margin: '0 auto', padding: '80px 20px'}}>
+        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '50px'}}>
           {properties.map((item) => (
-            <div key={item._id} style={{background: '#0d223f', border: '1px solid #d4af3722', borderRadius: '4px', overflow: 'hidden'}}>
+            <div key={item._id} style={{background: '#0d223f', border: '1px solid rgba(212, 175, 55, 0.1)', borderRadius: '2px', transition: 'transform 0.3s ease'}}>
               
-              {/* Üst Kısım: Ana Resim ve Galeri Özeti */}
-              <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                <div style={{flex: '1', minWidth: '300px'}}>
-                  <img src={urlFor(item.mainImage).width(800).url()} style={{width: '100%', height: '400px', objectFit: 'cover'}} />
+              {/* Görsel Alanı */}
+              <div style={{position: 'relative', height: '300px', overflow: 'hidden'}}>
+                <img 
+                  src={urlFor(item.mainImage).width(800).url()} 
+                  style={{width: '100%', height: '100%', objectFit: 'cover'}} 
+                  alt={item.title}
+                />
+                <div style={{position: 'absolute', top: '20px', right: '20px', background: 'rgba(10, 25, 47, 0.8)', padding: '8px 15px', color: '#d4af37', fontSize: '0.8rem', letterSpacing: '1px', border: '1px solid #d4af37'}}>
+                  {item.location}
                 </div>
-                {item.gallery && (
-                  <div style={{width: '200px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px', padding: '5px', background: '#0a192f'}}>
-                    {item.gallery.slice(0, 4).map((img, idx) => (
-                      <img key={idx} src={urlFor(img).width(100).height(100).url()} style={{width: '100%', height: '95px', objectFit: 'cover', opacity: 0.7}} />
-                    ))}
-                  </div>
-                )}
               </div>
 
-              {/* Alt Kısım: Detaylar */}
+              {/* İçerik Alanı */}
               <div style={{padding: '40px'}}>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap'}}>
-                  <div>
-                    <span style={{color: '#d4af37', fontSize: '0.8rem', letterSpacing: '2px'}}>{item.location}</span>
-                    <h2 style={{fontSize: '2rem', margin: '10px 0'}}>{item.title}</h2>
-                    <p style={{fontSize: '1.5rem', color: '#d4af37', fontWeight: 'bold'}}>{item.price} {item.currency}</p>
-                  </div>
-                  {item.googleMapsUrl && (
-                    <a href={item.googleMapsUrl} target="_blank" style={{padding: '12px 20px', border: '1px solid #d4af37', color: '#d4af37', textDecoration: 'none', borderRadius: '4px', fontSize: '0.9rem'}}>Konumu Gör</a>
-                  )}
-                </div>
-
-                <div style={{marginTop: '30px', padding: '25px', background: 'rgba(212, 175, 55, 0.03)', borderLeft: '3px solid #d4af37'}}>
-                  <h4 style={{margin: '0 0 10px 0', color: '#d4af37', fontSize: '0.8rem'}}>ONDA ANALİZİ</h4>
-                  <p style={{fontStyle: 'italic', color: '#ccc', lineHeight: '1.8', margin: 0}}>{item.analysis}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
-    </div>
-  );
-}
-
-export async function getStaticProps() {
-  const properties = await client.fetch(`*[_type == "property"]`);
-  return { props: { properties }, revalidate: 10 };
-}
+                <h2 style={{fontSize: '1.8rem', fontWeight: '400', margin: '0 0 15px 0', color: '#fff', lineHeight: '1.2'}}>{item.title}</h2>
+                <div style={{fontSize: '1.5rem', color: '#d4af37', marginBottom: '30px', fontWeight: '3
