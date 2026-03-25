@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from 'next/head';
@@ -8,56 +8,51 @@ const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
 export default function PropertyDetail({ property }) {
-  const [photoIndex, setPhotoIndex] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderRef = useRef(null);
+  const [lightboxImg, setLightboxImg] = useState(null);
 
   if (!property) return null;
+
+  // Tüm fotoğrafları bir diziye toplayalım (Ana resim + Galeri)
   const allPhotos = [property.mainImage, ...(property.gallery || [])];
   const waLink = `https://wa.me/905326466909?text=${encodeURIComponent(`Merhaba Onur Bey, "${property.title}" ilanı hakkında bilgi alabilir miyim?`)}`;
-
-  // Otomatik Slider Fonksiyonu
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % allPhotos.length);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [allPhotos.length]);
-
-  // Slayt değiştiğinde scroll yap
-  useEffect(() => {
-    if (sliderRef.current) {
-      const slideWidth = sliderRef.current.offsetWidth;
-      sliderRef.current.scrollTo({ left: currentSlide * slideWidth, behavior: 'smooth' });
-    }
-  }, [currentSlide]);
 
   return (
     <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', overflowX: 'hidden'}}>
       <Head>
         <title>{property.title} | Onda Yatırım</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </Head>
 
+      {/* MOBİL UYUMLULUK CSS KURALLARI */}
       <style dangerouslySetInnerHTML={{ __html: `
-        .slider-wrapper { position: relative; width: 100%; max-width: 1100px; margin: 0 auto; overflow: hidden; border-radius: 4px; border: 1px solid rgba(212,175,55,0.2); }
-        .slider-container { display: flex; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
-        .slider-container::-webkit-scrollbar { display: none; }
-        .slide { flex: 0 0 100%; scroll-snap-align: start; height: 500px; cursor: zoom-in; position: relative; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .main-container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 40px 20px; box-sizing: border-box; }
+        .hero-title { font-size: 3rem; color: #d4af37; fontWeight: 300; margin: 0 0 10px 0; text-align: center; line-height: 1.3; }
+        .location-text { font-size: 1.2rem; color: #8e8e8e; letterSpacing: '2px'; marginBottom: '30px'; text-align: center; }
+        .main-image-wrapper { width: 100%; aspect-ratio: 16 / 9; border: 1px solid rgba(212,175,55,0.2); border-radius: 4px; overflow: hidden; margin-bottom: 20px; }
+        .main-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 50px; }
+        .gallery-item { border: 1px solid rgba(212,175,55,0.1); border-radius: 2px; overflow: hidden; aspect-ratio: 4 / 3; cursor: zoom-in; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .analysis-box { padding: 50px; background: 'rgba(212, 175, 55, 0.03)'; borderLeft: '4px solid #d4af37'; marginBottom: '60px'; box-sizing: border-box; }
+        .analysis-box p { lineHeight: '2'; fontSize: '1.1rem'; color: '#ccc'; fontStyle: 'italic'; }
         
         @media (max-width: 768px) {
-          .slide { height: 300px; }
-          .hero-title { font-size: 2rem !important; }
-          .action-buttons { flex-direction: column; }
+          .main-container { padding: 20px 15px; }
+          .hero-title { font-size: 1.8rem; margin: 0 0 5px 0; }
+          .location-text { font-size: 1rem; marginBottom: '20px'; }
+          .main-image-wrapper { margin-bottom: 10px; }
+          .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-bottom: 30px; }
+          .analysis-box { padding: 25px; margin-bottom: 40px; }
+          .analysis-box p { fontSize: '1rem'; lineHeight: '1.8'; }
         }
       `}} />
 
       {/* 1. LIGHTBOX */}
-      {photoIndex !== null && (
-        <div onClick={() => setPhotoIndex(null)} style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.95)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'}}>
-           <img src={urlFor(allPhotos[photoIndex]).width(1500).url()} style={{maxWidth: '95%', maxHeight: '90%', border: '1px solid #d4af37'}} />
-           <p style={{position: 'absolute', bottom: 20, color: '#d4af37'}}>{photoIndex + 1} / {allPhotos.length}</p>
+      {lightboxImg && (
+        <div onClick={() => setLightboxImg(null)} style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.95)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'}}>
+           <img src={lightboxImg} style={{maxWidth: '95%', maxHeight: '90%', border: '1px solid #d4af37', borderRadius: '2px'}} />
+           <p style={{position: 'absolute', bottom: 20, color: '#d4af37'}}>× Kapat</p>
         </div>
       )}
 
@@ -66,46 +61,48 @@ export default function PropertyDetail({ property }) {
         <a href="/portfolio" style={{color: '#d4af37', textDecoration: 'none', letterSpacing: '2px', fontSize: '0.8rem'}}>← PORTFÖYE DÖN</a>
       </nav>
 
-      <main style={{maxWidth: '1200px', margin: '0 auto', padding: '40px 20px'}}>
+      <main className="main-container">
         
-        {/* 2. OTOMATİK SLIDER */}
-        <div className="slider-wrapper">
-          <div className="slider-container" ref={sliderRef}>
-            {allPhotos.map((img, i) => (
-              <div key={i} className="slide" onClick={() => setPhotoIndex(i)}>
-                <img src={urlFor(img).width(1200).url()} alt={`${property.title} - ${i}`} />
-              </div>
-            ))}
-          </div>
-          {/* Slayt Noktaları */}
-          <div style={{position: 'absolute', bottom: '15px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px'}}>
-            {allPhotos.map((_, i) => (
-              <div key={i} style={{width: '8px', height: '8px', borderRadius: '50%', background: currentSlide === i ? '#d4af37' : 'rgba(255,255,255,0.3)', transition: '0.3s'}} />
-            ))}
-          </div>
+        {/* 2. BAŞLIK VE LOKASYON (EN ÜSTTE VE ORTALI) */}
+        <h1 className="hero-title">{property.title}</h1>
+        <p className="location-text">{property.location}</p>
+
+        {/* 3. ANA GÖRSEL (BÜYÜK) */}
+        <div className="main-image-wrapper" onClick={() => setLightboxImg(urlFor(property.mainImage).width(1500).url())} style={{cursor: 'zoom-in'}}>
+          <img src={urlFor(property.mainImage).width(1200).url()} alt={property.title} />
         </div>
 
-        {/* BİLGİ ALANI */}
+        {/* 4. DİĞER FOTOĞRAFLAR (GALERİ - TIKLAYINCA BÜYÜR) */}
+        <div className="gallery-grid">
+          {property.gallery && property.gallery.map((img, i) => (
+            <div key={i} className="gallery-item" onClick={() => setLightboxImg(urlFor(img).width(1200).url())}>
+              <img src={urlFor(img).width(600).url()} alt={`${property.title} - ${i + 1}`} />
+            </div>
+          ))}
+        </div>
+
+        {/* FİYAT VE ANALİZ */}
         <div style={{marginTop: '40px'}}>
-          <h1 className="hero-title" style={{fontSize: '3rem', color: '#d4af37', fontWeight: '300', margin: '0 0 10px 0'}}>{property.title}</h1>
-          <p style={{fontSize: '1.2rem', color: '#8e8e8e', letterSpacing: '2px', marginBottom: '20px'}}>{property.location}</p>
-          <div style={{fontSize: '2.5rem', color: '#fff', fontWeight: 'bold', marginBottom: '40px'}}>{property.price} {property.currency}</div>
+          <div style={{fontSize: '2.5rem', color: '#fff', fontWeight: 'bold', marginBottom: '40px', textAlign: 'center'}}>{property.price} {property.currency}</div>
 
-          <div className="action-buttons" style={{display: 'flex', gap: '15px', marginBottom: '60px'}}>
-            <a href={waLink} target="_blank" style={{flex: 1, textAlign: 'center', padding: '20px', background: '#25D366', color: '#fff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '2px', letterSpacing: '1px'}}>WHATSAPP İLE SOR</a>
-            <a href="#contact" style={{flex: 1, textAlign: 'center', padding: '20px', border: '1px solid #d4af37', color: '#d4af37', textDecoration: 'none', fontWeight: 'bold', borderRadius: '2px'}}>İLETİŞİME GEÇ</a>
-          </div>
-
-          <div style={{padding: '40px', background: 'rgba(212, 175, 55, 0.03)', borderLeft: '4px solid #d4af37', marginBottom: '60px'}}>
+          <div className="analysis-box">
             <h3 style={{color: '#d4af37', margin: '0 0 15px 0', fontSize: '0.7rem', letterSpacing: '3px'}}>ONDA ANALİZİ</h3>
-            <p style={{lineHeight: '2', fontSize: '1.1rem', color: '#ccc', fontStyle: 'italic'}}>"{property.analysis}"</p>
+            <p>"{property.analysis}"</p>
           </div>
         </div>
 
-        {/* 3. DİREKT HARİTA GÖRÜNÜMÜ */}
+        {/* 5. WHATSAPP BUTONU (ŞIK, ORTALI, ANALİZİN ALTINDA) */}
+        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '80px'}}>
+          <a href={waLink} target="_blank" rel="noreferrer" style={{padding: '20px 60px', background: '#25D366', color: '#fff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '50px', letterSpacing: '1px', fontSize: '1rem', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(37, 211, 102, 0.2)'}}>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" style={{height: '20px', verticalAlign: 'middle', marginRight: '10px'}} />
+            WHATSAPP İLE SOR
+          </a>
+        </div>
+
+        {/* 6. KONUM VE HARİTA (DİREKT GÖRÜNÜM) */}
         <section style={{marginBottom: '80px'}}>
           <h3 style={{color: '#d4af37', marginBottom: '25px', letterSpacing: '3px', fontSize: '0.8rem'}}>KONUM VE ÇEVRE</h3>
-          <div style={{width: '100%', height: '400px', background: '#0d223f', border: '1px solid rgba(212, 175, 55, 0.1)', borderRadius: '2px', overflow: 'hidden'}}>
+          <div style={{width: '100%', height: '400px', background: '#0d223f', border: '1px solid rgba(212, 175, 55, 0.1)', borderRadius: '4px', overflow: 'hidden'}}>
             {property.googleMapsUrl ? (
               <iframe 
                 src={property.googleMapsUrl} 
@@ -118,7 +115,7 @@ export default function PropertyDetail({ property }) {
         </section>
       </main>
 
-      {/* 4. FOOTER */}
+      {/* FOOTER */}
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0d223f'}}>
         <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '30px', marginBottom: '30px', fontSize: '0.8rem', letterSpacing: '1px'}}>
           <a href="/" style={{color: '#8e8e8e', textDecoration: 'none'}}>ANA SAYFA</a>
