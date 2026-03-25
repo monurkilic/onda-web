@@ -15,7 +15,7 @@ export default function Home({ properties }) {
   // WhatsApp mesajını hazırlayan yardımcı fonksiyon
   const getWhatsAppLink = (title) => {
     const message = encodeURIComponent(`Merhaba Onur Bey, ondayatirim.com'daki "${title}" ilanı hakkında bilgi alabilir miyim?`);
-    return `https://wa.me/905XXXXXXXXX?text=${message}`; // Buraya kendi numaranı yazmalısın (Örn: 905321234567)
+    return `https://wa.me/905326466909?text=${message}`; // Buraya kendi numaranı yazmalısın (Örn: 905321234567)
   };
 
   return (
