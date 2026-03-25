@@ -1,5 +1,6 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
+import Head from 'next/head';
 
 const client = createClient({
   projectId: 'k8cd67dp',
@@ -18,75 +19,68 @@ export default function Home({ properties }) {
   };
 
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', paddingBottom: '100px'}}>
-      
-      {/* Logo ve Kurumsal Header */}
-      <header style={{padding: '60px 20px', textAlign: 'center', borderBottom: '1px solid rgba(212, 175, 55, 0.1)'}}>
-        <div style={{marginBottom: '20px'}}>
-          <img 
-            src="/logo.png" 
-            alt="Onda Yatırım" 
-            style={{height: '100px', width: 'auto', marginBottom: '10px'}}
-            onError={(e) => { e.target.style.display = 'none'; }}
-          />
-        </div>
-        <h1 style={{fontSize: '2.8rem', color: '#d4af37', fontWeight: '300', margin: 0, letterSpacing: '8px', textTransform: 'uppercase'}}>ONDA</h1>
-        <p style={{color: '#8e8e8e', fontSize: '0.8rem', letterSpacing: '4px', textTransform: 'uppercase', marginTop: '12px'}}>Yatırım & Gayrimenkul</p>
-      </header>
+    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif'}}>
+      <Head>
+        <title>Onda Yatırım | Güvenin Yeni Dalgası</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
 
-      <main style={{maxWidth: '1300px', margin: '0 auto', padding: '60px 20px'}}>
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '40px'}}>
+      {/* MOBİL UYUMLULUK İÇİN CSS KURALLARI */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        html { scroll-behavior: smooth; }
+        @media (max-width: 768px) {
+          .nav-container { padding: 15px 20px !important; flex-direction: column !important; gap: 15px; }
+          .nav-links { gap: 15px !important; font-size: 0.7rem !important; }
+          .hero-title { font-size: 2rem !important; letter-spacing: 4px !important; }
+          .hero-text { font-size: 0.9rem !important; padding: 0 10px; }
+          .grid-container { grid-template-columns: 1fr !important; gap: 25px !important; padding: 20px !important; }
+          .about-text { text-align: left !important; font-size: 1rem !important; line-height: 1.7 !important; }
+          .header-logo { height: 70px !important; }
+        }
+      `}} />
+      
+      {/* 1. NAVİGASYON */}
+      <nav className="nav-container" style={{position: 'sticky', top: 0, zIndex: 100, background: 'rgba(10, 25, 47, 0.95)', borderBottom: '1px solid rgba(212, 175, 55, 0.1)', padding: '20px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(10px)'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: '15px'}}>
+          <img src="/logo.png" alt="Onda Logo" style={{height: '40px'}} onError={(e) => e.target.style.display = 'none'} />
+          <span style={{color: '#d4af37', letterSpacing: '3px', fontWeight: 'bold', fontSize: '1.2rem'}}>ONDA</span>
+        </div>
+        <div className="nav-links" style={{display: 'flex', gap: '30px', fontSize: '0.8rem', letterSpacing: '2px', textTransform: 'uppercase'}}>
+          <a href="#home" style={{color: '#fff', textDecoration: 'none'}}>Giriş</a>
+          <a href="#portfolio" style={{color: '#fff', textDecoration: 'none'}}>Portföy</a>
+          <a href="#about" style={{color: '#fff', textDecoration: 'none'}}>Hakkımızda</a>
+          <a href="#contact" style={{color: '#fff', textDecoration: 'none'}}>İletişim</a>
+        </div>
+      </nav>
+
+      {/* 2. GİRİŞ (HERO) */}
+      <section id="home" style={{padding: '100px 20px', textAlign: 'center', background: 'radial-gradient(circle, #102a43 0%, #0a192f 100%)'}}>
+        <div style={{marginBottom: '30px'}}>
+           <img src="/logo.png" className="header-logo" style={{height: '100px', width: 'auto'}} onError={(e) => e.target.style.display = 'none'} />
+        </div>
+        <h2 className="hero-title" style={{fontSize: '3.5rem', color: '#d4af37', fontWeight: '300', margin: '0 0 20px 0', letterSpacing: '10px', textTransform: 'uppercase'}}>GÜVENİN YENİ DALGASI</h2>
+        <p className="hero-text" style={{maxWidth: '800px', margin: '0 auto', color: '#8e8e8e', fontSize: '1.1rem', lineHeight: '1.8', letterSpacing: '1px'}}>
+          Gayrimenkulde rakamların ötesine geçiyoruz. <br />
+          <strong>Onda Analizi</strong> ile her mülkü geleceğe atılmış güvenli bir adım olarak değerlendiriyoruz.
+        </p>
+      </section>
+
+      {/* 3. PORTFÖY */}
+      <section id="portfolio" style={{padding: '60px 0', maxWidth: '1300px', margin: '0 auto'}}>
+        <div style={{textAlign: 'center', marginBottom: '50px'}}>
+          <h3 style={{fontSize: '2rem', color: '#d4af37', fontWeight: '300', letterSpacing: '5px'}}>SEÇKİN PORTFÖY</h3>
+          <div style={{width: '50px', height: '1px', background: '#d4af37', margin: '20px auto'}}></div>
+        </div>
+        
+        <div className="grid-container" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '40px', padding: '0 20px'}}>
           {properties && properties.map((item) => (
-            <div key={item._id} style={{background: '#0d223f', border: '1px solid rgba(212, 175, 55, 0.1)', borderRadius: '2px', overflow: 'hidden', display: 'flex', flexDirection: 'column'}}>
-              
-              <div style={{position: 'relative', height: '300px', overflow: 'hidden'}}>
+            <div key={item._id} style={{background: '#0d223f', border: '1px solid rgba(212, 175, 55, 0.1)', overflow: 'hidden', borderRadius: '2px', display: 'flex', flexDirection: 'column'}}>
+              <div style={{position: 'relative', height: '300px'}}>
                 {item.mainImage ? (
                   <img src={urlFor(item.mainImage).width(800).url()} style={{width: '100%', height: '100%', objectFit: 'cover'}} alt={item.title} />
                 ) : (
                   <div style={{width: '100%', height: '100%', background: '#162d4a'}} />
                 )}
-                <div style={{position: 'absolute', top: '15px', right: '15px', background: 'rgba(10, 25, 47, 0.9)', padding: '8px 15px', color: '#d4af37', fontSize: '0.7rem', letterSpacing: '2px', border: '1px solid #d4af37'}}>
-                  {item.location}
-                </div>
+                <div style={{position: 'absolute', top: '15px', right: '15px', background: 'rgba(10, 25, 47, 0.9)', padding: '8px 15px', color: '#d4af37', fontSize: '0.7rem', border: '1px solid #d4af37'}}>{item.location}</div>
               </div>
-
-              <div style={{padding: '35px', flex: 1, display: 'flex', flexDirection: 'column'}}>
-                <h2 style={{fontSize: '1.6rem', fontWeight: '400', margin: '0 0 10px 0', color: '#fff', lineHeight: '1.3'}}>{item.title}</h2>
-                <div style={{fontSize: '1.7rem', color: '#d4af37', marginBottom: '25px', fontWeight: '300'}}>
-                  {item.price} <span style={{fontSize: '0.9rem', opacity: 0.8}}>{item.currency}</span>
-                </div>
-
-                <div style={{padding: '20px', background: 'rgba(212, 175, 55, 0.02)', borderLeft: '1px solid #d4af37', marginBottom: '30px'}}>
-                  <h4 style={{margin: '0 0 10px 0', color: '#d4af37', fontSize: '0.65rem', letterSpacing: '2px', fontWeight: '600'}}>ONDA ANALİZİ</h4>
-                  <p style={{fontStyle: 'italic', color: '#ccc', fontSize: '0.9rem', lineHeight: '1.7', margin: 0}}>
-                    "{item.analysis ? (item.analysis.length > 160 ? item.analysis.substring(0, 160) + '...' : item.analysis) : ''}"
-                  </p>
-                </div>
-
-                <div style={{marginTop: 'auto', display: 'flex', gap: '10px'}}>
-                  <a href={getWhatsAppLink(item.title)} target="_blank" rel="noreferrer" style={{flex: 2, textAlign: 'center', padding: '16px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.85rem', letterSpacing: '1px'}}>
-                    BİLGİ AL
-                  </a>
-                  {item.googleMapsUrl && (
-                    <a href={item.googleMapsUrl} target="_blank" rel="noreferrer" style={{flex: 1, textAlign: 'center', padding: '16px', border: '1px solid #d4af37', color: '#d4af37', textDecoration: 'none', fontSize: '0.85rem'}}>
-                      KONUM
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      <footer style={{textAlign: 'center', padding: '100px 20px', opacity: 0.4, fontSize: '0.75rem', letterSpacing: '4px'}}>
-        © 2026 ONDA YATIRIM | <a href="/studio" style={{color: '#fff', textDecoration: 'none'}}>YÖNETİM</a>
-      </footer>
-    </div>
-  );
-}
-
-export async function getStaticProps() {
-  const properties = await client.fetch(`*[_type == "property"]`);
-  return { props: { properties }, revalidate: 10 };
-}
+              <div style={{padding: '30px', flex: 1, display: 'flex', flexDirection: '
