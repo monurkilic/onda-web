@@ -9,6 +9,8 @@ const urlFor = (source) => builder.image(source);
 
 export default function PropertyDetail({ property }) {
   const [photoIndex, setPhotoIndex] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   if (!property) return null;
   const allPhotos = [property.mainImage, ...(property.gallery || [])];
   const waLink = `https://wa.me/905326466909?text=${encodeURIComponent(`Merhaba, "${property.title}" ilanı hakkında bilgi alabilir miyim?`)}`;
@@ -25,30 +27,40 @@ export default function PropertyDetail({ property }) {
       <style dangerouslySetInnerHTML={{ __html: `
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
         .gal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 20px; }
-        @media (max-width: 768px) { .hero-t { font-size: 1.8rem !important; } .container { padding: 20px 15px; } .gal-grid { grid-template-columns: repeat(2, 1fr); } }
+        .mobile-menu { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: #0a192f; z-index: 1000; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 1100; }
+        .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
+        @media (max-width: 768px) { 
+          .hero-t { font-size: 1.8rem !important; } 
+          .container { padding: 20px 15px; } 
+          .gal-grid { grid-template-columns: repeat(2, 1fr); }
+          .hamburger { display: flex !important; }
+        }
       `}} />
 
-      {/* LIGHTBOX */}
-      {photoIndex !== null && (
-        <div onClick={() => setPhotoIndex(null)} style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.95)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <button onClick={prev} style={{position: 'absolute', left: '15px', background: 'none', border: 'none', color: '#d4af37', fontSize: '35px'}}>‹</button>
-          <img src={urlFor(allPhotos[photoIndex]).width(1500).url()} style={{maxWidth: '95%', maxHeight: '85%', border: '1px solid #d4af37'}} alt="P" />
-          <button onClick={next} style={{position: 'absolute', right: '15px', background: 'none', border: 'none', color: '#d4af37', fontSize: '35px'}}>›</button>
-        </div>
-      )}
-
       {/* HEADER */}
-      <nav style={{padding: '15px 30px', borderBottom: '1px solid rgba(212,175,55,0.1)', background: 'rgba(10, 25, 47, 0.95)', position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+      <nav style={{padding: '15px 30px', borderBottom: '1px solid rgba(212,175,55,0.1)', background: '#0a192f', position: 'sticky', top: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
         <a href="/" style={{display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none'}}>
           <img src="/logo.png" style={{height: '30px'}} alt="Logo" />
           <span style={{color: '#d4af37', fontSize: '1rem', fontWeight: 'bold'}}>ONDA</span>
         </a>
-        <a href="/portfolio" style={{color: '#fff', textDecoration: 'none', fontSize: '0.8rem'}}>← PORTFÖY</a>
+        <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <div style={{transform: isMenuOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none'}}></div>
+          <div style={{opacity: isMenuOpen ? 0 : 1}}></div>
+          <div style={{transform: isMenuOpen ? 'rotate(-45deg) translate(5px, -6px)' : 'none'}}></div>
+        </div>
       </nav>
+
+      <div className="mobile-menu" style={{display: isMenuOpen ? 'flex' : 'none'}}>
+        <a href="/" style={{color: '#fff', fontSize: '1.5rem', textDecoration: 'none'}}>GİRİŞ</a>
+        <a href="/portfolio" style={{color: '#d4af37', fontSize: '1.5rem', textDecoration: 'none'}}>PORTFÖY</a>
+        <a href="/about" style={{color: '#fff', fontSize: '1.5rem', textDecoration: 'none'}}>HAKKIMIZDA</a>
+        <a href="/contact" style={{color: '#fff', fontSize: '1.5rem', textDecoration: 'none'}}>İLETİŞİM</a>
+      </div>
 
       <main className="container">
         <h1 className="hero-t" style={{fontSize: '2.5rem', color: '#d4af37', textAlign: 'center', marginBottom: '10px'}}>{property.title}</h1>
-        <p style={{textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', letterSpacing: '2px'}}>{property.location}</p>
+        <p style={{textAlign: 'center', color: '#8e8e8e', marginBottom: '40px'}}>{property.location}</p>
         
         <div onClick={() => setPhotoIndex(0)} style={{width: '100%', borderRadius: '4px', overflow: 'hidden', cursor: 'zoom-in', border: '1px solid rgba(212,175,55,0.2)'}}>
           <img src={urlFor(property.mainImage).width(1200).url()} style={{width: '100%', display: 'block'}} alt="M" />
@@ -70,29 +82,14 @@ export default function PropertyDetail({ property }) {
           </div>
         </div>
 
-        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '80px'}}>
-          <a href={waLink} target="_blank" rel="noreferrer" style={{padding: '20px 50px', background: '#25D366', color: '#fff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '50px', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 4px 15px rgba(37,211,102,0.2)'}}>
+        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '60px'}}>
+          <a href={waLink} target="_blank" rel="noreferrer" style={{padding: '20px 50px', background: '#25D366', color: '#fff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '50px', display: 'flex', alignItems: 'center', gap: '10px'}}>
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style={{height: '24px'}} alt="WA" /> WHATSAPP İLE SOR
           </a>
         </div>
-
-        <section style={{marginBottom: '60px'}}>
-          <h3 style={{color: '#d4af37', marginBottom: '25px', letterSpacing: '2px'}}>KONUM</h3>
-          <div style={{height: '400px', background: '#0d223f', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(212,175,55,0.1)'}}>
-            {property.googleMapsUrl && <iframe src={property.googleMapsUrl} width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>}
-          </div>
-        </section>
       </main>
 
-      {/* FOOTER */}
-      <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0d223f'}}>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '30px', fontSize: '0.8rem'}}>
-          <a href="/" style={{color: '#8e8e8e', textDecoration: 'none'}}>GİRİŞ</a>
-          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none'}}>PORTFÖY</a>
-          <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none'}}>HAKKIMIZDA</a>
-        </div>
-        <p style={{fontSize: '0.7rem', opacity: 0.4}}>© 2026 ONDA YATIRIM</p>
-      </footer>
+      <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', opacity: 0.4}}>© 2026 ONDA YATIRIM</footer>
     </div>
   );
 }
