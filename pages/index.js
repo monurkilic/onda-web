@@ -1,7 +1,7 @@
 import { createClient } from "next-sanity";
 
 const client = createClient({
-  projectId: "PROJECT_ID_BURAYA_GELECEK", // Sanity panelindeki Project ID
+  projectId: "k8cd67dp", // Sanity panelindeki Project ID
   dataset: "production",
   useCdn: false,
 });
