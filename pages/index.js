@@ -3,7 +3,13 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from 'next/head';
 
-const client = createClient({ projectId: 'k8cd67dp', dataset: "production", apiVersion: "2023-01-01", useCdn: false });
+const client = createClient({ 
+  projectId: 'k8cd67dp', 
+  dataset: "production", 
+  apiVersion: "2023-01-01", 
+  useCdn: false 
+});
+
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
@@ -11,67 +17,61 @@ export default function Home({ properties }) {
   const [lightboxImg, setLightboxImg] = useState(null);
 
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif'}}>
-      <Head><title>Onda Yatırım | Aradığınız her şey ONDA</title></Head>
+    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', overflowX: 'hidden'}}>
+      <Head>
+        <title>Onda Yatırım | Aradığınız her şey ONDA</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="description" content="Gayrimenkulde rasyonel analiz ve kurumsal güvenin buluşma noktası. İzmir ve Ankara merkezli seçkin portföyümüzü inceleyin." />
+        
+        {/* Sosyal Medya Önizleme */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ondayatirim.com/" />
+        <meta property="og:title" content="Onda Yatırım | Aradığınız her şey ONDA" />
+        <meta property="og:description" content="Gayrimenkulde rasyonel analiz ve kurumsal güvenin buluşma noktası." />
+        <meta property="og:image" content="https://ondayatirim.com/logo.png" />
+      </Head>
 
+      {/* GELİŞMİŞ MOBİL VE GENEL STİLLER */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; }
+        
+        /* Mobil Özel Ayarlar */
+        @media (max-width: 768px) {
+          .nav-links { display: none !important; }
+          .hero-section { padding: 80px 15px !important; }
+          .hero-title { font-size: 2rem !important; letter-spacing: 4px !important; line-height: 1.2 !important; }
+          .hero-desc { font-size: 0.95rem !important; }
+          .grid-container { 
+            grid-template-columns: 1fr !important; 
+            gap: 25px !important; 
+            padding: 20px 15px !important; 
+          }
+          .property-card-image { height: 240px !important; }
+          .footer-links { gap: 20px !important; flex-direction: column !important; }
+        }
+
+        /* Hover Efektleri (Masaüstü için) */
+        .property-card { transition: transform 0.3s ease, border-color 0.3s ease; }
+        .property-card:hover { transform: translateY(-5); border-color: #d4af37 !important; }
+        .btn-hover:hover { background-color: #c4a030 !important; }
+      `}} />
+
+      {/* LIGHTBOX MODAL */}
       {lightboxImg && (
-        <div onClick={() => setLightboxImg(null)} style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.9)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'}}>
-          <img src={lightboxImg} style={{maxWidth: '90%', maxHeight: '90%', border: '2px solid #d4af37'}} />
+        <div onClick={() => setLightboxImg(null)} style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.95)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'}}>
+          <img src={lightboxImg} style={{maxWidth: '90%', maxHeight: '85%', border: '1px solid #d4af37', borderRadius: '2px'}} alt="Büyük Görünüm" />
+          <span style={{position: 'absolute', top: 20, right: 30, color: '#d4af37', fontSize: '35px', fontWeight: 'bold'}}>×</span>
         </div>
       )}
 
-      {/* HEADER */}
-      <nav style={{position: 'sticky', top: 0, zIndex: 100, background: 'rgba(10, 25, 47, 0.95)', borderBottom: '1px solid rgba(212,175,55,0.1)', padding: '20px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-        <a href="/" style={{display: 'flex', alignItems: 'center', gap: '15px', textDecoration: 'none'}}>
-          <img src="/logo.png" style={{height: '40px'}} />
-          <span style={{color: '#d4af37', fontWeight: 'bold', fontSize: '1.2rem', letterSpacing: '2px'}}>ONDA</span>
+      {/* 1. ÜST MENÜ */}
+      <nav style={{position: 'sticky', top: 0, zIndex: 100, background: 'rgba(10, 25, 47, 0.95)', borderBottom: '1px solid rgba(212,175,55,0.1)', padding: '15px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(10px)'}}>
+        <a href="/" style={{display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none'}}>
+          <img src="/logo.png" alt="Onda Logo" style={{height: '35px'}} onError={(e) => e.target.style.display = 'none'} />
+          <span style={{color: '#d4af37', fontWeight: 'bold', fontSize: '1.1rem', letterSpacing: '2px'}}>ONDA</span>
         </a>
-        <div style={{display: 'flex', gap: '25px', fontSize: '0.8rem', letterSpacing: '1px'}}>
+        <div className="nav-links" style={{display: 'flex', gap: '25px', fontSize: '0.75rem', letterSpacing: '2px'}}>
           <a href="/portfolio" style={{color: '#fff', textDecoration: 'none'}}>PORTFÖY</a>
           <a href="/about" style={{color: '#fff', textDecoration: 'none'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#fff', textDecoration: 'none'}}>İLETİŞİM</a>
-        </div>
-      </nav>
-
-      {/* HERO SECTION */}
-      <section style={{padding: '120px 20px', textAlign: 'center', background: 'radial-gradient(circle, #102a43 0%, #0a192f 100%)'}}>
-        <h1 style={{fontSize: '3.5rem', color: '#d4af37', fontWeight: '300', letterSpacing: '8px', marginBottom: '20px'}}>ARADIĞINIZ HER ŞEY ONDA</h1>
-        <p style={{maxWidth: '700px', margin: '0 auto', color: '#8e8e8e', fontSize: '1.1rem', lineHeight: '1.8'}}>Gayrimenkulde rasyonel analiz ve kurumsal güvenin buluşma noktası.</p>
-      </section>
-
-      {/* ÖNE ÇIKAN İLANLAR */}
-      <section style={{padding: '80px 20px', maxWidth: '1300px', margin: '0 auto'}}>
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '40px'}}>
-          {properties.slice(0, 3).map((item) => (
-            <div key={item._id} style={{background: '#0d223f', border: '1px solid rgba(212, 175, 55, 0.1)', borderRadius: '2px', overflow: 'hidden'}}>
-              <div onClick={() => setLightboxImg(urlFor(item.mainImage).width(1200).url())} style={{height: '280px', cursor: 'zoom-in'}}>
-                <img src={urlFor(item.mainImage).width(800).url()} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-              </div>
-              <div style={{padding: '30px'}}>
-                <h3 style={{fontSize: '1.4rem', margin: '0 0 10px 0'}}>{item.title}</h3>
-                <p style={{color: '#d4af37', fontSize: '1.3rem', marginBottom: '20px'}}>{item.price} {item.currency}</p>
-                <a href={`/portfolio/${item.slug.current}`} style={{display: 'block', textAlign: 'center', padding: '15px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold'}}>DETAYI GÖR</a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0d223f'}}>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '30px', fontSize: '0.8rem'}}>
-          <a href="/" style={{color: '#8e8e8e', textDecoration: 'none'}}>ANA SAYFA</a>
-          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none'}}>PORTFÖY</a>
-          <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none'}}>İLETİŞİM</a>
-        </div>
-        <p style={{fontSize: '0.7rem', opacity: 0.5}}>© 2026 ONDA YATIRIM | İzmir - Ankara | Aradığınız her şey ONDA</p>
-      </footer>
-    </div>
-  );
-}
-
-export async function getStaticProps() {
-  const properties = await client.fetch(`*[_type == "property"]`);
-  return { props: { properties }, revalidate: 10 };
-}
+          <a href="/contact" style={{color: '#fff', textDecoration: 'none'}}>İ
