@@ -5,8 +5,8 @@ import schema from './sanity/schema'
 export default defineConfig({
   name: 'default',
   title: 'Onda Yatırım Panel',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  projectId: 'k8cd67dp', 
+  dataset: 'production',
   basePath: '/studio',
   plugins: [deskTool()],
   schema: {
