@@ -3,46 +3,27 @@ export default {
   title: 'İlanlar',
   type: 'document',
   fields: [
-    {
-      name: 'title',
-      title: 'İlan Başlığı',
-      type: 'string',
-    },
-    {
-      name: 'location',
-      title: 'Konum (Şehir/İlçe)',
-      type: 'string',
-    },
-    {
-      name: 'price',
-      title: 'Fiyat',
-      type: 'string',
-    },
+    { name: 'title', title: 'İlan Başlığı', type: 'string' },
+    { name: 'location', title: 'Konum (Şehir/İlçe)', type: 'string' },
+    { name: 'price', title: 'Fiyat', type: 'string' },
     {
       name: 'currency',
       title: 'Para Birimi',
       type: 'string',
-      options: {
-        list: [
-          { title: 'TL', value: 'TL' },
-          { title: 'GBP', value: 'GBP' },
-          { title: 'USD', value: 'USD' },
-          { title: 'EUR', value: 'EUR' },
-        ],
-      },
+      options: { list: ['TL', 'GBP', 'USD', 'EUR'] }
+    },
+    { name: 'mainImage', title: 'Ana Resim (Kapak)', type: 'image', options: { hotspot: true } },
+    {
+      name: 'gallery',
+      title: 'Fotoğraf Galerisi',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }]
     },
     {
-      name: 'mainImage',
-      title: 'Ana Resim (Kapak)',
-      type: 'image',
-      options: {
-        hotspot: true, // Bu sayede resmi panelde kırpabilirsin
-      },
+      name: 'googleMapsUrl',
+      title: 'Google Harita Linki (Paylaşım Linki)',
+      type: 'url',
     },
-    {
-      name: 'analysis',
-      title: 'Onda Analizi',
-      type: 'text',
-    },
+    { name: 'analysis', title: 'Onda Analizi', type: 'text' },
   ],
 }
