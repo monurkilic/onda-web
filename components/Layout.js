@@ -23,13 +23,22 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
+    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        * { box-sizing: border-box; }
+        /* TÜM SİTE FONT GÜNCELLEMESİ */
+        * { 
+          box-sizing: border-box; 
+          font-family: 'Times New Roman', Times, serif !important; 
+        }
+        
+        body, input, button, select, textarea {
+          font-family: 'Times New Roman', Times, serif !important;
+        }
+
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
@@ -43,9 +52,9 @@ export default function Layout({ children }) {
       <nav style={{padding: '25px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(212,175,55,0.1)', background: '#0a192f', position: 'sticky', top: 0, zIndex: 1000}}>
         <a href="/" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none'}}>
           <img src="/logo.png" style={{height: '40px'}} alt="Logo" />
-          <span style={{color: '#d4af37', fontWeight: 'bold', letterSpacing: '3px', fontSize: '1.1rem'}}>ONDA</span>
+          <span style={{color: '#d4af37', fontWeight: 'bold', letterSpacing: '3px', fontSize: '1.2rem'}}>ONDA</span>
         </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.9rem'}}>
+        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.95rem'}}>
           <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>PORTFÖY</a>
           <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>BLOG</a>
           <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
@@ -74,7 +83,7 @@ export default function Layout({ children }) {
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.9rem', flexWrap: 'wrap', marginBottom: '20px'}}>
+        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.95rem', flexWrap: 'wrap', marginBottom: '20px'}}>
           <a href="/" style={{color: getLinkColor('/'), textDecoration: 'none', fontWeight: 'bold'}}>GİRİŞ</a>
           <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: 'bold'}}>PORTFÖY</a>
           <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: 'bold'}}>BLOG</a>
@@ -82,7 +91,7 @@ export default function Layout({ children }) {
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: 'bold'}}>HAKKIMIZDA</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: 'bold'}}>İLETİŞİM</a>
         </div>
-        <p style={{fontSize: '0.7rem', opacity: 0.4, letterSpacing: '1px'}}>© 2026 ONDA YATIRIM</p>
+        <p style={{fontSize: '0.75rem', opacity: 0.4, letterSpacing: '1px'}}>© 2026 ONDA YATIRIM</p>
       </footer>
     </div>
   );
