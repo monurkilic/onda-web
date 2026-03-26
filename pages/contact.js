@@ -1,101 +1,59 @@
-import { useState } from 'react';
 import Head from 'next/head';
 
-const SocialIcons = ({ size = 20 }) => (
-  <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-    <a href="https://www.instagram.com/ondayatirim" target="_blank" rel="noreferrer" style={{ color: '#d4af37' }}><svg width={size} height={size} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-    <a href="https://www.facebook.com/profile.php?id=61579458574677" target="_blank" rel="noreferrer" style={{ color: '#d4af37' }}><svg width={size} height={size} fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg></a>
-  </div>
-);
-
-export default function Contact() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+export default function About() {
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
+    <>
       <Head>
-        <title>İletişim | Onda Yatırım</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <title>Hakkımızda | Onda Yatırım</title>
+        <meta name="description" content="Gayrimenkulde rasyonel analiz ve psikolojik derinlik. Onda Yatırım'ın hikayesi ve vizyonu." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        * { box-sizing: border-box; }
-        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
-        .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
-        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
-        .mobile-overlay.active { transform: translateX(0); }
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-        .input-item { width: 100%; padding: 12px; background: #0d223f; border: 1px solid rgba(212,175,55,0.3); color: #fff; margin-bottom: 15px; }
+        .about-section { max-width: 900px; margin: 60px auto; padding: 0 20px; line-height: 1.8; }
+        .about-title { color: #d4af37; font-size: 2.5rem; font-weight: 300; letter-spacing: 4px; margin-bottom: 40px; text-align: center; }
+        .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px; }
+        .vision-box { background: rgba(13,34,63,0.5); border: 1px solid rgba(212,175,55,0.1); padding: 30px; }
+        .vision-box h3 { color: #d4af37; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 1px; }
+        .vision-box p { color: #ccc; fontSize: 0.9rem; margin: 0; }
         @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .hamburger { display: flex !important; }
-          .contact-container { grid-template-columns: 1fr !important; }
-          .map-box { height: 300px !important; }
+          .vision-grid { grid-template-columns: 1fr; gap: 20px; }
+          .about-title { font-size: 1.8rem; }
         }
       `}} />
 
-      <nav style={{padding: '20px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(212,175,55,0.1)', background: '#0a192f', position: 'sticky', top: 0, zIndex: 1000}}>
-        <a href="/" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none'}}>
-          <img src="/logo.png" style={{height: '35px'}} alt="Logo" />
-          <span style={{color: '#d4af37', fontWeight: 'bold', letterSpacing: '2px'}}>ONDA</span>
-        </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '20px', fontSize: '0.8rem'}}>
-          <a href="/portfolio" style={{color: '#fff', textDecoration: 'none'}}>PORTFÖY</a>
-          <a href="/valuation" style={{color: '#fff', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
-          <a href="/about" style={{color: '#fff', textDecoration: 'none'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#d4af37', textDecoration: 'none'}}>İLETİŞİM</a>
-        </div>
-        <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <div style={{transform: isMenuOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none'}}></div>
-          <div style={{opacity: isMenuOpen ? 0 : 1}}></div>
-          <div style={{transform: isMenuOpen ? 'rotate(-45deg) translate(5px, -6px)' : 'none'}}></div>
-        </div>
-      </nav>
-
-      <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
-        <a href="/" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>GİRİŞ</a>
-        <a href="/portfolio" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>PORTFÖY</a>
-        <a href="/valuation" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
-        <a href="/contact" style={{color: '#d4af37', fontSize: '1.8rem', textDecoration: 'none'}}>İLETİŞİM</a>
-      </div>
-
-      <main style={{flex: 1, padding: '40px 20px', maxWidth: '1100px', margin: '0 auto', width: '100%'}}>
-        <h2 style={{color: '#d4af37', textAlign: 'center', marginBottom: '40px', letterSpacing: '3px'}}>İLETİŞİM</h2>
+      <main className="about-section" style={{ flex: 1 }}>
+        <h1 className="about-title">BİZ KİMİZ?</h1>
         
-        <div className="contact-container">
-           <div>
-             <h4 style={{color: '#d4af37', marginBottom: '20px'}}>BİZE ULAŞIN</h4>
-             <p style={{color: '#ccc', lineHeight: '2'}}>İzmir - Ankara<br/>m.onur.kilic@gmail.com<br/>+90 532 646 69 09</p>
-           </div>
-           
-           <form action="https://formspree.io/f/xvzvooyy" method="POST">
-             <input type="text" name="name" placeholder="Adınız" required className="input-item" />
-             <input type="email" name="email" placeholder="E-posta" required className="input-item" />
-             <textarea name="message" placeholder="Mesajınız" rows="4" required className="input-item"></textarea>
-             <button type="submit" style={{width: '100%', padding: '15px', background: '#d4af37', color: '#0a192f', fontWeight: 'bold', border: 'none'}}>GÖNDER</button>
-           </form>
+        <div style={{ color: '#fff', fontSize: '1.1rem', textAlign: 'center', marginBottom: '40px', fontStyle: 'italic' }}>
+          "Gayrimenkul, sadece taş ve topraktan ibaret değildir; rasyonel verilerin ve insan psikolojisinin birleştiği bir karardır."
         </div>
 
-        <div className="map-box" style={{height: '450px', width: '100%', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(212,175,55,0.1)'}}>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d200000!2d27.1!3d38.4!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd862a76221b5%3A0xec4981656819446f!2zxLB6bWly!5e0!3m2!1str!2str!4v1711111111111" width="100%" height="100%" style={{border:0}} allowFullScreen="" loading="lazy"></iframe>
+        <p style={{ color: '#ccc', marginBottom: '25px' }}>
+          Onda Yatırım, geleneksel emlakçılık anlayışının ötesine geçerek, gayrimenkul süreçlerini bilimsel bir yaklaşımla ele alan bir danışmanlık markasıdır. İzmir ve Ankara merkezli faaliyetlerimizde, her mülkü kendi özelinde bir "vaka" olarak ele alıyoruz.
+        </p>
+
+        <p style={{ color: '#ccc', marginBottom: '25px' }}>
+          Kurucumuzun psikoloji altyapısı ve rasyonel analiz yetkinliği, Onda Yatırım'ın temelini oluşturur. Yatırımcılarımıza sadece mülk satmıyor; piyasa dinamiklerini, gelecek projeksiyonlarını ve karar verme süreçlerini etkileyen tüm faktörleri kapsayan bir **Onda Analizi** sunuyoruz.
+        </p>
+
+        <div className="vision-grid">
+          <div className="vision-box">
+            <h3>RASYONEL YAKLAŞIM</h3>
+            <p>Piyasa verilerini, bölgesel gelişim raporlarını ve yatırımın geri dönüş hızını (ROI) matematiksel netlikle analiz ediyoruz.</p>
+          </div>
+          <div className="vision-box">
+            <h3>PSİKOLOJİK DERİNLİK</h3>
+            <p>Alıcı ve satıcı arasındaki beklenti dengesini, mülkün duygusal değerini ve doğru iletişim stratejilerini yönetiyoruz.</p>
+          </div>
+        </div>
+
+        <div style={{ marginTop: '80px', textAlign: 'center' }}>
+          <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '300', marginBottom: '30px' }}>Aradığınız profesyonel bakış açısı Onda.</h2>
+          <a href="/contact" style={{ display: 'inline-block', padding: '15px 40px', border: '1px solid #d4af37', color: '#d4af37', textDecoration: 'none', fontSize: '0.85rem', letterSpacing: '2px' }}>
+            BİZE ULAŞIN
+          </a>
         </div>
       </main>
-
-     <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
-        <div style={{marginBottom: '30px'}}>
-          <SocialIcons size={24} />
-        </div>
-        
-        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.8rem', flexWrap: 'wrap', marginBottom: '20px'}}>
-          <a href="/" style={{color: '#fff', textDecoration: 'none', letterSpacing: '1px'}}>GİRİŞ</a>
-          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>PORTFÖY</a>
-          <a href="/valuation" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
-          <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>İLETİŞİM</a>
-        </div>
-        
-        <p style={{fontSize: '0.7rem', opacity: 0.4, letterSpacing: '2px'}}>© 2026 ONDA YATIRIM | Aradığınız her şey ONDA</p>
-      </footer>
-    </div>
+    </>
   );
 }
