@@ -65,14 +65,20 @@ export default function Portfolio({ properties }) {
       </main>
 
       {/* FOOTER */}
-      <footer style={{padding: '80px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0d223f', marginTop: '60px'}}>
-        <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '30px', marginBottom: '30px', fontSize: '0.8rem', letterSpacing: '1px'}}>
-          <a href="/" style={{color: '#8e8e8e', textDecoration: 'none'}}>ANA SAYFA</a>
-          <a href="/portfolio" style={{color: '#fff', textDecoration: 'none', borderBottom: '1px solid #d4af37'}}>PORTFÖY</a>
-          <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none'}}>İLETİŞİM</a>
+   <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
+        <div style={{marginBottom: '30px'}}>
+          <SocialIcons size={24} />
         </div>
-        <p style={{fontSize: '0.7rem', opacity: 0.5, letterSpacing: '2px'}}>© 2026 ONDA YATIRIM | Aradığınız her şey ONDA</p>
+        
+        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.8rem', flexWrap: 'wrap', marginBottom: '20px'}}>
+          <a href="/" style={{color: '#fff', textDecoration: 'none', letterSpacing: '1px'}}>GİRİŞ</a>
+          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>PORTFÖY</a>
+          <a href="/valuation" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
+          <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>HAKKIMIZDA</a>
+          <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>İLETİŞİM</a>
+        </div>
+        
+        <p style={{fontSize: '0.7rem', opacity: 0.4, letterSpacing: '2px'}}>© 2026 ONDA YATIRIM | Aradığınız her şey ONDA</p>
       </footer>
     </div>
   );
