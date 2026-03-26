@@ -11,7 +11,7 @@ export default function BlogIndex({ posts }) {
     <>
       <Head>
         <title>Onda Analizleri | Blog</title>
-        <meta name="description" content="Gayrimenkul dünyasına rasyonel ve faydacı bir bakış." />
+        <meta name="description" content="Gayrimenkul dünyasına rasyonel, teknik ve faydacı bir bakış." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
@@ -22,17 +22,17 @@ export default function BlogIndex({ posts }) {
       `}} />
 
       <main style={{ flex: 1 }}>
-        <h1 style={{ textAlign: 'center', color: '#d4af37', margin: '60px 0 20px 0', letterSpacing: '4px', fontWeight: '300' }}>ONDA ANALİZLERİ</h1>
-        <p style={{ textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', padding: '0 20px' }}>Rasyonel veriler ve piyasa psikolojisi.</p>
+        <h1 style={{ textAlign: 'center', color: '#d4af37', margin: '60px 0 20px 0', letterSpacing: '4px', fontWeight: '300', fontSize: '2.5rem' }}>ONDA ANALİZLERİ</h1>
+        <p style={{ textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', padding: '0 20px', letterSpacing: '1px' }}>Rasyonel veriler ve teknik analizler.</p>
         
         <div className="blog-grid">
           {posts && posts.map((post) => (
             <a href={`/blog/${post.slug?.current}`} key={post._id} className="blog-card">
               <img src={urlFor(post.mainImage).width(600).url()} style={{ width: '100%', height: '220px', objectFit: 'cover' }} alt={post.title} />
               <div style={{ padding: '25px', flex: 1 }}>
-                <h3 style={{ color: '#d4af37', marginBottom: '15px', fontSize: '1.2rem', lineHeight: '1.4' }}>{post.title}</h3>
-                <p style={{ color: '#ccc', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '20px' }}>{post.excerpt}</p>
-                <span style={{ color: '#d4af37', fontSize: '0.8rem', fontWeight: 'bold' }}>DEVAMINI OKU →</span>
+                <h3 style={{ color: '#d4af37', marginBottom: '15px', fontSize: '1.4rem', lineHeight: '1.4' }}>{post.title}</h3>
+                <p style={{ color: '#ccc', fontSize: '1rem', lineHeight: '1.6', marginBottom: '20px' }}>{post.excerpt}</p>
+                <span style={{ color: '#d4af37', fontSize: '0.9rem', fontWeight: 'bold' }}>DEVAMINI OKU →</span>
               </div>
             </a>
           ))}
