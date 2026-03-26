@@ -29,13 +29,26 @@ export default function Layout({ children }) {
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        * { box-sizing: border-box; font-family: serif !important; }
-        body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea { font-family: serif !important; }
+        /* AGRESİF FONT SIFIRLAMA: TÜM SİTEYİ MOTTO FONTYLA EŞİTLEME */
+        * { 
+          box-sizing: border-box; 
+          font-family: 'Times New Roman', Times, serif !important; 
+          -webkit-font-smoothing: antialiased;
+        }
+        
+        body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
+          font-family: 'Times New Roman', Times, serif !important;
+        }
+
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
         .mobile-overlay.active { transform: translateX(0); }
-        @media (max-width: 768px) { .desktop-nav { display: none !important; } .hamburger { display: flex !important; } }
+        
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .hamburger { display: flex !important; }
+        }
       `}} />
 
       <nav style={{padding: '25px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(212,175,55,0.1)', background: '#0a192f', position: 'sticky', top: 0, zIndex: 1000}}>
@@ -66,7 +79,9 @@ export default function Layout({ children }) {
         <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
       </div>
 
-      <main style={{flex: 1}}>{children}</main>
+      <main style={{flex: 1}}>
+        {children}
+      </main>
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
@@ -78,7 +93,7 @@ export default function Layout({ children }) {
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: 'bold'}}>HAKKIMIZDA</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: 'bold'}}>İLETİŞİM</a>
         </div>
-        <p style={{fontSize: '0.85rem', opacity: 0.4}}>© 2026 ONDA YATIRIM</p>
+        <p style={{fontSize: '0.85rem', opacity: 0.4, letterSpacing: '1px'}}>© 2026 ONDA YATIRIM</p>
       </footer>
     </div>
   );
