@@ -28,7 +28,7 @@ const property = {
     { name: 'googleMapsUrl', title: 'Harita Linki', type: 'url' },
     { name: 'analysis', title: 'Onda Analizi', type: 'text' }
   ]
-}
+};
 
 const post = {
   name: 'post',
@@ -52,6 +52,8 @@ const post = {
       of: [{ type: 'block' }, { type: 'image' }]
     }
   ]
-}
+};
 
-export const schemaTypes = [property, post]
+// Bu kısım kritik: Her iki çağırma yöntemini de destekliyoruz
+export const schemaTypes = [property, post];
+export default schemaTypes;
