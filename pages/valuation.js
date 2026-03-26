@@ -23,23 +23,22 @@ export default function Valuation() {
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
         .mobile-overlay.active { transform: translateX(0); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .input-field { padding: 12px; background: #0d223f; border: 1px solid rgba(212,175,55,0.3); color: #fff; font-family: 'serif'; width: 100%; margin-bottom: 20px; font-size: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-box { padding: 14px; background: #0d223f; border: 1px solid rgba(212,175,55,0.3); color: #fff; width: 100%; margin-bottom: 20px; font-size: 1rem; }
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: flex !important; }
-          .form-grid { grid-template-columns: 1fr !important; gap: 0; }
-          .main-title { font-size: 1.5rem !important; }
+          .form-row { grid-template-columns: 1fr !important; gap: 0; }
+          .v-title { font-size: 1.6rem !important; }
         }
       `}} />
 
-      {/* HEADER */}
       <nav style={{padding: '20px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(212,175,55,0.1)', background: '#0a192f', position: 'sticky', top: 0, zIndex: 1000}}>
         <a href="/" style={{display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none'}}>
           <img src="/logo.png" style={{height: '35px'}} alt="Logo" />
           <span style={{color: '#d4af37', fontWeight: 'bold', letterSpacing: '2px'}}>ONDA</span>
         </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.8rem'}}>
+        <div className="desktop-nav" style={{display: 'flex', gap: '20px', fontSize: '0.8rem'}}>
           <a href="/portfolio" style={{color: '#fff', textDecoration: 'none'}}>PORTFÖY</a>
           <a href="/valuation" style={{color: '#d4af37', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: '#fff', textDecoration: 'none'}}>HAKKIMIZDA</a>
@@ -53,51 +52,41 @@ export default function Valuation() {
       </nav>
 
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
-        <a href="/" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
-        <a href="/portfolio" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
-        <a href="/valuation" style={{color: '#d4af37', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
-        <a href="/contact" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
+        <a href="/" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>GİRİŞ</a>
+        <a href="/portfolio" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>PORTFÖY</a>
+        <a href="/valuation" style={{color: '#d4af37', fontSize: '1.8rem', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
+        <a href="/about" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>HAKKIMIZDA</a>
+        <a href="/contact" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>İLETİŞİM</a>
       </div>
 
       <main style={{flex: 1, padding: '40px 20px', maxWidth: '800px', margin: '0 auto', width: '100%'}}>
-        <h2 className="main-title" style={{color: '#d4af37', textAlign: 'center', marginBottom: '20px', letterSpacing: '3px', fontWeight: '300'}}>ONDA ANALİZİ TALEBİ</h2>
-        <p style={{textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', lineHeight: '1.8', fontSize: '0.9rem'}}>
-          Mülkünüzün gerçek değerini rasyonel verilerle analiz ediyoruz. Formu doldurduğunuzda danışmanlarımız en kısa sürede sizinle iletişime geçecektir.
-        </p>
+        <h2 className="v-title" style={{color: '#d4af37', textAlign: 'center', marginBottom: '20px', letterSpacing: '3px', fontWeight: '300'}}>ONDA ANALİZİ TALEBİ</h2>
+        <p style={{textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', lineHeight: '1.8'}}>Mülkünüzün gerçek değerini rasyonel verilerle raporlayalım.</p>
 
         <form action="https://formspree.io/f/xvzvooyy" method="POST">
-          <div className="form-grid">
-            <input type="text" name="ad_soyad" placeholder="Adınız Soyadınız" required className="input-field" />
-            <input type="tel" name="telefon" placeholder="Telefon Numaranız" required className="input-field" />
+          <div className="form-row">
+            <input type="text" name="ad_soyad" placeholder="Adınız Soyadınız" required className="input-box" />
+            <input type="tel" name="telefon" placeholder="Telefon Numaranız" required className="input-box" />
           </div>
-          
-          <input type="text" name="konum" placeholder="Mülkün Konumu (Şehir / İlçe / Mahalle)" required className="input-field" />
-          
-          <div className="form-grid">
-            <select name="mulk_tipi" required className="input-field" style={{appearance: 'none'}}>
-              <option value="">Mülk Tipi Seçin</option>
-              <option value="Daire">Daire / Rezidans</option>
-              <option value="Villa">Villa / Müstakil Ev</option>
-              <option value="Ticari">Ticari Gayrimenkul</option>
-              <option value="Arsa">Arsa / Arazi</option>
-            </select>
-            <input type="number" name="metrekare" placeholder="Brüt Metrekare" required className="input-field" />
+          <input type="text" name="konum" placeholder="Mülkün Konumu" required className="input-box" />
+          <div className="form-row">
+            <select name="mulk_tipi" required className="input-box" style={{appearance: 'none'}}><option value="">Mülk Tipi</option><option value="Daire">Daire</option><option value="Villa">Villa</option></select>
+            <input type="number" name="metrekare" placeholder="Metrekare" required className="input-box" />
           </div>
-
-          <textarea name="ek_notlar" placeholder="Mülkünüz hakkında eklemek istediğiniz detaylar..." rows="5" className="input-field"></textarea>
-          
-          <button type="submit" style={{padding: '18px', background: '#d4af37', color: '#0a192f', fontWeight: 'bold', border: 'none', cursor: 'pointer', width: '100%', letterSpacing: '2px'}}>ANALİZ TALEBİNİ GÖNDER</button>
+          <textarea name="ek_notlar" placeholder="Ek detaylar..." rows="5" className="input-box"></textarea>
+          <button type="submit" style={{padding: '18px', background: '#d4af37', color: '#0a192f', fontWeight: 'bold', border: 'none', cursor: 'pointer', width: '100%'}}>ANALİZ TALEBİNİ GÖNDER</button>
         </form>
       </main>
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.8rem', marginBottom: '20px'}}>
+        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.8rem', flexWrap: 'wrap'}}>
           <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none'}}>PORTFÖY</a>
+          <a href="/valuation" style={{color: '#fff', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none'}}>HAKKIMIZDA</a>
           <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none'}}>İLETİŞİM</a>
         </div>
-        <p style={{fontSize: '0.7rem', opacity: 0.4}}>© 2026 ONDA YATIRIM</p>
+        <p style={{fontSize: '0.7rem', opacity: 0.4, marginTop: '20px'}}>© 2026 ONDA YATIRIM</p>
       </footer>
     </div>
   );
