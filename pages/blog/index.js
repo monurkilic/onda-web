@@ -11,7 +11,7 @@ export default function BlogIndex({ posts }) {
     <>
       <Head>
         <title>Onda Analizleri | Blog</title>
-        <meta name="description" content="Gayrimenkul dünyasına rasyonel ve psikolojik bir bakış." />
+        <meta name="description" content="Gayrimenkul dünyasına rasyonel ve faydacı bir bakış." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
