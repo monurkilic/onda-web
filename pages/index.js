@@ -13,12 +13,11 @@ const client = createClient({
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
-// ŞİMDİLİK SİTE BOŞ GÖRÜNMESİN DİYE PROFESYONEL GÖRSELLER EKLEDİM
-// Kendi görsellerini yüklediğinde burayı ["/hero1.jpg", "/hero2.jpg", "/hero3.jpg"] yapabiliriz.
+// Birbirinden farklı 3 profesyonel görsel
 const heroImages = [
-  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80",
-  "https://images.unsplash.com/photo-1600607687940-4e5a994239b7?auto=format&fit=crop&w=1920&q=80",
-  "https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?auto=format&fit=crop&w=1920&q=80"
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80", // Modern Villa Dış Çekim
+  "https://images.unsplash.com/photo-1600607687940-4e5a994239b7?auto=format&fit=crop&w=1920&q=80", // Lüks Salon İç Mekan
+  "https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?auto=format&fit=crop&w=1920&q=80"  // Mimari Detay Gece Çekimi
 ];
 
 export default function Home({ properties, posts }) {
@@ -27,7 +26,7 @@ export default function Home({ properties, posts }) {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImg((prev) => (prev + 1) % heroImages.length);
-    }, 5000); 
+    }, 6000); // Geçiş süresini biraz daha uzattım, daha atmosferik olması için
     return () => clearInterval(timer);
   }, []);
 
@@ -62,26 +61,36 @@ export default function Home({ properties, posts }) {
           top: 0; left: 0; width: 100%; height: 100%;
           background-size: cover;
           background-position: center;
-          transition: opacity 2s ease-in-out;
+          transition: opacity 2.5s ease-in-out; /* Daha yumuşak geçiş */
           opacity: 0;
         }
         .hero-slide.active { opacity: 1; }
         .hero-overlay {
           position: absolute;
           top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(10, 25, 47, 0.5);
+          background: rgba(10, 25, 47, 0.45); /* Görselin kalitesini bozmadan hafif karartma */
           z-index: 2;
         }
         .hero-content { position: relative; z-index: 3; padding: 0 20px; }
         
+        .hero-t { 
+          font-size: 4.5rem; 
+          font-weight: 300; 
+          letter-spacing: 12px; 
+          margin-bottom: 25px; 
+          text-shadow: 2px 2px 15px rgba(0,0,0,0.8); 
+          color: #ffffff; /* Ana renk beyaz */
+        }
+        .hero-t span { color: #d4af37; } /* ONDA vurgusu */
+
         .cta-box { 
           border: 1px solid rgba(212,175,55,0.3); 
           padding: 50px 40px; 
-          background: rgba(13,34,63,0.9); 
+          background: rgba(13,34,63,0.92); 
           width: 100%; 
           max-width: 900px; 
           margin: -80px auto 60px auto; 
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(12px);
           position: relative;
           z-index: 10;
         }
@@ -91,7 +100,7 @@ export default function Home({ properties, posts }) {
         
         @media (max-width: 768px) {
           .hero-container { height: 75vh; }
-          .hero-t { font-size: 2.2rem !important; letter-spacing: 4px !important; line-height: 1.2; }
+          .hero-t { font-size: 2.2rem !important; letter-spacing: 5px !important; line-height: 1.2; }
           .cta-box { padding: 35px 20px !important; margin: -40px auto 40px auto !important; width: 92% !important; }
         }
       `}} />
@@ -110,10 +119,10 @@ export default function Home({ properties, posts }) {
         </div>
         
         <div className="hero-content">
-          <h1 className="hero-t" style={{fontSize: '4.5rem', color: '#d4af37', fontWeight: '300', letterSpacing: '12px', marginBottom: '25px', textShadow: '2px 2px 10px rgba(0,0,0,0.7)'}}>
-            ARADIĞINIZ HER ŞEY ONDA
+          <h1 className="hero-t">
+            ARADIĞINIZ HER ŞEY <span>ONDA</span>
           </h1>
-          <p style={{maxWidth: '750px', margin: '0 auto', color: '#fff', lineHeight: '1.8', fontSize: '1.2rem', letterSpacing: '1px', textShadow: '1px 1px 5px rgba(0,0,0,1)'}}>
+          <p style={{maxWidth: '750px', margin: '0 auto', color: '#fff', lineHeight: '1.8', fontSize: '1.2rem', letterSpacing: '2px', textShadow: '1px 1px 6px rgba(0,0,0,1)', fontWeight: '300'}}>
             İzmir ve Ankara merkezli lüks gayrimenkul danışmanlığında rasyonel analiz süreci.
           </p>
         </div>
