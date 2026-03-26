@@ -13,11 +13,11 @@ const client = createClient({
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
-// Birbirinden farklı 3 profesyonel görsel
+// Public klasöründeki yerel görseller
 const heroImages = [
-  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80", // Modern Villa Dış Çekim
-  "https://images.unsplash.com/photo-1600607687940-4e5a994239b7?auto=format&fit=crop&w=1920&q=80", // Lüks Salon İç Mekan
-  "https://images.unsplash.com/photo-1600566753190-17f0bb2a6c3e?auto=format&fit=crop&w=1920&q=80"  // Mimari Detay Gece Çekimi
+  "/hero1.jpg",
+  "/hero2.jpg",
+  "/hero3.jpg"
 ];
 
 export default function Home({ properties, posts }) {
@@ -26,7 +26,7 @@ export default function Home({ properties, posts }) {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImg((prev) => (prev + 1) % heroImages.length);
-    }, 6000); // Geçiş süresini biraz daha uzattım, daha atmosferik olması için
+    }, 5500); 
     return () => clearInterval(timer);
   }, []);
 
@@ -61,27 +61,35 @@ export default function Home({ properties, posts }) {
           top: 0; left: 0; width: 100%; height: 100%;
           background-size: cover;
           background-position: center;
-          transition: opacity 2.5s ease-in-out; /* Daha yumuşak geçiş */
+          transition: opacity 2.5s ease-in-out;
           opacity: 0;
         }
         .hero-slide.active { opacity: 1; }
         .hero-overlay {
           position: absolute;
           top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(10, 25, 47, 0.45); /* Görselin kalitesini bozmadan hafif karartma */
+          background: rgba(10, 25, 47, 0.4);
           z-index: 2;
         }
         .hero-content { position: relative; z-index: 3; padding: 0 20px; }
         
         .hero-t { 
-          font-size: 4.5rem; 
+          font-size: 3.8rem; 
           font-weight: 300; 
-          letter-spacing: 12px; 
+          letter-spacing: 10px; 
           margin-bottom: 25px; 
           text-shadow: 2px 2px 15px rgba(0,0,0,0.8); 
-          color: #ffffff; /* Ana renk beyaz */
+          color: #ffffff;
+          line-height: 1.2;
         }
-        .hero-t span { color: #d4af37; } /* ONDA vurgusu */
+        .hero-t span { 
+          color: #d4af37; 
+          display: block; 
+          font-size: 1.3em; 
+          letter-spacing: 15px; 
+          margin-top: 15px;
+          font-weight: bold;
+        }
 
         .cta-box { 
           border: 1px solid rgba(212,175,55,0.3); 
@@ -100,12 +108,12 @@ export default function Home({ properties, posts }) {
         
         @media (max-width: 768px) {
           .hero-container { height: 75vh; }
-          .hero-t { font-size: 2.2rem !important; letter-spacing: 5px !important; line-height: 1.2; }
+          .hero-t { font-size: 2rem !important; letter-spacing: 5px !important; }
+          .hero-t span { font-size: 1.2em !important; letter-spacing: 8px !important; }
           .cta-box { padding: 35px 20px !important; margin: -40px auto 40px auto !important; width: 92% !important; }
         }
       `}} />
 
-      {/* DİNAMİK GİRİŞ (HERO) BÖLÜMÜ */}
       <section className="hero-container">
         <div className="hero-bg-layer">
           {heroImages.map((img, index) => (
@@ -129,14 +137,12 @@ export default function Home({ properties, posts }) {
       </section>
 
       <div style={{ textAlign: 'center', padding: '0 20px 80px 20px' }}>
-        {/* ANALİZ TALEBİ KUTUSU */}
         <div className="cta-box">
           <h2 className="cta-title" style={{color: '#d4af37', fontSize: '1.6rem', fontWeight: '300', marginBottom: '20px', letterSpacing: '2px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
           <p style={{color: '#ccc', fontSize: '1rem', marginBottom: '35px', lineHeight: '1.6'}}>Mülkünüzün gerçek piyasa değerini rasyonel analiz ve teknik verilerle raporlayalım.</p>
           <a href="/valuation" style={{display: 'inline-block', padding: '18px 45px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem', letterSpacing: '2px'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
         </div>
 
-        {/* SON ANALİZ YAZISI */}
         {posts && posts.length > 0 && (
           <div style={{ maxWidth: '900px', margin: '100px auto 40px auto' }}>
             <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', fontSize: '1.1rem', marginBottom: '30px' }}>GÜNCEL ANALİZLER</h3>
