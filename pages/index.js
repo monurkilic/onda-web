@@ -18,21 +18,36 @@ export default function Home({ properties }) {
 
   return (
     <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
-      <Head>
-        <title>Onda Yatırım | Aradığınız her şey ONDA</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        
-        {/* GOOGLE DOĞRULAMA */}
-        <meta name="google-site-verification" content="fNf4nfB1gCy8OW-VxDDD4fIa0rzdCEPOoLazxRLEOx4" />
-        
-        {/* SOSYAL MEDYA ÖNİZLEME (SEO) */}
-        <meta name="description" content="İzmir ve Ankara merkezli lüks gayrimenkul ve yatırım danışmanlığı. Onda Analizi ile rasyonel yatırım fırsatları." />
-        <meta property="og:title" content="Onda Yatırım | Aradığınız her şey ONDA" />
-        <meta property="og:description" content="Doğru yatırımcı, doğru mülk. Gayrimenkulde rasyonel analiz ve kurumsal güven." />
-        <meta property="og:image" content="/logo.png" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ondayatirim.com" />
-      </Head>
+     <Head>
+  <title>Onda Yatırım | Aradığınız her şey ONDA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  
+  {/* Google Search Console Doğrulama */}
+  <meta name="google-site-verification" content="fNf4nfB1gCy8OW-VxDDD4fIa0rzdCEPOoLazxRLEOx4" />
+  
+  {/* Temel SEO Etiketleri */}
+  <meta name="description" content="İzmir ve Ankara merkezli lüks gayrimenkul ve yatırım danışmanlığı. Onda Analizi ile rasyonel yatırım fırsatları ve kurumsal güven." />
+  <meta name="keywords" content="gayrimenkul, yatırım, izmir emlak, ankara emlak, lüks konut, yatırım danışmanlığı, onda yatırım" />
+  <meta name="author" content="Onda Yatırım" />
+
+  {/* Open Graph / Facebook / WhatsApp (Sosyal Medya Görünümü) */}
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ondayatirim.com" />
+  <meta property="og:title" content="Onda Yatırım | Aradığınız her şey ONDA" />
+  <meta property="og:description" content="Doğru yatırımcı, doğru mülk. Gayrimenkulde rasyonel analiz ve kurumsal güvenin adresi." />
+  <meta property="og:image" content="https://ondayatirim.com/logo.png" />
+  <meta property="og:site_name" content="Onda Yatırım" />
+
+  {/* Twitter Card (X Paylaşımları İçin) */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Onda Yatırım | Aradığınız her şey ONDA" />
+  <meta name="twitter:description" content="Gayrimenkul yatırımında rasyonel analiz ve psikolojik derinlik." />
+  <meta name="twitter:image" content="https://ondayatirim.com/logo.png" />
+
+  {/* Favicon Entegrasyonu */}
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+</Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; padding: 10px; }
