@@ -96,3 +96,5 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
+// Vercel Uyandırma Yorum Satırı: Son Güncelleme 2026-03-26
