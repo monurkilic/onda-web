@@ -13,7 +13,6 @@ const client = createClient({
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
-// Public klasöründeki yerel görseller
 const heroImages = [
   "/hero1.jpg",
   "/hero2.jpg",
@@ -74,20 +73,20 @@ export default function Home({ properties, posts }) {
         .hero-content { position: relative; z-index: 3; padding: 0 20px; }
         
         .hero-t { 
-          font-size: 3.8rem; 
+          font-size: 3.5rem; 
           font-weight: 300; 
-          letter-spacing: 10px; 
+          letter-spacing: 12px; 
           margin-bottom: 25px; 
           text-shadow: 2px 2px 15px rgba(0,0,0,0.8); 
           color: #ffffff;
-          line-height: 1.2;
+          line-height: 1.1;
         }
         .hero-t span { 
           color: #d4af37; 
           display: block; 
-          font-size: 1.3em; 
-          letter-spacing: 15px; 
-          margin-top: 15px;
+          font-size: 1.4em; 
+          letter-spacing: 18px; 
+          margin-top: 20px;
           font-weight: bold;
         }
 
@@ -108,8 +107,8 @@ export default function Home({ properties, posts }) {
         
         @media (max-width: 768px) {
           .hero-container { height: 75vh; }
-          .hero-t { font-size: 2rem !important; letter-spacing: 5px !important; }
-          .hero-t span { font-size: 1.2em !important; letter-spacing: 8px !important; }
+          .hero-t { font-size: 1.8rem !important; letter-spacing: 6px !important; }
+          .hero-t span { font-size: 1.3em !important; letter-spacing: 8px !important; }
           .cta-box { padding: 35px 20px !important; margin: -40px auto 40px auto !important; width: 92% !important; }
         }
       `}} />
@@ -130,7 +129,7 @@ export default function Home({ properties, posts }) {
           <h1 className="hero-t">
             ARADIĞINIZ HER ŞEY <span>ONDA</span>
           </h1>
-          <p style={{maxWidth: '750px', margin: '0 auto', color: '#fff', lineHeight: '1.8', fontSize: '1.2rem', letterSpacing: '2px', textShadow: '1px 1px 6px rgba(0,0,0,1)', fontWeight: '300'}}>
+          <p style={{maxWidth: '750px', margin: '0 auto', color: '#fff', lineHeight: '1.8', fontSize: '1.25rem', letterSpacing: '2px', textShadow: '1px 1px 6px rgba(0,0,0,1)', fontWeight: '300'}}>
             İzmir ve Ankara merkezli lüks gayrimenkul danışmanlığında rasyonel analiz süreci.
           </p>
         </div>
@@ -138,20 +137,20 @@ export default function Home({ properties, posts }) {
 
       <div style={{ textAlign: 'center', padding: '0 20px 80px 20px' }}>
         <div className="cta-box">
-          <h2 className="cta-title" style={{color: '#d4af37', fontSize: '1.6rem', fontWeight: '300', marginBottom: '20px', letterSpacing: '2px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
-          <p style={{color: '#ccc', fontSize: '1rem', marginBottom: '35px', lineHeight: '1.6'}}>Mülkünüzün gerçek piyasa değerini rasyonel analiz ve teknik verilerle raporlayalım.</p>
-          <a href="/valuation" style={{display: 'inline-block', padding: '18px 45px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem', letterSpacing: '2px'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
+          <h2 className="cta-title" style={{color: '#d4af37', fontSize: '1.7rem', fontWeight: '300', marginBottom: '20px', letterSpacing: '2px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
+          <p style={{color: '#ccc', fontSize: '1.05rem', marginBottom: '35px', lineHeight: '1.6'}}>Mülkünüzün gerçek piyasa değerini rasyonel analiz ve teknik verilerle raporlayalım.</p>
+          <a href="/valuation" style={{display: 'inline-block', padding: '18px 45px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.95rem', letterSpacing: '2px'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
         </div>
 
         {posts && posts.length > 0 && (
           <div style={{ maxWidth: '900px', margin: '100px auto 40px auto' }}>
-            <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', fontSize: '1.1rem', marginBottom: '30px' }}>GÜNCEL ANALİZLER</h3>
+            <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', fontSize: '1.2rem', marginBottom: '30px' }}>GÜNCEL ANALİZLER</h3>
             <a href={`/blog/${posts[0].slug.current}`} className="blog-preview-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '30px', textAlign: 'left', flexWrap: 'wrap' }}>
                 <img src={urlFor(posts[0].mainImage).width(300).url()} style={{ width: '220px', height: '140px', objectFit: 'cover', border: '1px solid rgba(212,175,55,0.1)' }} alt="Blog" />
                 <div style={{ flex: 1 }}>
-                  <h4 style={{ color: '#fff', margin: '0 0 12px 0', fontSize: '1.3rem' }}>{posts[0].title}</h4>
-                  <p style={{ color: '#8e8e8e', fontSize: '0.9rem', margin: 0, lineHeight: '1.5' }}>{posts[0].excerpt}</p>
+                  <h4 style={{ color: '#fff', margin: '0 0 12px 0', fontSize: '1.4rem' }}>{posts[0].title}</h4>
+                  <p style={{ color: '#8e8e8e', fontSize: '0.95rem', margin: 0, lineHeight: '1.5' }}>{posts[0].excerpt}</p>
                 </div>
               </div>
             </a>
@@ -159,7 +158,7 @@ export default function Home({ properties, posts }) {
         )}
 
         <div style={{marginTop: '80px'}}>
-          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'underline', fontSize: '0.9rem', letterSpacing: '1px'}}>Veya güncel portföyü inceleyin</a>
+          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'underline', fontSize: '0.95rem', letterSpacing: '1px'}}>Veya güncel portföyü inceleyin</a>
         </div>
       </div>
     </>
