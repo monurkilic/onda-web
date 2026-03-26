@@ -10,6 +10,6 @@ export default defineConfig({
   basePath: '/studio',
   plugins: [deskTool()],
   schema: {
-    types: [schema],
+    types: schema, // Köşeli parantezleri [] kaldırdık, çünkü 'schema' zaten bir dizi.
   },
 })
