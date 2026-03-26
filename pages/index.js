@@ -3,7 +3,13 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from 'next/head';
 
-const client = createClient({ projectId: 'k8cd67dp', dataset: "production", apiVersion: "2023-01-01", useCdn: false });
+const client = createClient({ 
+  projectId: 'k8cd67dp', 
+  dataset: "production", 
+  apiVersion: "2023-01-01", 
+  useCdn: false 
+});
+
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
@@ -25,21 +31,33 @@ export default function Home({ properties }) {
     <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
       <Head>
         <title>Onda Yatırım | Aradığınız her şey ONDA</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <meta name="google-site-verification" content="fNf4nfB1gCy8OW-VxDDD4fIa0rzdCEPOoLazxRLEOx4" />
+        
+        {/* WhatsApp & Sosyal Medya Önizleme Ayarları */}
+        <meta name="description" content="İzmir ve Ankara merkezli lüks gayrimenkul yatırımında rasyonel analiz ve kurumsal güven." />
+        <meta property="og:title" content="Onda Yatırım | Aradığınız her şey ONDA" />
+        <meta property="og:description" content="Doğru yatırımcı, doğru mülk. Rasyonel analiz ve kurumsal güvenin adresi." />
+        <meta property="og:image" content="https://ondayatirim.com/logo.png" />
+        <meta property="og:image:secure_url" content="https://ondayatirim.com/logo.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ondayatirim.com" />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        * { box-sizing: border-box; }
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
         .mobile-overlay.active { transform: translateX(0); }
-        .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 40px; background: rgba(13,34,63,0.5); max-width: 900px; margin: 40px auto; }
+        .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 40px; background: rgba(13,34,63,0.5); width: 100%; max-width: 900px; margin: 40px auto; }
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: flex !important; }
-          .hero-t { font-size: 2rem !important; letter-spacing: 4px !important; }
-          .cta-box { padding: 30px 15px !important; margin: 20px !important; }
+          .hero-t { font-size: 1.8rem !important; letter-spacing: 4px !important; line-height: 1.4; }
+          .cta-box { padding: 30px 20px !important; margin: 20px auto !important; width: 90% !important; }
+          .cta-title { font-size: 1.2rem !important; }
         }
       `}} />
 
@@ -62,6 +80,7 @@ export default function Home({ properties }) {
         </div>
       </nav>
 
+      {/* MOBIL MENU OVERLAY */}
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
         <a href="/portfolio" style={{color: '#fff', fontSize: '1.5rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
         <a href="/valuation" style={{color: '#d4af37', fontSize: '1.5rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
@@ -71,13 +90,13 @@ export default function Home({ properties }) {
 
       <main style={{flex: 1, textAlign: 'center', padding: '60px 20px'}}>
         <h1 className="hero-t" style={{fontSize: '3.5rem', color: '#d4af37', fontWeight: '300', letterSpacing: '8px', marginBottom: '20px'}}>ARADIĞINIZ HER ŞEY ONDA</h1>
-        <p style={{maxWidth: '650px', margin: '0 auto 40px auto', color: '#8e8e8e', lineHeight: '1.8'}}>İzmir ve Ankara merkezli lüks gayrimenkul danışmanlığında rasyonel analiz süreci.</p>
+        <p style={{maxWidth: '650px', margin: '0 auto 40px auto', color: '#8e8e8e', lineHeight: '1.8', fontSize: '0.95rem'}}>İzmir ve Ankara merkezli lüks gayrimenkul danışmanlığında rasyonel analiz süreci.</p>
         
-        {/* YÖNLENDİRME BÖLÜMÜ */}
+        {/* ONDA ANALIZI CTA BOX */}
         <div className="cta-box">
-          <h2 style={{color: '#d4af37', fontSize: '1.5rem', fontWeight: '300', marginBottom: '20px', letterSpacing: '2px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
+          <h2 className="cta-title" style={{color: '#d4af37', fontSize: '1.5rem', fontWeight: '300', marginBottom: '20px', letterSpacing: '2px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
           <p style={{color: '#ccc', fontSize: '0.9rem', marginBottom: '30px', lineHeight: '1.6'}}>Mülkünüzün gerçek piyasa değerini psikolojik derinlik ve teknik verilerle raporlayalım.</p>
-          <a href="/valuation" style={{padding: '15px 35px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
+          <a href="/valuation" style={{display: 'inline-block', padding: '15px 35px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem', width: 'auto'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
         </div>
 
         <div style={{marginTop: '40px'}}>
