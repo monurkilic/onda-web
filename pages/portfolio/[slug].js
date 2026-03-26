@@ -22,27 +22,26 @@ export default function PropertyDetail({ property }) {
       </Head>
 
       <div style={{ maxWidth: '1100px', margin: '40px auto', padding: '0 20px' }}>
-        <h1 style={{ color: '#d4af37', fontSize: '2.5rem', marginBottom: '30px', fontWeight: '300' }}>{property.title}</h1>
+        <h1 style={{ color: '#d4af37', fontSize: '2.8rem', marginBottom: '30px', fontWeight: '300', letterSpacing: '2px' }}>{property.title}</h1>
         
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px' }}>
           {property.mainImage && (
             <img 
               src={urlFor(property.mainImage).width(1200).url()} 
-              style={{ width: '100%', borderRadius: '4px', border: '1px solid rgba(212,175,55,0.2)' }} 
+              style={{ width: '100%', borderRadius: '4px', border: '1px solid rgba(212,175,55,0.2)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }} 
               alt={property.title} 
             />
           )}
           
-          <div style={{ background: 'rgba(13,34,63,0.5)', padding: '40px', border: '1px solid rgba(212,175,55,0.1)' }}>
-            <h2 style={{ color: '#d4af37', fontSize: '1.4rem', marginBottom: '20px', borderBottom: '1px solid rgba(212,175,55,0.2)', paddingBottom: '10px' }}>TEKNİK ANALİZ VE DETAYLAR</h2>
-            <div style={{ color: '#fff', lineHeight: '1.8', fontSize: '1.1rem' }}>
-              {/* Sanity'den gelen açıklamayı burada gösteriyoruz */}
+          <div style={{ background: 'rgba(13,34,63,0.5)', padding: '50px 40px', border: '1px solid rgba(212,175,55,0.1)', backdropFilter: 'blur(10px)' }}>
+            <h2 style={{ color: '#d4af37', fontSize: '1.6rem', marginBottom: '20px', borderBottom: '1px solid rgba(212,175,55,0.2)', paddingBottom: '15px', letterSpacing: '1px' }}>ANALİZ VE MÜLK ÖZELLİKLERİ</h2>
+            <div style={{ color: '#fff', lineHeight: '1.9', fontSize: '1.15rem' }}>
               <p style={{ whiteSpace: 'pre-wrap' }}>{property.description || property.excerpt}</p>
             </div>
             
-            <div style={{ marginTop: '40px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-              <a href="https://wa.me/905326466909" target="_blank" style={{ background: '#d4af37', color: '#0a192f', padding: '15px 30px', textDecoration: 'none', fontWeight: 'bold' }}>DETAYLI BİLGİ AL</a>
-              <a href="/portfolio" style={{ color: '#8e8e8e', padding: '15px 0', textDecoration: 'underline' }}>PORTFÖYE DÖN</a>
+            <div style={{ marginTop: '50px', display: 'flex', gap: '25px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <a href="https://wa.me/905326466909" target="_blank" style={{ background: '#d4af37', color: '#0a192f', padding: '18px 40px', textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px' }}>RANDEVU VE DETAYLI BİLGİ</a>
+              <a href="/portfolio" style={{ color: '#8e8e8e', textDecoration: 'underline', fontSize: '0.95rem' }}>PORTFÖYE GERİ DÖN</a>
             </div>
           </div>
         </div>

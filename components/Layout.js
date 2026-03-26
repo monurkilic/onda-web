@@ -29,15 +29,15 @@ export default function Layout({ children }) {
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        /* AGRESİF FONT SIFIRLAMA: TÜM SİTEYİ MOTTO FONTYLA EŞİTLEME */
+        /* AGRESİF FONT PROTOKOLÜ: HER ŞEYİ SERIF YAPAR */
         * { 
           box-sizing: border-box; 
-          font-family: 'Times New Roman', Times, serif !important; 
+          font-family: serif !important; 
           -webkit-font-smoothing: antialiased;
         }
         
         body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
-          font-family: 'Times New Roman', Times, serif !important;
+          font-family: serif !important;
         }
 
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
@@ -79,9 +79,7 @@ export default function Layout({ children }) {
         <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
       </div>
 
-      <main style={{flex: 1}}>
-        {children}
-      </main>
+      <main style={{flex: 1}}>{children}</main>
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>

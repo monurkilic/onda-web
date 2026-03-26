@@ -1,4 +1,4 @@
-import Layout from '../components/Layout';
+import Layout from '../components/Layout'; // Büyük 'L' ile çağırıyoruz
 
 function MyApp({ Component, pageProps }) {
   return (
