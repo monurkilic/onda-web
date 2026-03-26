@@ -29,15 +29,18 @@ export default function Layout({ children }) {
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        /* AGRESİF FONT PROTOKOLÜ: HER ŞEYİ SERIF YAPAR */
-        * { 
-          box-sizing: border-box; 
-          font-family: serif !important; 
+        /* FONT MÜHÜRLEME PROTOKOLÜ */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+        html, body, #__next, * { 
+          font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+          box-sizing: border-box;
           -webkit-font-smoothing: antialiased;
         }
-        
-        body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
-          font-family: serif !important;
+
+        /* Tüm metin elementlerini tek tek zorluyoruz */
+        p, span, div, a, h1, h2, h3, h4, h5, h6, li, button, input, select, textarea {
+          font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
         }
 
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
