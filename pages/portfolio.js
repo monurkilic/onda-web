@@ -2,11 +2,11 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from 'next/head';
 
-const client = createClient({
-  projectId: 'k8cd67dp',
-  dataset: "production",
-  apiVersion: "2023-01-01",
-  useCdn: false,
+const client = createClient({ 
+  projectId: 'k8cd67dp', 
+  dataset: "production", 
+  apiVersion: "2023-01-01", 
+  useCdn: false 
 });
 
 const builder = imageUrlBuilder(client);
@@ -14,73 +14,37 @@ const urlFor = (source) => builder.image(source);
 
 export default function Portfolio({ properties }) {
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif'}}>
+    <>
       <Head>
         <title>Portföy | Onda Yatırım</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Onda Yatırım güncel gayrimenkul portföyü. İzmir ve Ankara'da rasyonel yatırım fırsatları." />
       </Head>
 
-      {/* HEADER / NAV */}
-      <nav style={{position: 'sticky', top: 0, zIndex: 100, background: 'rgba(10, 25, 47, 0.95)', borderBottom: '1px solid rgba(212, 175, 55, 0.1)', padding: '20px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backdropFilter: 'blur(10px)'}}>
-        <a href="/" style={{display: 'flex', alignItems: 'center', gap: '15px', textDecoration: 'none'}}>
-          <img src="/logo.png" alt="Onda Logo" style={{height: '40px'}} onError={(e) => e.target.style.display = 'none'} />
-          <span style={{color: '#d4af37', letterSpacing: '3px', fontWeight: 'bold', fontSize: '1.2rem'}}>ONDA</span>
-        </a>
-        <div style={{display: 'flex', gap: '25px', fontSize: '0.8rem', letterSpacing: '1px'}}>
-          <a href="/" style={{color: '#fff', textDecoration: 'none'}}>GİRİŞ</a>
-          <a href="/about" style={{color: '#fff', textDecoration: 'none'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#fff', textDecoration: 'none'}}>İLETİŞİM</a>
-        </div>
-      </nav>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        .prop-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); overflow: hidden; transition: 0.3s; text-decoration: none; }
+        .prop-card:hover { border-color: #d4af37; transform: translateY(-5px); }
+        @media (max-width: 768px) { .prop-grid { grid-template-columns: 1fr; } }
+      `}} />
 
-      <main style={{maxWidth: '1300px', margin: '0 auto', padding: '60px 20px'}}>
-        <header style={{textAlign: 'center', marginBottom: '60px'}}>
-          <h1 style={{fontSize: '2.5rem', color: '#d4af37', fontWeight: '300', letterSpacing: '5px', textTransform: 'uppercase'}}>SEÇKİN PORTFÖY</h1>
-          <div style={{width: '50px', height: '1px', background: '#d4af37', margin: '20px auto'}}></div>
-          <p style={{color: '#8e8e8e', letterSpacing: '2px'}}>Aradığınız her şey ONDA.</p>
-        </header>
+      <main style={{ flex: 1 }}>
+        <h1 style={{ textAlign: 'center', color: '#d4af37', margin: '60px 0 20px 0', letterSpacing: '4px', fontWeight: '300' }}>GÜNCEL PORTFÖY</h1>
+        <p style={{ textAlign: 'center', color: '#8e8e8e', marginBottom: '40px' }}>Rasyonel analizlerle seçilmiş yatırım fırsatları.</p>
         
-        <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px'}}>
-          {properties && properties.map((item) => (
-            <div key={item._id} style={{background: '#0d223f', border: '1px solid rgba(212, 175, 55, 0.1)', borderRadius: '2px', overflow: 'hidden', display: 'flex', flexDirection: 'column'}}>
-              <a href={`/portfolio/${item.slug.current}`} target="_blank" rel="noreferrer" style={{textDecoration: 'none', color: 'inherit'}}>
-                <div style={{height: '280px', overflow: 'hidden'}}>
-                  {item.mainImage ? (
-                    <img src={urlFor(item.mainImage).width(800).url()} style={{width: '100%', height: '100%', objectFit: 'cover'}} alt={item.title} />
-                  ) : (
-                    <div style={{width: '100%', height: '100%', background: '#162d4a'}} />
-                  )}
-                </div>
-                <div style={{padding: '30px'}}>
-                  <span style={{color: '#d4af37', fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase'}}>{item.location}</span>
-                  <h3 style={{fontSize: '1.4rem', fontWeight: '400', margin: '10px 0', lineHeight: '1.4'}}>{item.title}</h3>
-                  <div style={{fontSize: '1.5rem', color: '#d4af37', fontWeight: '300'}}>
-                    {item.price} <span style={{fontSize: '0.8rem', opacity: 0.8}}>{item.currency}</span>
-                  </div>
-                </div>
-              </a>
-            </div>
+        <div className="prop-grid">
+          {properties && properties.map((prop) => (
+            <a href={`/property/${prop.slug.current}`} key={prop._id} className="prop-card">
+              <img src={urlFor(prop.mainImage).width(600).url()} style={{ width: '100%', height: '220px', objectFit: 'cover' }} alt={prop.title} />
+              <div style={{ padding: '20px' }}>
+                <h3 style={{ color: '#d4af37', marginBottom: '10px', fontSize: '1.1rem' }}>{prop.title}</h3>
+                <p style={{ color: '#ccc', fontSize: '0.85rem' }}>{prop.location}</p>
+                <p style={{ color: '#fff', fontWeight: 'bold', marginTop: '10px' }}>{prop.price} {prop.currency}</p>
+              </div>
+            </a>
           ))}
         </div>
       </main>
-
-      {/* FOOTER */}
-   <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
-        <div style={{marginBottom: '30px'}}>
-          <SocialIcons size={24} />
-        </div>
-        
-        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.8rem', flexWrap: 'wrap', marginBottom: '20px'}}>
-          <a href="/" style={{color: '#fff', textDecoration: 'none', letterSpacing: '1px'}}>GİRİŞ</a>
-          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>PORTFÖY</a>
-          <a href="/valuation" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
-          <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none', letterSpacing: '1px'}}>İLETİŞİM</a>
-        </div>
-        
-        <p style={{fontSize: '0.7rem', opacity: 0.4, letterSpacing: '2px'}}>© 2026 ONDA YATIRIM | Aradığınız her şey ONDA</p>
-      </footer>
-    </div>
+    </>
   );
 }
 
