@@ -7,7 +7,6 @@ const client = createClient({ projectId: 'k8cd67dp', dataset: "production", apiV
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
-// Sosyal Medya İkonları
 const SocialIcons = ({ size = 20 }) => (
   <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
     <a href="https://www.instagram.com/ondayatirim" target="_blank" rel="noreferrer" style={{ color: '#d4af37' }}>
@@ -23,7 +22,7 @@ export default function Home({ properties }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', display: 'flex', flexDirection: 'column'}}>
+    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
       <Head>
         <title>Onda Yatırım | Aradığınız her şey ONDA</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -35,10 +34,12 @@ export default function Home({ properties }) {
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
         .mobile-overlay.active { transform: translateX(0); }
+        .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 40px; background: rgba(13,34,63,0.5); max-width: 900px; margin: 40px auto; }
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: flex !important; }
-          .hero-t { font-size: 2.2rem !important; }
+          .hero-t { font-size: 2rem !important; letter-spacing: 4px !important; }
+          .cta-box { padding: 30px 15px !important; margin: 20px !important; }
         }
       `}} />
 
@@ -48,8 +49,9 @@ export default function Home({ properties }) {
           <img src="/logo.png" style={{height: '35px'}} alt="Logo" />
           <span style={{color: '#d4af37', fontWeight: 'bold', letterSpacing: '2px'}}>ONDA</span>
         </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.8rem'}}>
+        <div className="desktop-nav" style={{display: 'flex', gap: '20px', fontSize: '0.75rem'}}>
           <a href="/portfolio" style={{color: '#fff', textDecoration: 'none'}}>PORTFÖY</a>
+          <a href="/valuation" style={{color: '#fff', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: '#fff', textDecoration: 'none'}}>HAKKIMIZDA</a>
           <a href="/contact" style={{color: '#fff', textDecoration: 'none'}}>İLETİŞİM</a>
         </div>
@@ -60,25 +62,35 @@ export default function Home({ properties }) {
         </div>
       </nav>
 
-      {/* MOBILE OVERLAY */}
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
-        <a href="/" style={{color: '#d4af37', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
-        <a href="/portfolio" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
-        <a href="/about" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
-        <a href="/contact" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
+        <a href="/portfolio" style={{color: '#fff', fontSize: '1.5rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
+        <a href="/valuation" style={{color: '#d4af37', fontSize: '1.5rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
+        <a href="/about" style={{color: '#fff', fontSize: '1.5rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
+        <a href="/contact" style={{color: '#fff', fontSize: '1.5rem', textDecoration: 'none'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
       </div>
 
-      <main style={{flex: 1, textAlign: 'center', padding: '100px 20px'}}>
+      <main style={{flex: 1, textAlign: 'center', padding: '60px 20px'}}>
         <h1 className="hero-t" style={{fontSize: '3.5rem', color: '#d4af37', fontWeight: '300', letterSpacing: '8px', marginBottom: '20px'}}>ARADIĞINIZ HER ŞEY ONDA</h1>
-        <p style={{maxWidth: '600px', margin: '0 auto 40px auto', color: '#8e8e8e', lineHeight: '1.8'}}>İzmir ve Ankara merkezli gayrimenkul yatırımında rasyonel analiz ve kurumsal güven.</p>
-        <a href="/portfolio" style={{padding: '15px 40px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', letterSpacing: '2px'}}>PORTFÖYÜ İNCELE</a>
+        <p style={{maxWidth: '650px', margin: '0 auto 40px auto', color: '#8e8e8e', lineHeight: '1.8'}}>İzmir ve Ankara merkezli lüks gayrimenkul danışmanlığında rasyonel analiz süreci.</p>
+        
+        {/* YÖNLENDİRME BÖLÜMÜ */}
+        <div className="cta-box">
+          <h2 style={{color: '#d4af37', fontSize: '1.5rem', fontWeight: '300', marginBottom: '20px', letterSpacing: '2px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
+          <p style={{color: '#ccc', fontSize: '0.9rem', marginBottom: '30px', lineHeight: '1.6'}}>Mülkünüzün gerçek piyasa değerini psikolojik derinlik ve teknik verilerle raporlayalım.</p>
+          <a href="/valuation" style={{padding: '15px 35px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
+        </div>
+
+        <div style={{marginTop: '40px'}}>
+          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'underline', fontSize: '0.9rem'}}>Veya güncel portföyü inceleyin</a>
+        </div>
       </main>
 
       {/* FOOTER */}
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.8rem', marginBottom: '20px'}}>
+        <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', fontSize: '0.8rem', marginBottom: '20px'}}>
           <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none'}}>PORTFÖY</a>
+          <a href="/valuation" style={{color: '#fff', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none'}}>HAKKIMIZDA</a>
           <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none'}}>İLETİŞİM</a>
         </div>
