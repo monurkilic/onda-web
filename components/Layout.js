@@ -29,14 +29,14 @@ export default function Layout({ children }) {
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        /* TÜM SİTE FONT GÜNCELLEMESİ */
+        /* TÜM SİTEYİ MOTTO FONTYLA EŞİTLEME */
         * { 
           box-sizing: border-box; 
-          font-family: 'Times New Roman', Times, serif !important; 
+          font-family: serif !important; 
         }
         
-        body, input, button, select, textarea {
-          font-family: 'Times New Roman', Times, serif !important;
+        body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, select, textarea {
+          font-family: serif !important;
         }
 
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
@@ -54,12 +54,12 @@ export default function Layout({ children }) {
           <img src="/logo.png" style={{height: '40px'}} alt="Logo" />
           <span style={{color: '#d4af37', fontWeight: 'bold', letterSpacing: '3px', fontSize: '1.2rem'}}>ONDA</span>
         </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.95rem'}}>
-          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>PORTFÖY</a>
-          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>BLOG</a>
-          <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
-          <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1px'}}>İLETİŞİM</a>
+        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '1rem'}}>
+          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1.5px'}}>PORTFÖY</a>
+          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1.5px'}}>BLOG</a>
+          <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1.5px'}}>MÜLK DEĞERLEME</a>
+          <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1.5px'}}>HAKKIMIZDA</a>
+          <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: 'bold', letterSpacing: '1.5px'}}>İLETİŞİM</a>
         </div>
         <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <div style={{transform: isMenuOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none'}}></div>
@@ -69,12 +69,12 @@ export default function Layout({ children }) {
       </nav>
 
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
-        <a href="/" style={{color: getLinkColor('/'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
-        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
-        <a href="/blog" style={{color: getLinkColor('/blog'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>BLOG</a>
-        <a href="/valuation" style={{color: getLinkColor('/valuation'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
-        <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
-        <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
+        <a href="/" style={{color: getLinkColor('/'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
+        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
+        <a href="/blog" style={{color: getLinkColor('/blog'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>BLOG</a>
+        <a href="/valuation" style={{color: getLinkColor('/valuation'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
+        <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
+        <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.8rem', textDecoration: 'none', fontWeight: 'bold'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
       </div>
 
       <main style={{flex: 1}}>
@@ -83,7 +83,7 @@ export default function Layout({ children }) {
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.95rem', flexWrap: 'wrap', marginBottom: '20px'}}>
+        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '1rem', flexWrap: 'wrap', marginBottom: '20px'}}>
           <a href="/" style={{color: getLinkColor('/'), textDecoration: 'none', fontWeight: 'bold'}}>GİRİŞ</a>
           <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: 'bold'}}>PORTFÖY</a>
           <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: 'bold'}}>BLOG</a>
@@ -91,7 +91,7 @@ export default function Layout({ children }) {
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: 'bold'}}>HAKKIMIZDA</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: 'bold'}}>İLETİŞİM</a>
         </div>
-        <p style={{fontSize: '0.75rem', opacity: 0.4, letterSpacing: '1px'}}>© 2026 ONDA YATIRIM</p>
+        <p style={{fontSize: '0.8rem', opacity: 0.4, letterSpacing: '1px'}}>© 2026 ONDA YATIRIM</p>
       </footer>
     </div>
   );
