@@ -15,21 +15,22 @@ export default function Valuation() {
     <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', fontFamily: 'serif', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
       <Head>
         <title>Mülk Değerleme | Onda Yatırım</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        * { box-sizing: border-box; }
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
         .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
         .mobile-overlay.active { transform: translateX(0); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .input-box { padding: 14px; background: #0d223f; border: 1px solid rgba(212,175,55,0.3); color: #fff; width: 100%; margin-bottom: 20px; font-size: 1rem; }
+        .form-input { width: 100%; padding: 14px; background: #0d223f; border: 1px solid rgba(212,175,55,0.3); color: #fff; margin-bottom: 20px; font-size: 1rem; }
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: flex !important; }
           .form-row { grid-template-columns: 1fr !important; gap: 0; }
-          .v-title { font-size: 1.6rem !important; }
+          .title-v { font-size: 1.6rem !important; }
         }
       `}} />
 
@@ -55,38 +56,31 @@ export default function Valuation() {
         <a href="/" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>GİRİŞ</a>
         <a href="/portfolio" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>PORTFÖY</a>
         <a href="/valuation" style={{color: '#d4af37', fontSize: '1.8rem', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
-        <a href="/about" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>HAKKIMIZDA</a>
         <a href="/contact" style={{color: '#fff', fontSize: '1.8rem', textDecoration: 'none'}}>İLETİŞİM</a>
       </div>
 
       <main style={{flex: 1, padding: '40px 20px', maxWidth: '800px', margin: '0 auto', width: '100%'}}>
-        <h2 className="v-title" style={{color: '#d4af37', textAlign: 'center', marginBottom: '20px', letterSpacing: '3px', fontWeight: '300'}}>ONDA ANALİZİ TALEBİ</h2>
-        <p style={{textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', lineHeight: '1.8'}}>Mülkünüzün gerçek değerini rasyonel verilerle raporlayalım.</p>
+        <h2 className="title-v" style={{color: '#d4af37', textAlign: 'center', marginBottom: '20px', letterSpacing: '3px', fontWeight: '300'}}>ONDA ANALİZİ TALEBİ</h2>
+        <p style={{textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', lineHeight: '1.8'}}>Mülkünüzün gerçek değerini raporlayalım.</p>
 
         <form action="https://formspree.io/f/xvzvooyy" method="POST">
           <div className="form-row">
-            <input type="text" name="ad_soyad" placeholder="Adınız Soyadınız" required className="input-box" />
-            <input type="tel" name="telefon" placeholder="Telefon Numaranız" required className="input-box" />
+            <input type="text" name="name" placeholder="Ad Soyad" required className="form-input" />
+            <input type="tel" name="phone" placeholder="Telefon" required className="form-input" />
           </div>
-          <input type="text" name="konum" placeholder="Mülkün Konumu" required className="input-box" />
+          <input type="text" name="location" placeholder="Mülk Konumu" required className="form-input" />
           <div className="form-row">
-            <select name="mulk_tipi" required className="input-box" style={{appearance: 'none'}}><option value="">Mülk Tipi</option><option value="Daire">Daire</option><option value="Villa">Villa</option></select>
-            <input type="number" name="metrekare" placeholder="Metrekare" required className="input-box" />
+            <select name="type" required className="form-input" style={{appearance: 'none'}}><option value="">Mülk Tipi</option><option value="Daire">Daire</option><option value="Villa">Villa</option></select>
+            <input type="number" name="area" placeholder="Metrekare" required className="form-input" />
           </div>
-          <textarea name="ek_notlar" placeholder="Ek detaylar..." rows="5" className="input-box"></textarea>
+          <textarea name="notes" placeholder="Detaylar..." rows="5" className="form-input"></textarea>
           <button type="submit" style={{padding: '18px', background: '#d4af37', color: '#0a192f', fontWeight: 'bold', border: 'none', cursor: 'pointer', width: '100%'}}>ANALİZ TALEBİNİ GÖNDER</button>
         </form>
       </main>
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.8rem', flexWrap: 'wrap'}}>
-          <a href="/portfolio" style={{color: '#8e8e8e', textDecoration: 'none'}}>PORTFÖY</a>
-          <a href="/valuation" style={{color: '#fff', textDecoration: 'none'}}>MÜLK DEĞERLEME</a>
-          <a href="/about" style={{color: '#8e8e8e', textDecoration: 'none'}}>HAKKIMIZDA</a>
-          <a href="/contact" style={{color: '#8e8e8e', textDecoration: 'none'}}>İLETİŞİM</a>
-        </div>
-        <p style={{fontSize: '0.7rem', opacity: 0.4, marginTop: '20px'}}>© 2026 ONDA YATIRIM</p>
+        <p style={{fontSize: '0.7rem', opacity: 0.4}}>© 2026 ONDA YATIRIM</p>
       </footer>
     </div>
   );
