@@ -7,54 +7,49 @@ const client = createClient({
   useCdn: false
 });
 
-const EXTERNAL_DATA_URL = 'https://ondayatirim.com/portfolio';
+const BASE_URL = 'https://ondayatirim.com';
 
-function generateSiteMap(properties) {
+function generateSiteMap(properties, posts) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-     <url>
-       <loc>https://ondayatirim.com</loc>
-     </url>
-     <url>
-       <loc>https://ondayatirim.com/about</loc>
-     </url>
-     <url>
-       <loc>https://ondayatirim.com/contact</loc>
-     </url>
-     <url>
-       <loc>https://ondayatirim.com/portfolio</loc>
-     </url>
-     ${properties
-       .map(({ slug }) => {
-         return `
+     {/* Statik Sayfalar */}
+     <url><loc>${BASE_URL}</loc></url>
+     <url><loc>${BASE_URL}/about</loc></url>
+     <url><loc>${BASE_URL}/contact</loc></url>
+     <url><loc>${BASE_URL}/portfolio</loc></url>
+     <url><loc>${BASE_URL}/blog</loc></url>
+
+     {/* Dinamik İlanlar (Portfolio) */}
+     ${properties.map(({ slug }) => `
        <url>
-           <loc>${`${EXTERNAL_DATA_URL}/${slug.current}`}</loc>
+         <loc>${BASE_URL}/portfolio/${slug.current}</loc>
        </url>
-     `;
-       })
-       .join('')}
+     `).join('')}
+
+     {/* Dinamik Blog Yazıları (Onda Analizleri) */}
+     ${posts.map(({ slug }) => `
+       <url>
+         <loc>${BASE_URL}/blog/${slug.current}</loc>
+       </url>
+     `).join('')}
    </urlset>
  `;
 }
 
-function SiteMap() {
-  // getServerSideProps her şeyi halledecek
-}
-
 export async function getServerSideProps({ res }) {
-  // Sanity'den tüm ilanların slug'larını çekiyoruz
-  const properties = await client.fetch(`*[_type == "property" && defined(slug.current)]{slug}`);
+  // Hem mülkleri hem de blog yazılarını aynı anda çekiyoruz
+  const [properties, posts] = await Promise.all([
+    client.fetch(`*[_type == "property" && defined(slug.current)]{slug}`),
+    client.fetch(`*[_type == "post" && defined(slug.current)]{slug}`)
+  ]);
 
-  // XML haritasını oluşturuyoruz
-  const sitemap = generateSiteMap(properties);
+  const sitemap = generateSiteMap(properties, posts);
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);
   res.end();
 
-  return {
-    props: {},
-  };
+  return { props: {} };
 }
 
-export default SiteMap;
+export default function SiteMap() {}
