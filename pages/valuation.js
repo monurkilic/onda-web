@@ -6,15 +6,34 @@ export default function Valuation() {
     name: '',
     phone: '',
     propertyType: 'Daire',
+    purpose: 'Satış',
     location: '',
     size: '',
     roomCount: '',
-    age: ''
+    age: '',
+    floor: '',
+    heating: 'Doğalgaz',
+    features: '',
+    notes: ''
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const message = `Merhaba, mülküm için analiz istiyorum:%0A%0AAd Soyad: ${formData.name}%0ATel: ${formData.phone}%0AMülk Tipi: ${formData.propertyType}%0AKonum: ${formData.location}%0Am2: ${formData.size}%0AOda: ${formData.roomCount}%0AYaş: ${formData.age}`;
+    const message = `*ONDA ANALİZ TALEBİ*%0A
+*Müşteri:* ${formData.name}%0A
+*Tel:* ${formData.phone}%0A
+*Analiz Amacı:* ${formData.purpose}%0A%0A
+*MÜLK BİLGİLERİ*%0A
+*Tip:* ${formData.propertyType}%0A
+*Konum:* ${formData.location}%0A
+*m2 (Brüt):* ${formData.size}%0A
+*Oda:* ${formData.roomCount}%0A
+*Bina Yaşı:* ${formData.age}%0A
+*Bulunduğu Kat:* ${formData.floor}%0A
+*Isınma:* ${formData.heating}%0A
+*Ek Özellikler:* ${formData.features}%0A
+*Notlar:* ${formData.notes}`;
+
     window.open(`https://wa.me/905326466909?text=${message}`, '_blank');
   };
 
@@ -25,79 +44,209 @@ export default function Valuation() {
   return (
     <>
       <Head>
-        <title>Onda Analizi | Mülk Değerleme</title>
-        <meta name="description" content="Mülkünüzün gerçek değerini rasyonel verilerle keşfedin." />
+        <title>Mülk Değerleme ONDA | Rasyonel Analiz</title>
+        <meta name="description" content="Mülkünüzün gerçek piyasa değerini rasyonel veriler ve teknik analizlerle keşfedin." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .val-container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
-        .val-card { background: rgba(13,34,63,0.5); border: 1px solid rgba(212,175,55,0.2); padding: 40px; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; color: #d4af37; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 8px; }
-        .form-group input, .form-group select { 
-          width: 100%; padding: 12px; background: #0a192f; border: 1px solid rgba(212,175,55,0.1); 
-          color: #fff; font-family: serif; outline: none;
+        .val-page { 
+          max-width: 900px; 
+          margin: 100px auto; 
+          padding: 0 20px; 
+          font-family: 'Inter', sans-serif;
+          color: #ffffff;
+          -webkit-font-smoothing: antialiased;
         }
-        .form-group input:focus { border-color: #d4af37; }
+
+        .onda-title {
+          color: #d4af37 !important;
+          font-size: 3rem;
+          font-weight: 800;
+          letter-spacing: 6px;
+          text-align: center;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+        }
+
+        .val-subtitle {
+          text-align: center;
+          color: #ffffff;
+          font-size: 1.1rem;
+          font-weight: 500;
+          margin-bottom: 50px;
+          letter-spacing: 1px;
+          opacity: 0.9;
+        }
+
+        .val-card { 
+          background: rgba(13, 34, 63, 0.8); 
+          border: 2px solid #d4af37; 
+          padding: 50px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .section-label {
+          color: #d4af37;
+          font-size: 0.75rem;
+          font-weight: 800;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          margin: 30px 0 20px 0;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .section-label::after { content: ""; flex: 1; height: 1px; background: rgba(212,175,55,0.2); }
+
+        .form-group { margin-bottom: 25px; text-align: left; }
+        .form-group label { 
+          display: block; 
+          color: #ffffff; 
+          font-size: 0.85rem; 
+          font-weight: 700;
+          letter-spacing: 1px; 
+          margin-bottom: 10px; 
+        }
+
+        .form-group input, .form-group select, .form-group textarea { 
+          width: 100%; 
+          padding: 15px; 
+          background: #0a192f; 
+          border: 1px solid rgba(212,175,55,0.3); 
+          color: #ffffff; 
+          font-size: 1rem;
+          font-weight: 500;
+          outline: none;
+          transition: 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus { 
+          border-color: #d4af37;
+          background: #0d223f;
+        }
+
+        .grid-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
         .submit-btn { 
-          width: 100%; padding: 18px; background: #d4af37; color: #0a192f; border: none; 
-          font-weight: bold; cursor: pointer; letter-spacing: 2px; transition: 0.3s; margin-top: 20px;
+          width: 100%; 
+          padding: 22px; 
+          background: #d4af37; 
+          color: #0a192f; 
+          border: none; 
+          font-size: 1.1rem;
+          font-weight: 900; 
+          cursor: pointer; 
+          letter-spacing: 3px; 
+          transition: 0.4s; 
+          margin-top: 30px;
+          text-transform: uppercase;
         }
-        .submit-btn:hover { background: #fff; }
-        @media (max-width: 768px) { .val-card { padding: 25px 20px; } }
+
+        .submit-btn:hover { 
+          background: #ffffff; 
+          transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) { 
+          .onda-title { font-size: 2rem; }
+          .val-card { padding: 30px 20px; }
+          .grid-row { grid-template-columns: 1fr; gap: 0; }
+        }
       `}} />
 
-      <main className="val-container">
-        <h1 style={{ textAlign: 'center', color: '#d4af37', fontSize: '2.5rem', fontWeight: '300', letterSpacing: '4px', marginBottom: '20px' }}>ONDA ANALİZİ</h1>
-        <p style={{ textAlign: 'center', color: '#ccc', marginBottom: '40px', lineHeight: '1.6' }}>
-          Mülkünüzün rasyonel değerini belirlemek için aşağıdaki bilgileri eksiksiz doldurun.
-        </p>
+      <main className="val-page">
+        <h1 className="onda-title">MÜLK DEĞERLEME ONDA</h1>
+        <p className="val-subtitle">Rasyonel Analiz Raporu İçin Ön Bilgi Formu</p>
 
         <div className="val-card">
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>AD SOYAD</label>
-              <input type="text" name="name" required onChange={handleChange} />
-            </div>
             
-            <div className="form-group">
-              <label>TELEFON NUMARASI</label>
-              <input type="tel" name="phone" required onChange={handleChange} />
+            <div className="section-label">İletişim Bilgileri</div>
+            <div className="grid-row">
+              <div className="form-group">
+                <label>AD SOYAD</label>
+                <input type="text" name="name" required placeholder="Onur Kılıç" onChange={handleChange} />
+              </div>
+              <div className="form-group">
+                <label>TELEFON</label>
+                <input type="tel" name="phone" required placeholder="0532..." onChange={handleChange} />
+              </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="section-label">Mülk Temel Bilgileri</div>
+            <div className="grid-row">
               <div className="form-group">
                 <label>MÜLK TİPİ</label>
                 <select name="propertyType" onChange={handleChange}>
                   <option>Daire</option>
                   <option>Villa / Müstakil</option>
                   <option>Arsa / Arazi</option>
-                  <option>Ticari</option>
+                  <option>Ticari / Ofis</option>
+                  <option>Fabrika / Sanayi</option>
                 </select>
               </div>
               <div className="form-group">
-                <label>BRÜT METREKARE</label>
-                <input type="number" name="size" required onChange={handleChange} />
+                <label>ANALİZ AMACI</label>
+                <select name="purpose" onChange={handleChange}>
+                  <option>Satış Amaçlı</option>
+                  <option>Kiralama Amaçlı</option>
+                  <option>Yatırım Değerlemesi</option>
+                  <option>Sadece Bilgi Edinme</option>
+                </select>
               </div>
             </div>
 
             <div className="form-group">
-              <label>KONUM (İLÇE / MAHALLE / SİTE)</label>
-              <input type="text" name="location" required onChange={handleChange} />
+              <label>KONUM (İLÇE / MAHALLE / SİTE ADI)</label>
+              <input type="text" name="location" required placeholder="Örn: İzmir, Güzelbahçe, Çelebi Mah." onChange={handleChange} />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="grid-row">
+              <div className="form-group">
+                <label>BRÜT METREKARE</label>
+                <input type="number" name="size" required placeholder="250" onChange={handleChange} />
+              </div>
               <div className="form-group">
                 <label>ODA SAYISI</label>
-                <input type="text" name="roomCount" placeholder="Örn: 3+1" onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>BİNA YAŞI</label>
-                <input type="number" name="age" onChange={handleChange} />
+                <input type="text" name="roomCount" placeholder="Örn: 4+1" onChange={handleChange} />
               </div>
             </div>
 
-            <button type="submit" className="submit-btn">ANALİZ RAPORU OLUŞTUR</button>
+            <div className="section-label">Teknik Detaylar</div>
+            <div className="grid-row">
+              <div className="form-group">
+                <label>BİNA YAŞI</label>
+                <input type="number" name="age" placeholder="0" onChange={handleChange} />
+              </div>
+              <div className="form-group">
+                <label>BULUNDUĞU KAT / TOPLAM KAT</label>
+                <input type="text" name="floor" placeholder="Örn: 3. Kat / 5" onChange={handleChange} />
+              </div>
+            </div>
+
+            <div className="grid-row">
+              <div className="form-group">
+                <label>ISINMA TİPİ</label>
+                <select name="heating" onChange={handleChange}>
+                  <option>Doğalgaz (Kombi)</option>
+                  <option>Merkezi Pay Ölçer</option>
+                  <option>Yerden Isıtma</option>
+                  <option>Isı Pompası</option>
+                  <option>Klima / Yok</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>ÖNE ÇIKAN ÖZELLİKLER</label>
+                <input type="text" name="features" placeholder="Havuz, Akıllı Ev, Deniz Manzarası vb." onChange={handleChange} />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>EKLEMEK İSTEDİĞİNİZ NOTLAR</label>
+              <textarea name="notes" rows="3" placeholder="Mülkünüzle ilgili rasyonel analize dahil edilmesini istediğiniz ek bilgiler..." onChange={handleChange}></textarea>
+            </div>
+
+            <button type="submit" className="submit-btn">ANALİZ RAPORU TALEBİNİ GÖNDER</button>
           </form>
         </div>
       </main>
