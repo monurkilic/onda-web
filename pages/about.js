@@ -9,92 +9,191 @@ export default function About() {
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .about-page { max-width: 1000px; margin: 100px auto; padding: 0 20px; line-height: 1.8; color: #fff; font-family: 'Inter', sans-serif; }
-        .about-header { text-align: center; margin-bottom: 80px; }
-        .about-title { color: #d4af37; font-size: 3rem; font-weight: 200; letter-spacing: 8px; margin-bottom: 20px; }
-        .about-subtitle { color: #8e8e8e; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; }
-        
-        .content-block { margin-bottom: 60px; position: relative; }
-        .quote-box { 
-          background: rgba(212, 175, 55, 0.05); 
-          border-left: 3px solid #d4af37; 
-          padding: 40px; 
-          margin: 60px 0; 
-          font-style: italic; 
-          font-size: 1.2rem;
-          color: #e0e0e0;
+        /* Ana Konteyner ve Font Ayarı */
+        .about-page { 
+          max-width: 1100px; 
+          margin: 120px auto; 
+          padding: 0 20px; 
+          color: #ffffff; /* Tam parlak beyaz */
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          -webkit-font-smoothing: antialiased;
         }
 
-        .story-text { color: #ccc; font-size: 1.05rem; margin-bottom: 30px; text-align: justify; }
-        .highlight { color: #d4af37; font-weight: bold; }
+        .about-header { text-align: center; margin-bottom: 100px; }
+        
+        /* Başlıklar: Daha kalın ve parlak */
+        .about-title { 
+          color: #d4af37; 
+          font-size: 3.5rem; 
+          font-weight: 800; /* Çok kalın */
+          letter-spacing: 6px; 
+          margin-bottom: 15px;
+          text-transform: uppercase;
+        }
+        
+        .about-subtitle { 
+          color: #ffffff; 
+          font-size: 1rem; 
+          letter-spacing: 5px; 
+          font-weight: 400;
+          opacity: 0.9;
+        }
 
-        .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 80px; }
-        .vision-item { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 40px; transition: 0.3s; }
-        .vision-item:hover { border-color: #d4af37; transform: translateY(-5px); }
-        .vision-item h3 { color: #d4af37; font-size: 1rem; letter-spacing: 2px; margin-bottom: 20px; text-transform: uppercase; }
-        .vision-item p { color: #aaa; font-size: 0.9rem; margin: 0; line-height: 1.6; }
+        /* Hikaye Metni: Griyi bırakıp parlak beyaza geçtik */
+        .story-text { 
+          font-size: 1.25rem; /* Yazıyı büyüttük */
+          line-height: 1.8; 
+          margin-bottom: 35px; 
+          font-weight: 500; /* Orta kalınlıkta, daha okunaklı */
+          text-align: left;
+          color: #f8f8f8; /* Göz yormayan ama çok parlak bir beyaz */
+        }
 
-        .signature { margin-top: 60px; text-align: right; }
-        .signature-name { color: #d4af37; font-size: 1.2rem; letter-spacing: 2px; display: block; }
-        .signature-title { color: #666; font-size: 0.8rem; text-transform: uppercase; }
+        .highlight { 
+          color: #d4af37; 
+          font-weight: 800; 
+        }
+
+        /* Felsefe Kutusu: Sayfanın en çarpıcı yeri */
+        .philosophy-card {
+          background: #d4af37;
+          color: #0a192f;
+          padding: 60px;
+          margin: 80px 0;
+          border-radius: 4px;
+          position: relative;
+        }
+        .philosophy-card p {
+          font-size: 1.8rem;
+          font-weight: 700;
+          line-height: 1.4;
+          margin: 0;
+        }
+        .philosophy-card::after {
+          content: '"';
+          position: absolute;
+          top: 10px;
+          left: 20px;
+          font-size: 8rem;
+          opacity: 0.2;
+          font-family: serif;
+        }
+
+        /* Vizyon Kartları */
+        .vision-grid { 
+          display: grid; 
+          grid-template-cols: 1fr 1fr; 
+          gap: 40px; 
+          margin-top: 100px; 
+        }
+        .vision-item { 
+          background: rgba(13, 34, 63, 0.8); 
+          border: 2px solid #d4af37; /* Çerçeveler daha belirgin */
+          padding: 45px; 
+          transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .vision-item:hover { 
+          background: #d4af37; 
+        }
+        .vision-item:hover h3, .vision-item:hover p { 
+          color: #0a192f; 
+        }
+
+        .vision-item h3 { 
+          color: #d4af37; 
+          font-size: 1.3rem; 
+          font-weight: 800; 
+          margin-bottom: 20px; 
+          letter-spacing: 2px;
+        }
+        .vision-item p { 
+          color: #ffffff; 
+          font-size: 1.05rem; 
+          font-weight: 600; 
+          line-height: 1.6;
+        }
+
+        /* İmza Alanı */
+        .footer-sig { 
+          margin-top: 100px; 
+          text-align: right; 
+          border-top: 1px solid rgba(212,175,55,0.3);
+          padding-top: 40px;
+        }
+        .sig-name { color: #d4af37; font-size: 1.8rem; font-weight: 800; display: block; }
+        .sig-title { color: #ffffff; font-size: 0.9rem; letter-spacing: 3px; font-weight: 600; margin-top: 5px; display: block; }
 
         @media (max-width: 768px) {
-          .about-title { font-size: 2rem; }
+          .about-title { font-size: 2.2rem; }
+          .philosophy-card { padding: 30px; }
+          .philosophy-card p { font-size: 1.3rem; }
           .vision-grid { grid-template-cols: 1fr; }
-          .quote-box { padding: 25px; font-size: 1rem; }
+          .story-text { font-size: 1.1rem; }
         }
       `}} />
 
       <main className="about-page">
         <header className="about-header">
-          <p className="about-subtitle">Vizyon & Hikaye</p>
           <h1 className="about-title">BİZ KİMİZ?</h1>
+          <p className="about-subtitle">Rasyonel Analiz • Kurumsal Güven</p>
         </header>
 
-        <section className="content-block">
+        <section>
           <p className="story-text">
-            Onda Yatırım’ın temelleri, çok basit ama sarsılmaz bir prensip üzerine atıldı: <span className="highlight">Güven.</span> 
+            Onda Yatırım’ın temelleri, çok basit ama sarsılmaz bir prensip üzerine atıldı: <span className="highlight">KOŞULSUZ GÜVEN.</span> 
           </p>
           
-          <div className="quote-box">
-            "Kendi yakın çevreme, aileme ve dostlarıma en güvenilir, en karlı yatırımları sunmak amacıyla çıktığım bu yolda; bugün tüm danışanlarıma aynı özenle, 'kendi çevrem' muamelesi yapıyorum."
+          <div className="philosophy-card">
+            <p>
+              "Kendi yakın çevreme, aileme ve dostlarıma en karlı yatırımları sunmak amacıyla çıktığım bu yolda; bugün tüm danışanlarıma 'yakın çevrem' muamelesi yapıyorum."
+            </p>
           </div>
 
           <p className="story-text">
-            Gayrimenkul sektörü, maalesef zaman içerisinde güven erozyonuna uğramış bir alan haline geldi. Benim en büyük motivasyonum; piyasadaki "emlak danışmanı" algısını yeniden inşa etmek, korumak ve danışanlarımıza hak ettikleri rasyonel zemini sağlamaktır. 
+            Gayrimenkul sektörü, güvenin en temel ihtiyaç olduğu ancak en çok sarsıldığı alanlardan biri. Bizim en büyük motivasyonumuz; piyasadaki <span className="highlight">"emlak danışmanı"</span> algısını yeniden inşa etmek ve korumaktır. 
           </p>
 
           <p className="story-text">
-            Hem yerel piyasanın nabzını tutan derin tecrübemi hem de ulusal ölçekte edindiğim kurumsal birikimimi, sizin için en doğru karara dönüştürüyorum. Temel amacımız sadece bir mülk alım-satımı değil; <span className="highlight">malınızı en yüksek değerle satmanızı sağlamak</span> ve <span className="highlight">piyasadaki en iyi mülke en rasyonel şartlarla ulaşmanızı</span> garanti altına almaktır.
+            Yerel piyasanın nabzını tutan derin tecrübemiz ile ulusal ölçekteki profesyonel birikimimizi birleştiriyoruz. Temel amacımız sadece bir işlem gerçekleştirmek değil; <span className="highlight">mülkünüzü en yüksek değerle satmanızı sağlamak</span> ve <span className="highlight">piyasadaki en iyi fırsata en rasyonel şartlarla ulaşmanızı</span> garanti altına almaktır.
           </p>
         </section>
 
         <div className="vision-grid">
           <div className="vision-item">
             <h3>TECRÜBE KARMASI</h3>
-            <p>Yerel piyasanın dinamiklerini, ulusal standartlardaki profesyonel tecrübemizle birleştirerek hata payını sıfıra indiriyoruz.</p>
+            <p>Yerel dinamikleri ulusal standartlarla harmanlayarak hata payını rasyonel zeminde sıfıra indiriyoruz.</p>
           </div>
           <div className="vision-item">
             <h3>SADAKAT ODAKLI</h3>
-            <p>Bizim için her yatırımcı bir aile ferdi gibidir. Kısa vadeli kazançlar yerine, ömür boyu sürecek bir güven ilişkisini tercih ediyoruz.</p>
+            <p>Bizim için her yatırımcı bir aile ferdi gibidir. Ömür boyu sürecek bir güven ilişkisini her şeyin üzerinde tutuyoruz.</p>
           </div>
           <div className="vision-item">
             <h3>RASYONEL ANALİZ</h3>
-            <p>Duygularla değil, verilerle hareket ediyoruz. Mülkünüzün değerini pazarın gerçek aynasında, teknik verilerle raporluyoruz.</p>
+            <p>Duygularla değil, verilerle hareket ediyoruz. Mülkünüzün gerçek değerini teknik raporlarla kanıtlıyoruz.</p>
           </div>
           <div className="vision-item">
-            <h3>KÜRESEL ERİŞİM</h3>
-            <p>İzmir ve Ankara merkezli gücümüzü; Kıbrıs, Dubai ve Yunanistan gibi stratejik noktalardaki ağımızla birleştiriyoruz.</p>
+            <h3>KÜRESEL VİZYON</h3>
+            <p>İzmir ve Ankara merkezli gücümüzü; Kıbrıs, Dubai ve Yunanistan ağımızla global bir fırsata dönüştürüyoruz.</p>
           </div>
         </div>
 
-        <div className="signature">
-          <span className="signature-name">M. Onur Kılıç</span>
-          <span className="signature-title">Kurucu, Onda Yatırım</span>
-        </div>
+        <footer className="footer-sig">
+          <span className="sig-name">M. Onur Kılıç</span>
+          <span className="sig-title">Kurucu, Onda Yatırım</span>
+        </footer>
 
-        <div style={{ marginTop: '100px', textAlign: 'center' }}>
-          <a href="/contact" style={{ display: 'inline-block', padding: '18px 50px', border: '1px solid #d4af37', color: '#d4af37', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '3px', transition: '0.3s' }}>
+        <div style={{ marginTop: '80px', textAlign: 'center' }}>
+          <a href="/contact" style={{ 
+            display: 'inline-block', 
+            padding: '22px 60px', 
+            background: '#d4af37', 
+            color: '#0a192f', 
+            textDecoration: 'none', 
+            fontSize: '1rem', 
+            fontWeight: '900', 
+            letterSpacing: '3px',
+            borderRadius: '4px'
+          }}>
             BİZE ULAŞIN
           </a>
         </div>
