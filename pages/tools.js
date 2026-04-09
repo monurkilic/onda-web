@@ -3,64 +3,173 @@ import Head from 'next/head';
 
 export default function Tools() {
   // ROI Hesaplama State'leri
-  const [price, setPrice] = useState(5000000);
-  const [rent, setRent] = useState(25000);
+  const [price, setPrice] = useState(10000000);
+  const [rent, setRent] = useState(45000);
   const [roi, setRoi] = useState(0);
   const [amortization, setAmortization] = useState(0);
 
   // Kredi Hesaplama State'leri
-  const [loanAmount, setLoanAmount] = useState(1000000);
-  const [interest, setInterest] = useState(3.5);
+  const [loanAmount, setLoanAmount] = useState(2000000);
+  const [annualInterest, setAnnualInterest] = useState(42); // Örn: %42 Yıllık
   const [term, setTerm] = useState(120);
   const [monthlyPayment, setMonthlyPayment] = useState(0);
 
-  // ROI Hesapla
+  // ROI (Geri Dönüş) Hesapla
   useEffect(() => {
     const annualRent = rent * 12;
-    const calculatedRoi = (annualRent / price) * 100;
-    const calculatedAmortization = price / annualRent;
-    setRoi(calculatedRoi.toFixed(2));
-    setAmortization(calculatedAmortization.toFixed(1));
+    if (price > 0 && annualRent > 0) {
+      const calculatedRoi = (annualRent / price) * 100;
+      const calculatedAmortization = price / annualRent;
+      setRoi(calculatedRoi.toFixed(2));
+      setAmortization(calculatedAmortization.toFixed(1));
+    }
   }, [price, rent]);
 
-  // Kredi Hesapla
+  // Kredi Hesapla (Rasyonel Finans Formülü)
   useEffect(() => {
-    const monthlyInterest = interest / 100 / 12;
-    const payment = (loanAmount * monthlyInterest * Math.pow(1 + monthlyInterest, term)) / (Math.pow(1 + monthlyInterest, term) - 1);
-    setMonthlyPayment(payment.toFixed(0));
-  }, [loanAmount, interest, term]);
+    // Yıllık faizi aylık ondalık orana çeviriyoruz
+    const r = (annualInterest / 100) / 12; 
+    const n = term;
+    const P = loanAmount;
+
+    if (r > 0) {
+      // Standart Taksit Formülü: P * [r(1+r)^n] / [(1+r)^n - 1]
+      const payment = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      setMonthlyPayment(Math.round(payment));
+    } else if (n > 0) {
+      setMonthlyPayment(Math.round(P / n));
+    }
+  }, [loanAmount, annualInterest, term]);
 
   return (
     <>
       <Head>
         <title>Yatırım Analiz Araçları | Onda Yatırım</title>
-        <meta name="description" content="Gayrimenkul yatırımınızın geri dönüş süresini ve kredi maliyetlerini rasyonel verilerle hesaplayın." />
+        <meta name="description" content="Mülkünüzün amortisman süresini ve kredi maliyetlerini rasyonel verilerle hesaplayın." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .tools-page { max-width: 1100px; margin: 120px auto; padding: 0 20px; font-family: 'Inter', sans-serif; color: #fff; }
-        .onda-title { color: #d4af37; font-size: 2.8rem; font-weight: 800; letter-spacing: 6px; text-transform: uppercase; text-align: center; margin-bottom: 60px; }
+        .tools-page { 
+          max-width: 1100px; 
+          margin: 120px auto; 
+          padding: 0 20px; 
+          font-family: 'Inter', sans-serif; 
+          color: #fff; 
+          -webkit-font-smoothing: antialiased;
+        }
+
+        .onda-title { 
+          color: #d4af37; 
+          font-size: 3rem; 
+          font-weight: 800; 
+          letter-spacing: 6px; 
+          text-transform: uppercase; 
+          text-align: center; 
+          margin-bottom: 60px; 
+        }
         
         .tools-grid { display: grid; grid-template-cols: 1fr 1fr; gap: 40px; }
-        .tool-card { background: rgba(13, 34, 63, 0.8); border: 2px solid #d4af37; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .tool-header { color: #d4af37; font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; margin-bottom: 30px; border-bottom: 1px solid rgba(212,175,55,0.2); padding-bottom: 15px; text-transform: uppercase; }
         
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; font-size: 0.75rem; font-weight: 700; color: #8e8e8e; letter-spacing: 1px; margin-bottom: 8px; }
-        .input-group input { width: 100%; padding: 12px; background: #0a192f; border: 1px solid rgba(212,175,55,0.3); color: #fff; font-size: 1rem; outline: none; }
-        .input-group input:focus { border-color: #d4af37; }
+        .tool-card { 
+          background: rgba(13, 34, 63, 0.8); 
+          border: 2px solid #d4af37; 
+          padding: 45px; 
+          box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+          display: flex;
+          flex-direction: column;
+        }
 
-        .result-box { background: #d4af37; color: #0a192f; padding: 25px; margin-top: 30px; border-radius: 4px; }
-        .result-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(10,25,47,0.1); padding-bottom: 10px; }
+        .tool-header { 
+          color: #d4af37; 
+          font-size: 1.3rem; 
+          font-weight: 800; 
+          letter-spacing: 2px; 
+          margin-bottom: 35px; 
+          border-bottom: 1px solid rgba(212,175,55,0.2); 
+          padding-bottom: 15px; 
+          text-transform: uppercase; 
+        }
+        
+        .input-group { margin-bottom: 25px; }
+        .input-group label { 
+          display: block; 
+          font-size: 0.75rem; 
+          font-weight: 800; 
+          color: #ffffff; 
+          letter-spacing: 2px; 
+          margin-bottom: 10px; 
+          text-transform: uppercase;
+        }
+        .input-group input { 
+          width: 100%; 
+          padding: 15px; 
+          background: #0a192f; 
+          border: 1px solid rgba(212,175,55,0.3); 
+          color: #fff; 
+          font-size: 1.1rem; 
+          font-weight: 600;
+          outline: none; 
+          transition: 0.3s;
+        }
+        .input-group input:focus { border-color: #d4af37; background: #0d223f; }
+
+        /* Sonuç Paneli */
+        .result-panel { 
+          background: #d4af37; 
+          color: #0a192f; 
+          padding: 30px; 
+          margin-top: auto; 
+          border-radius: 2px; 
+        }
+        .result-item { 
+          display: flex; 
+          justify-content: space-between; 
+          align-items: center; 
+          margin-bottom: 15px; 
+          border-bottom: 1px solid rgba(10,25,47,0.1); 
+          padding-bottom: 10px; 
+        }
         .result-item:last-child { border: none; margin: 0; padding: 0; }
-        .result-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
-        .result-value { font-size: 1.4rem; font-weight: 900; }
+        .result-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .result-value { font-size: 1.6rem; font-weight: 900; }
 
-        .disclaimer { font-size: 0.7rem; color: #666; margin-top: 40px; text-align: center; line-height: 1.5; }
+        .info-text { 
+          text-align: center; 
+          margin-top: 60px; 
+          color: #f8f8f8; 
+          font-weight: 500; 
+          font-size: 1.1rem;
+        }
+
+        .cta-button { 
+          display: inline-block; 
+          margin-top: 30px; 
+          padding: 20px 60px; 
+          background: #d4af37; 
+          color: #0a192f; 
+          text-decoration: none; 
+          font-weight: 900; 
+          letter-spacing: 3px; 
+          text-transform: uppercase;
+          transition: 0.3s;
+        }
+        .cta-button:hover { background: #fff; transform: translateY(-3px); }
+
+        .disclaimer { 
+          font-size: 0.75rem; 
+          color: #666; 
+          margin-top: 50px; 
+          text-align: center; 
+          line-height: 1.8; 
+          max-width: 800px;
+          margin-left: auto;
+          margin-right: auto;
+        }
 
         @media (max-width: 768px) {
           .tools-grid { grid-template-cols: 1fr; }
-          .onda-title { font-size: 1.8rem; }
+          .onda-title { font-size: 2rem; }
+          .tool-card { padding: 30px 20px; }
         }
       `}} />
 
@@ -68,7 +177,7 @@ export default function Tools() {
         <h1 className="onda-title">YATIRIM ANALİZ ARAÇLARI</h1>
 
         <div className="tools-grid">
-          {/* ROI Hesaplayıcı */}
+          {/* ROI Analizi */}
           <section className="tool-card">
             <h2 className="tool-header">Amortisman (ROI) Analizi</h2>
             <div className="input-group">
@@ -80,7 +189,7 @@ export default function Tools() {
               <input type="number" value={rent} onChange={(e) => setRent(e.target.value)} />
             </div>
 
-            <div className="result-box">
+            <div className="result-panel">
               <div className="result-item">
                 <span className="result-label">Yıllık Brüt Verim</span>
                 <span className="result-value">%{roi}</span>
@@ -92,7 +201,7 @@ export default function Tools() {
             </div>
           </section>
 
-          {/* Kredi Hesaplayıcı */}
+          {/* Kredi Analizi */}
           <section className="tool-card">
             <h2 className="tool-header">Kredi Maliyet Tablosu</h2>
             <div className="input-group">
@@ -100,15 +209,15 @@ export default function Tools() {
               <input type="number" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} />
             </div>
             <div className="input-group">
-              <label>AYLIK FAİZ ORANI (%)</label>
-              <input type="number" step="0.01" value={interest} onChange={(e) => setInterest(e.target.value)} />
+              <label>YILLIK FAİZ ORANI (%)</label>
+              <input type="number" step="0.1" value={annualInterest} onChange={(e) => setAnnualInterest(e.target.value)} />
             </div>
             <div className="input-group">
               <label>VADE (AY)</label>
               <input type="number" value={term} onChange={(e) => setTerm(e.target.value)} />
             </div>
 
-            <div className="result-box">
+            <div className="result-panel">
               <div className="result-item">
                 <span className="result-label">Aylık Taksit</span>
                 <span className="result-value">₺{Number(monthlyPayment).toLocaleString('tr-TR')}</span>
@@ -121,16 +230,16 @@ export default function Tools() {
           </section>
         </div>
 
-        <div style={{ marginTop: '60px', textAlign: 'center' }}>
-          <p style={{ color: '#ccc', marginBottom: '30px', fontWeight: '500' }}>Bu rakamlar rasyonel birer projeksiyondur. Daha detaylı "Onda Analizi" için bize ulaşın.</p>
-          <a href="https://wa.me/905326466909" target="_blank" rel="noreferrer" style={{ display: 'inline-block', padding: '18px 50px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: '900', letterSpacing: '2px', borderRadius: '4px' }}>
+        <div style={{ textAlign: 'center' }}>
+          <p className="info-text">Rakamlar rasyonel bir gelecek projeksiyonudur.</p>
+          <a href="https://wa.me/905326466909" target="_blank" rel="noreferrer" className="cta-button">
             PROFESYONEL ANALİZ AL
           </a>
         </div>
 
         <p className="disclaimer">
-          * Hesaplamalar genel bilgilendirme amaçlıdır. Vergi, harç, aidat ve enflasyon gibi değişkenler hesaplamaya dahil edilmemiştir. <br />
-          Gerçek piyasa değerlemesi için saha verisi ve teknik analiz şarttır.
+          * Bu hesaplama tablosu genel bilgilendirme amaçlıdır. Vergi, tapu harcı, aidat artışları ve enflasyon gibi değişkenler hesaplamaya dahil edilmemiştir. <br />
+          Gerçek bir yatırım kararı için mülk bazlı "Onda Analizi" raporu almanız önerilir.
         </p>
       </main>
     </>
