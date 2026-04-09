@@ -36,26 +36,59 @@ export default function Home({ posts, igPosts }) {
         .blog-preview-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 25px; text-decoration: none; display: block; transition: 0.3s; margin-top: 25px; }
         .blog-preview-card:hover { border-color: #d4af37; }
 
-        /* Yeni Instagram Tasarımı */
-        .ig-container { max-width: 1200px; margin: 120px auto; padding: 0 20px; text-align: center; }
-        .ig-title { color: #d4af37; font-size: 1.8rem; font-weight: 300; letter-spacing: 5px; margin-bottom: 10px; text-transform: uppercase; }
-        .ig-subtitle { color: #8e8e8e; font-size: 0.9rem; margin-bottom: 50px; letter-spacing: 1px; }
-        .ig-grid { display: grid; grid-template-cols: repeat(3, 1fr); gap: 20px; }
-        .ig-card { position: relative; aspect-ratio: 1/1; overflow: hidden; background: #0d223f; border: 1px solid rgba(212,175,55,0.1); transition: 0.4s ease; }
-        .ig-card:hover { border-color: #d4af37; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .ig-card img, .ig-card video { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
-        .ig-card:hover img { transform: scale(1.08); filter: brightness(0.6); }
-        .ig-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; background: rgba(212,175,55,0.1); }
-        .ig-card:hover .ig-overlay { opacity: 1; }
-        .ig-btn { display: inline-block; margin-top: 50px; padding: 15px 35px; border: 1px solid #d4af37; color: #d4af37; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
-        .ig-btn:hover { background: #d4af37; color: #0a192f; }
+        /* Minimalist Instagram Vitrini */
+        .ig-window { max-width: 900px; margin: 100px auto; padding: 0 20px; }
+        .ig-header { margin-bottom: 40px; text-align: center; }
+        .ig-title { color: #d4af37; font-size: 1.4rem; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 8px; }
+        .ig-subtitle { color: #666; font-size: 0.8rem; letter-spacing: 1px; }
+        
+        .ig-grid-window { 
+          display: grid; 
+          grid-template-cols: repeat(3, 1fr); 
+          gap: 15px; 
+          padding: 15px;
+          background: rgba(13,34,63,0.5);
+          border: 1px solid rgba(212,175,55,0.1);
+        }
+        
+        .ig-post-item { 
+          position: relative; 
+          aspect-ratio: 1/1; 
+          overflow: hidden; 
+          background: #000;
+        }
+        
+        .ig-post-item img, .ig-post-item video { 
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+          transition: transform 0.6s ease;
+          opacity: 0.9;
+        }
+        
+        .ig-post-item:hover img { 
+          transform: scale(1.05); 
+          opacity: 1;
+        }
+
+        .ig-follow-link {
+          display: inline-block;
+          margin-top: 30px;
+          color: #d4af37;
+          text-decoration: none;
+          font-size: 0.75rem;
+          letter-spacing: 2px;
+          border-bottom: 1px solid transparent;
+          transition: 0.3s;
+        }
+        .ig-follow-link:hover { border-bottom-color: #d4af37; }
 
         @media (max-width: 768px) { 
           .hero-t { font-size: 2.2rem !important; letter-spacing: 6px !important; } 
           .hero-t span { font-size: 1.4em !important; } 
           .cta-box { width: 92% !important; margin: -40px auto 40px auto !important; }
-          .ig-grid { grid-template-cols: repeat(2, 1fr); gap: 10px; }
-          .ig-title { font-size: 1.4rem; }
+          .ig-grid-window { grid-template-cols: repeat(2, 1fr); gap: 10px; padding: 10px; }
+          .ig-window { margin: 60px auto; }
         }
       `}} />
 
@@ -92,29 +125,28 @@ export default function Home({ posts, igPosts }) {
           </div>
         )}
 
-        {/* Yeni Şık Instagram Bölümü */}
+        {/* Minimalist ve Şık Instagram Bölümü */}
         {igPosts && igPosts.length > 0 && (
-          <section className="ig-container">
-            <h3 className="ig-title">ONDA YAŞAM</h3>
-            <p className="ig-subtitle">Gayrimenkul dünyasından güncel kareler ve fırsatlar</p>
+          <section className="ig-window">
+            <div className="ig-header">
+              <h3 className="ig-title">ONDA YAŞAM</h3>
+              <p className="ig-subtitle">@ondayatirim</p>
+            </div>
             
-            <div className="ig-grid">
-              {igPosts.map((post) => (
-                <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-card">
-                  <div className="ig-overlay">
-                    <span style={{color: '#fff', fontSize: '0.8rem', letterSpacing: '1px'}}>YAKINDAN İNCELE</span>
-                  </div>
+            <div className="ig-grid-window">
+              {igPosts.slice(0, 6).map((post) => (
+                <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-post-item">
                   {post.media_type === "VIDEO" ? (
                     <video src={post.media_url} autoPlay muted loop playsInline />
                   ) : (
-                    <img src={post.media_url} alt="Onda Yatırım Instagram" loading="lazy" />
+                    <img src={post.media_url} alt="Onda Yatırım" loading="lazy" />
                   )}
                 </a>
               ))}
             </div>
 
-            <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" className="ig-btn">
-              INSTAGRAM'DA TAKİP ET
+            <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" className="ig-follow-link">
+              TÜMÜNÜ GÖRÜNTÜLE →
             </a>
           </section>
         )}
@@ -130,16 +162,12 @@ export async function getStaticProps() {
   try {
     const igId = process.env.NEXT_PUBLIC_IG_ID;
     const token = process.env.IG_ACCESS_TOKEN;
-    // Limit 6 olarak ayarlandı, en şık 3x2 grid için idealdir
     const response = await fetch(`https://graph.facebook.com/v20.0/${igId}/media?fields=id,media_url,permalink,media_type&limit=6&access_token=${token}`);
     const igData = await response.json();
     igPosts = igData.data || [];
   } catch (err) {
-    console.error("Instagram çekilemedi:", err);
+    console.error("Instagram verisi çekilemedi.");
   }
 
-  return { 
-    props: { posts, igPosts }, 
-    revalidate: 60 // 60 saniyede bir kontrol etmesi yeterli
-  };
+  return { props: { posts, igPosts }, revalidate: 60 };
 }
