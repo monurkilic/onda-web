@@ -3,14 +3,16 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from 'next/head';
 
+// Sanity ve Instagram için gerekli ayarlar
 const client = createClient({ projectId: 'k8cd67dp', dataset: "production", apiVersion: "2023-01-01", useCdn: false });
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
 const heroImages = ["/hero1.jpg", "/hero2.jpg", "/hero3.jpg"];
 
-export default function Home({ properties, posts }) {
+export default function Home({ properties, posts, igPosts }) {
   const [currentImg, setCurrentImg] = useState(0);
+  
   useEffect(() => {
     const timer = setInterval(() => { setCurrentImg((prev) => (prev + 1) % heroImages.length); }, 5500);
     return () => clearInterval(timer);
@@ -34,14 +36,31 @@ export default function Home({ properties, posts }) {
         .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 60px 40px; background: rgba(13,34,63,0.92); width: 100%; max-width: 900px; margin: -80px auto 60px auto; backdrop-filter: blur(12px); position: relative; z-index: 10; }
         .blog-preview-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 25px; text-decoration: none; display: block; transition: 0.3s; margin-top: 25px; }
         .blog-preview-card:hover { border-color: #d4af37; }
-        @media (max-width: 768px) { .hero-t { font-size: 2.2rem !important; letter-spacing: 6px !important; } .hero-t span { font-size: 1.4em !important; } .cta-box { width: 92% !important; margin: -40px auto 40px auto !important; } }
+        
+        /* Instagram Grid Tasarımı */
+        .ig-section { max-width: 1100px; margin: 100px auto; padding: 0 20px; }
+        .ig-grid { display: grid; grid-template-cols: repeat(6, 1fr); gap: 10px; margin-top: 40px; }
+        .ig-item { position: relative; aspect-ratio: 1/1; overflow: hidden; border: 1px solid rgba(212,175,55,0.1); }
+        .ig-item img, .ig-item video { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .ig-item:hover img { transform: scale(1.1); filter: brightness(0.7); }
+        .ig-link { position: absolute; inset: 0; z-index: 5; }
+
+        @media (max-width: 768px) { 
+          .hero-t { font-size: 2.2rem !important; letter-spacing: 6px !important; } 
+          .hero-t span { font-size: 1.4em !important; } 
+          .cta-box { width: 92% !important; margin: -40px auto 40px auto !important; }
+          .ig-grid { grid-template-cols: repeat(3, 1fr); } 
+        }
       `}} />
 
       <section className="hero-container">
         {heroImages.map((img, index) => (
           <div key={index} className={`hero-slide ${index === currentImg ? 'active' : ''}`} style={{ backgroundImage: `url(${img})` }} />
         ))}
-        <div className="hero-overlay" /><div className="hero-content"><h1 className="hero-t">ARADIĞINIZ HER ŞEY <span>ONDA</span></h1></div>
+        <div className="hero-overlay" />
+        <div className="hero-content">
+          <h1 className="hero-t">ARADIĞINIZ HER ŞEY <span>ONDA</span></h1>
+        </div>
       </section>
 
       <div style={{ textAlign: 'center', padding: '0 20px 80px 20px' }}>
@@ -50,6 +69,8 @@ export default function Home({ properties, posts }) {
           <p style={{color: '#ccc', marginBottom: '40px'}}>Mülkünüzün gerçek piyasa değerini rasyonel analiz ve teknik verilerle raporlayalım.</p>
           <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
         </div>
+
+        {/* Blog Bölümü */}
         {posts && posts.length > 0 && (
           <div style={{ maxWidth: '950px', margin: '120px auto 40px auto' }}>
             <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', marginBottom: '40px' }}>GÜNCEL ANALİZLER</h3>
@@ -64,12 +85,51 @@ export default function Home({ properties, posts }) {
             </a>
           </div>
         )}
+
+        {/* Instagram Bölümü */}
+        {igPosts && igPosts.length > 0 && (
+          <section className="ig-section">
+            <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', textTransform: 'uppercase' }}>ONDA INSTAGRAM</h3>
+            <div className="ig-grid">
+              {igPosts.map((post) => (
+                <div key={post.id} className="ig-item">
+                  <a href={post.permalink} target="_blank" rel="noreferrer" className="ig-link"></a>
+                  {post.media_type === "VIDEO" ? (
+                    <video src={post.media_url} muted />
+                  ) : (
+                    <img src={post.media_url} alt="Onda Yatırım Instagram" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </>
   );
 }
 
 export async function getStaticProps() {
+  // 1. Sanity'den blog postlarını çek
   const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc)[0...1]`);
-  return { props: { posts }, revalidate: 10 };
+
+  // 2. Instagram'dan postları çek (Vercel'deki gizli anahtarları kullanır)
+  let igPosts = [];
+  try {
+    const igId = process.env.NEXT_PUBLIC_IG_ID;
+    const token = process.env.IG_ACCESS_TOKEN;
+    const response = await fetch(`https://graph.facebook.com/v20.0/${igId}/media?fields=id,media_url,permalink,media_type&limit=6&access_token=${token}`);
+    const igData = await response.json();
+    igPosts = igData.data || [];
+  } catch (err) {
+    console.error("Instagram verisi çekilemedi:", err);
+  }
+
+  return { 
+    props: { 
+      posts,
+      igPosts 
+    }, 
+    revalidate: 10 
+  };
 }
