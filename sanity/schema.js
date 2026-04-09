@@ -1,33 +1,196 @@
+// 1. İlanlar (Property) Şeması
 const property = {
   name: 'property',
   title: 'İlanlar',
   type: 'document',
   fields: [
-    { name: 'title', title: 'İlan Başlığı', type: 'string' },
-    { name: 'slug', title: 'İlan Linki', type: 'slug', options: { source: 'title', maxLength: 96 } },
-    { name: 'location', title: 'Konum', type: 'string' },
-    { name: 'price', title: 'Fiyat', type: 'string' },
-    { name: 'currency', title: 'Para Birimi', type: 'string', options: { list: ['TL', 'GBP', 'USD', 'EUR'] } },
-    { name: 'mainImage', title: 'Ana Resim', type: 'image', options: { hotspot: true } },
-    { name: 'gallery', title: 'Fotoğraf Galerisi', type: 'array', of: [{ type: 'image', options: { hotspot: true } }] },
-    { name: 'googleMapsUrl', title: 'Harita Linki', type: 'url' },
-    { name: 'analysis', title: 'Onda Analizi', type: 'text' }
-  ]
+    {
+      name: 'title',
+      title: 'İlan Başlığı',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'İlan Linki (Slug)',
+      type: 'slug',
+      description: 'Sağdaki "Generate" butonuna basarak başlıktan üretebilirsiniz.',
+      options: { source: 'title', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'isFeatured',
+      title: 'Ana Sayfada Öne Çıkar',
+      type: 'boolean',
+      description: 'Bu seçenek işaretlenirse ilan ana sayfadaki vitrinde görünür.',
+      initialValue: false,
+    },
+    {
+      name: 'status',
+      title: 'İlan Durumu',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Satılık', value: 'satilik' },
+          { title: 'Kiralık', value: 'kiralik' },
+          { title: 'Satıldı', value: 'satildi' },
+          { title: 'Fırsat', value: 'firsat' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'propertyType',
+      title: 'Mülk Tipi',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Villa', value: 'villa' },
+          { title: 'Daire', value: 'daire' },
+          { title: 'Ofis', value: 'ofis' },
+          { title: 'Arsa', value: 'arsa' },
+          { title: 'Fabrika', value: 'fabrika' },
+          { title: 'Malikane', value: 'malikane' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'location',
+      title: 'Konum (Şehir/İlçe)',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'price',
+      title: 'Fiyat',
+      type: 'string',
+      description: 'Sadece rakam veya "Teklif Alınacaktır" yazabilirsiniz.',
+    },
+    {
+      name: 'currency',
+      title: 'Para Birimi',
+      type: 'string',
+      options: {
+        list: ['TL', 'GBP', 'USD', 'EUR'],
+      },
+    },
+    {
+      name: 'area',
+      title: 'Net Metrekare (m2)',
+      type: 'number',
+    },
+    {
+      name: 'rooms',
+      title: 'Oda Sayısı',
+      type: 'string',
+      options: {
+        list: ['1+1', '2+1', '3+1', '4+1', '5+2', '6+2', 'Stüdyo', 'Ticari'],
+      },
+    },
+    {
+      name: 'features',
+      title: 'Mülk Özellikleri',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Örn: Deniz Manzaralı, Akıllı Ev, Yerden Isıtma, Havuzlu',
+      options: { layout: 'tags' },
+    },
+    {
+      name: 'mainImage',
+      title: 'Ana Resim (Kapak)',
+      type: 'image',
+      options: { hotspot: true },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'gallery',
+      title: 'Fotoğraf Galerisi',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+    },
+    {
+      name: 'googleMapsUrl',
+      title: 'Google Harita Linki',
+      type: 'url',
+    },
+    {
+      name: 'analysis',
+      title: 'Onda Analizi',
+      type: 'array',
+      description: 'Bu mülke özel rasyonel analiz raporu içeriği.',
+      of: [
+        { type: 'block' },
+        { type: 'image', options: { hotspot: true } }
+      ],
+    },
+  ],
 };
 
+// 2. Blog Yazıları (Post) Şeması
 const post = {
   name: 'post',
   title: 'Blog Yazıları',
   type: 'document',
   fields: [
-    { name: 'title', title: 'Blog Başlığı', type: 'string' },
-    { name: 'slug', title: 'Blog Linki', type: 'slug', options: { source: 'title', maxLength: 96 } },
-    { name: 'mainImage', title: 'Kapak Görseli', type: 'image', options: { hotspot: true } },
-    { name: 'publishedAt', title: 'Yayınlanma Tarihi', type: 'datetime' },
-    { name: 'excerpt', title: 'Kısa Özet', type: 'text', rows: 3 },
-    { name: 'body', title: 'İçerik', type: 'array', of: [{ type: 'block' }, { type: 'image', options: { hotspot: true } }] }
-  ]
+    {
+      name: 'title',
+      title: 'Blog Başlığı',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'Blog Linki (Slug)',
+      type: 'slug',
+      options: { source: 'title', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'category',
+      title: 'Kategori',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Piyasa Analizi', value: 'piyasa' },
+          { title: 'Yatırım Tavsiyeleri', value: 'yatirim' },
+          { title: 'Bölge İncelemesi', value: 'bolge' },
+          { title: 'Haberler', value: 'haber' },
+        ],
+      },
+    },
+    {
+      name: 'mainImage',
+      title: 'Kapak Görseli',
+      type: 'image',
+      options: { hotspot: true },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'publishedAt',
+      title: 'Yayınlanma Tarihi',
+      type: 'datetime',
+      initialValue: (new Date()).toISOString(),
+    },
+    {
+      name: 'excerpt',
+      title: 'Kısa Özet',
+      type: 'text',
+      rows: 3,
+      description: 'Listeleme sayfasında görünecek vurucu özet cümle.',
+    },
+    {
+      name: 'body',
+      title: 'İçerik',
+      type: 'array',
+      of: [
+        { type: 'block' },
+        { type: 'image', options: { hotspot: true } }
+      ],
+    },
+  ],
 };
 
+// Şemaları dışa aktar
 const schemaTypes = [property, post];
 export default schemaTypes;
