@@ -5,51 +5,96 @@ export default function About() {
     <>
       <Head>
         <title>Hakkımızda | Onda Yatırım</title>
-        <meta name="description" content="Gayrimenkulde rasyonel analiz ve psikolojik derinlik. Onda Yatırım'ın hikayesi ve vizyonu." />
+        <meta name="description" content="Onda Yatırım'ın hikayesi: Yakın çevre güvenini, tüm yatırımcılarına sunan rasyonel gayrimenkul vizyonu." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .about-section { max-width: 900px; margin: 60px auto; padding: 0 20px; line-height: 1.8; }
-        .about-title { color: #d4af37; font-size: 2.5rem; font-weight: 300; letter-spacing: 4px; margin-bottom: 40px; text-align: center; }
-        .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px; }
-        .vision-box { background: rgba(13,34,63,0.5); border: 1px solid rgba(212,175,55,0.1); padding: 30px; }
-        .vision-box h3 { color: #d4af37; font-size: 1.1rem; margin-bottom: 15px; letter-spacing: 1px; }
-        .vision-box p { color: #ccc; fontSize: 0.9rem; margin: 0; }
+        .about-page { max-width: 1000px; margin: 100px auto; padding: 0 20px; line-height: 1.8; color: #fff; font-family: 'Inter', sans-serif; }
+        .about-header { text-align: center; margin-bottom: 80px; }
+        .about-title { color: #d4af37; font-size: 3rem; font-weight: 200; letter-spacing: 8px; margin-bottom: 20px; }
+        .about-subtitle { color: #8e8e8e; font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; }
+        
+        .content-block { margin-bottom: 60px; position: relative; }
+        .quote-box { 
+          background: rgba(212, 175, 55, 0.05); 
+          border-left: 3px solid #d4af37; 
+          padding: 40px; 
+          margin: 60px 0; 
+          font-style: italic; 
+          font-size: 1.2rem;
+          color: #e0e0e0;
+        }
+
+        .story-text { color: #ccc; font-size: 1.05rem; margin-bottom: 30px; text-align: justify; }
+        .highlight { color: #d4af37; font-weight: bold; }
+
+        .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 80px; }
+        .vision-item { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 40px; transition: 0.3s; }
+        .vision-item:hover { border-color: #d4af37; transform: translateY(-5px); }
+        .vision-item h3 { color: #d4af37; font-size: 1rem; letter-spacing: 2px; margin-bottom: 20px; text-transform: uppercase; }
+        .vision-item p { color: #aaa; font-size: 0.9rem; margin: 0; line-height: 1.6; }
+
+        .signature { margin-top: 60px; text-align: right; }
+        .signature-name { color: #d4af37; font-size: 1.2rem; letter-spacing: 2px; display: block; }
+        .signature-title { color: #666; font-size: 0.8rem; text-transform: uppercase; }
+
         @media (max-width: 768px) {
-          .vision-grid { grid-template-columns: 1fr; gap: 20px; }
-          .about-title { font-size: 1.8rem; }
+          .about-title { font-size: 2rem; }
+          .vision-grid { grid-template-cols: 1fr; }
+          .quote-box { padding: 25px; font-size: 1rem; }
         }
       `}} />
 
-      <main className="about-section" style={{ flex: 1 }}>
-        <h1 className="about-title">BİZ KİMİZ?</h1>
-        
-        <div style={{ color: '#fff', fontSize: '1.1rem', textAlign: 'center', marginBottom: '40px', fontStyle: 'italic' }}>
-          "Gayrimenkul, sadece taş ve topraktan ibaret değildir; rasyonel verilerin ve insan psikolojisinin birleştiği bir karardır."
-        </div>
+      <main className="about-page">
+        <header className="about-header">
+          <p className="about-subtitle">Vizyon & Hikaye</p>
+          <h1 className="about-title">BİZ KİMİZ?</h1>
+        </header>
 
-        <p style={{ color: '#ccc', marginBottom: '25px' }}>
-          Onda Yatırım, geleneksel emlakçılık anlayışının ötesine geçerek, gayrimenkul süreçlerini bilimsel bir yaklaşımla ele alan bir danışmanlık markasıdır. İzmir ve Ankara merkezli faaliyetlerimizde, her mülkü kendi özelinde bir "vaka" olarak ele alıyoruz.
-        </p>
+        <section className="content-block">
+          <p className="story-text">
+            Onda Yatırım’ın temelleri, çok basit ama sarsılmaz bir prensip üzerine atıldı: <span className="highlight">Güven.</span> 
+          </p>
+          
+          <div className="quote-box">
+            "Kendi yakın çevreme, aileme ve dostlarıma en güvenilir, en karlı yatırımları sunmak amacıyla çıktığım bu yolda; bugün tüm danışanlarıma aynı özenle, 'kendi çevrem' muamelesi yapıyorum."
+          </div>
 
-        <p style={{ color: '#ccc', marginBottom: '25px' }}>
-          Kurucumuzun psikoloji altyapısı ve rasyonel analiz yetkinliği, Onda Yatırım'ın temelini oluşturur. Yatırımcılarımıza sadece mülk satmıyor; piyasa dinamiklerini, gelecek projeksiyonlarını ve karar verme süreçlerini etkileyen tüm faktörleri kapsayan bir **Onda Analizi** sunuyoruz.
-        </p>
+          <p className="story-text">
+            Gayrimenkul sektörü, maalesef zaman içerisinde güven erozyonuna uğramış bir alan haline geldi. Benim en büyük motivasyonum; piyasadaki "emlak danışmanı" algısını yeniden inşa etmek, korumak ve danışanlarımıza hak ettikleri rasyonel zemini sağlamaktır. 
+          </p>
+
+          <p className="story-text">
+            Hem yerel piyasanın nabzını tutan derin tecrübemi hem de ulusal ölçekte edindiğim kurumsal birikimimi, sizin için en doğru karara dönüştürüyorum. Temel amacımız sadece bir mülk alım-satımı değil; <span className="highlight">malınızı en yüksek değerle satmanızı sağlamak</span> ve <span className="highlight">piyasadaki en iyi mülke en rasyonel şartlarla ulaşmanızı</span> garanti altına almaktır.
+          </p>
+        </section>
 
         <div className="vision-grid">
-          <div className="vision-box">
-            <h3>RASYONEL YAKLAŞIM</h3>
-            <p>Piyasa verilerini, bölgesel gelişim raporlarını ve yatırımın geri dönüş hızını (ROI) matematiksel netlikle analiz ediyoruz.</p>
+          <div className="vision-item">
+            <h3>TECRÜBE KARMASI</h3>
+            <p>Yerel piyasanın dinamiklerini, ulusal standartlardaki profesyonel tecrübemizle birleştirerek hata payını sıfıra indiriyoruz.</p>
           </div>
-          <div className="vision-box">
-            <h3>PSİKOLOJİK DERİNLİK</h3>
-            <p>Alıcı ve satıcı arasındaki beklenti dengesini, mülkün duygusal değerini ve doğru iletişim stratejilerini yönetiyoruz.</p>
+          <div className="vision-item">
+            <h3>SADAKAT ODAKLI</h3>
+            <p>Bizim için her yatırımcı bir aile ferdi gibidir. Kısa vadeli kazançlar yerine, ömür boyu sürecek bir güven ilişkisini tercih ediyoruz.</p>
+          </div>
+          <div className="vision-item">
+            <h3>RASYONEL ANALİZ</h3>
+            <p>Duygularla değil, verilerle hareket ediyoruz. Mülkünüzün değerini pazarın gerçek aynasında, teknik verilerle raporluyoruz.</p>
+          </div>
+          <div className="vision-item">
+            <h3>KÜRESEL ERİŞİM</h3>
+            <p>İzmir ve Ankara merkezli gücümüzü; Kıbrıs, Dubai ve Yunanistan gibi stratejik noktalardaki ağımızla birleştiriyoruz.</p>
           </div>
         </div>
 
-        <div style={{ marginTop: '80px', textAlign: 'center' }}>
-          <h2 style={{ color: '#fff', fontSize: '1.2rem', fontWeight: '300', marginBottom: '30px' }}>Aradığınız profesyonel bakış açısı Onda.</h2>
-          <a href="/contact" style={{ display: 'inline-block', padding: '15px 40px', border: '1px solid #d4af37', color: '#d4af37', textDecoration: 'none', fontSize: '0.85rem', letterSpacing: '2px' }}>
+        <div className="signature">
+          <span className="signature-name">M. Onur Kılıç</span>
+          <span className="signature-title">Kurucu, Onda Yatırım</span>
+        </div>
+
+        <div style={{ marginTop: '100px', textAlign: 'center' }}>
+          <a href="/contact" style={{ display: 'inline-block', padding: '18px 50px', border: '1px solid #d4af37', color: '#d4af37', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '3px', transition: '0.3s' }}>
             BİZE ULAŞIN
           </a>
         </div>
