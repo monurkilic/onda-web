@@ -37,7 +37,7 @@ export default function Home({ posts, igPosts }) {
         .blog-preview-card:hover { border-color: #d4af37; }
 
         /* Kompakt ve Şık Instagram Vitrini */
-        .ig-window { max-width: 800px; margin: 100px auto; padding: 0 20px; }
+        .ig-window { max-width: 300px; margin: 100px auto; padding: 0 20px; }
         .ig-header { margin-bottom: 30px; text-align: center; }
         .ig-title { color: #d4af37; font-size: 1.2rem; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
         .ig-subtitle { color: #666; font-size: 0.75rem; letter-spacing: 1px; }
