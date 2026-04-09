@@ -36,19 +36,19 @@ export default function Home({ posts, igPosts }) {
         .blog-preview-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 25px; text-decoration: none; display: block; transition: 0.3s; margin-top: 25px; }
         .blog-preview-card:hover { border-color: #d4af37; }
 
-        /* Minimalist Instagram Vitrini */
-        .ig-window { max-width: 900px; margin: 100px auto; padding: 0 20px; }
-        .ig-header { margin-bottom: 40px; text-align: center; }
-        .ig-title { color: #d4af37; font-size: 1.4rem; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 8px; }
-        .ig-subtitle { color: #666; font-size: 0.8rem; letter-spacing: 1px; }
+        /* Kompakt ve Şık Instagram Vitrini */
+        .ig-window { max-width: 800px; margin: 100px auto; padding: 0 20px; }
+        .ig-header { margin-bottom: 30px; text-align: center; }
+        .ig-title { color: #d4af37; font-size: 1.2rem; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
+        .ig-subtitle { color: #666; font-size: 0.75rem; letter-spacing: 1px; }
         
         .ig-grid-window { 
           display: grid; 
-          grid-template-cols: repeat(3, 1fr); 
-          gap: 15px; 
-          padding: 15px;
-          background: rgba(13,34,63,0.5);
-          border: 1px solid rgba(212,175,55,0.1);
+          grid-template-cols: repeat(3, 1fr); /* Bilgisayarda 3 post yan yana */
+          gap: 12px; 
+          padding: 12px;
+          background: rgba(13,34,63,0.3);
+          border: 1px solid rgba(212,175,55,0.15);
         }
         
         .ig-post-item { 
@@ -56,6 +56,7 @@ export default function Home({ posts, igPosts }) {
           aspect-ratio: 1/1; 
           overflow: hidden; 
           background: #000;
+          border: 1px solid rgba(212,175,55,0.05);
         }
         
         .ig-post-item img, .ig-post-item video { 
@@ -63,32 +64,33 @@ export default function Home({ posts, igPosts }) {
           height: 100%; 
           object-fit: cover; 
           transition: transform 0.6s ease;
-          opacity: 0.9;
+          opacity: 0.85;
         }
         
-        .ig-post-item:hover img { 
+        .ig-post-item:hover img, .ig-post-item:hover video { 
           transform: scale(1.05); 
           opacity: 1;
         }
 
         .ig-follow-link {
           display: inline-block;
-          margin-top: 30px;
+          margin-top: 25px;
           color: #d4af37;
           text-decoration: none;
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           letter-spacing: 2px;
-          border-bottom: 1px solid transparent;
+          opacity: 0.7;
           transition: 0.3s;
         }
-        .ig-follow-link:hover { border-bottom-color: #d4af37; }
+        .ig-follow-link:hover { opacity: 1; letter-spacing: 3px; }
 
         @media (max-width: 768px) { 
           .hero-t { font-size: 2.2rem !important; letter-spacing: 6px !important; } 
           .hero-t span { font-size: 1.4em !important; } 
           .cta-box { width: 92% !important; margin: -40px auto 40px auto !important; }
-          .ig-grid-window { grid-template-cols: repeat(2, 1fr); gap: 10px; padding: 10px; }
+          .ig-grid-window { grid-template-cols: repeat(2, 1fr); gap: 8px; padding: 8px; } /* Mobilde 2 post yan yana */
           .ig-window { margin: 60px auto; }
+          .ig-title { font-size: 1rem; }
         }
       `}} />
 
@@ -125,7 +127,7 @@ export default function Home({ posts, igPosts }) {
           </div>
         )}
 
-        {/* Minimalist ve Şık Instagram Bölümü */}
+        {/* Kompakt Instagram Bölümü */}
         {igPosts && igPosts.length > 0 && (
           <section className="ig-window">
             <div className="ig-header">
@@ -146,7 +148,7 @@ export default function Home({ posts, igPosts }) {
             </div>
 
             <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" className="ig-follow-link">
-              TÜMÜNÜ GÖRÜNTÜLE →
+              INSTAGRAM'DA GÖRÜNTÜLE
             </a>
           </section>
         )}
