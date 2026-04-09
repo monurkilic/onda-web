@@ -3,14 +3,13 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from 'next/head';
 
-// Sanity ve Instagram için gerekli ayarlar
 const client = createClient({ projectId: 'k8cd67dp', dataset: "production", apiVersion: "2023-01-01", useCdn: false });
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
 const heroImages = ["/hero1.jpg", "/hero2.jpg", "/hero3.jpg"];
 
-export default function Home({ properties, posts, igPosts }) {
+export default function Home({ posts, igPosts }) {
   const [currentImg, setCurrentImg] = useState(0);
   
   useEffect(() => {
@@ -36,20 +35,27 @@ export default function Home({ properties, posts, igPosts }) {
         .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 60px 40px; background: rgba(13,34,63,0.92); width: 100%; max-width: 900px; margin: -80px auto 60px auto; backdrop-filter: blur(12px); position: relative; z-index: 10; }
         .blog-preview-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 25px; text-decoration: none; display: block; transition: 0.3s; margin-top: 25px; }
         .blog-preview-card:hover { border-color: #d4af37; }
-        
-        /* Instagram Grid Tasarımı */
-        .ig-section { max-width: 1100px; margin: 100px auto; padding: 0 20px; }
-        .ig-grid { display: grid; grid-template-cols: repeat(6, 1fr); gap: 10px; margin-top: 40px; }
-        .ig-item { position: relative; aspect-ratio: 1/1; overflow: hidden; border: 1px solid rgba(212,175,55,0.1); }
-        .ig-item img, .ig-item video { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .ig-item:hover img { transform: scale(1.1); filter: brightness(0.7); }
-        .ig-link { position: absolute; inset: 0; z-index: 5; }
+
+        /* Yeni Instagram Tasarımı */
+        .ig-container { max-width: 1200px; margin: 120px auto; padding: 0 20px; text-align: center; }
+        .ig-title { color: #d4af37; font-size: 1.8rem; font-weight: 300; letter-spacing: 5px; margin-bottom: 10px; text-transform: uppercase; }
+        .ig-subtitle { color: #8e8e8e; font-size: 0.9rem; margin-bottom: 50px; letter-spacing: 1px; }
+        .ig-grid { display: grid; grid-template-cols: repeat(3, 1fr); gap: 20px; }
+        .ig-card { position: relative; aspect-ratio: 1/1; overflow: hidden; background: #0d223f; border: 1px solid rgba(212,175,55,0.1); transition: 0.4s ease; }
+        .ig-card:hover { border-color: #d4af37; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .ig-card img, .ig-card video { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
+        .ig-card:hover img { transform: scale(1.08); filter: brightness(0.6); }
+        .ig-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; background: rgba(212,175,55,0.1); }
+        .ig-card:hover .ig-overlay { opacity: 1; }
+        .ig-btn { display: inline-block; margin-top: 50px; padding: 15px 35px; border: 1px solid #d4af37; color: #d4af37; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
+        .ig-btn:hover { background: #d4af37; color: #0a192f; }
 
         @media (max-width: 768px) { 
           .hero-t { font-size: 2.2rem !important; letter-spacing: 6px !important; } 
           .hero-t span { font-size: 1.4em !important; } 
           .cta-box { width: 92% !important; margin: -40px auto 40px auto !important; }
-          .ig-grid { grid-template-cols: repeat(3, 1fr); } 
+          .ig-grid { grid-template-cols: repeat(2, 1fr); gap: 10px; }
+          .ig-title { font-size: 1.4rem; }
         }
       `}} />
 
@@ -86,22 +92,30 @@ export default function Home({ properties, posts, igPosts }) {
           </div>
         )}
 
-        {/* Instagram Bölümü */}
+        {/* Yeni Şık Instagram Bölümü */}
         {igPosts && igPosts.length > 0 && (
-          <section className="ig-section">
-            <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', textTransform: 'uppercase' }}>ONDA INSTAGRAM</h3>
+          <section className="ig-container">
+            <h3 className="ig-title">ONDA YAŞAM</h3>
+            <p className="ig-subtitle">Gayrimenkul dünyasından güncel kareler ve fırsatlar</p>
+            
             <div className="ig-grid">
               {igPosts.map((post) => (
-                <div key={post.id} className="ig-item">
-                  <a href={post.permalink} target="_blank" rel="noreferrer" className="ig-link"></a>
+                <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-card">
+                  <div className="ig-overlay">
+                    <span style={{color: '#fff', fontSize: '0.8rem', letterSpacing: '1px'}}>YAKINDAN İNCELE</span>
+                  </div>
                   {post.media_type === "VIDEO" ? (
-                    <video src={post.media_url} muted />
+                    <video src={post.media_url} autoPlay muted loop playsInline />
                   ) : (
-                    <img src={post.media_url} alt="Onda Yatırım Instagram" />
+                    <img src={post.media_url} alt="Onda Yatırım Instagram" loading="lazy" />
                   )}
-                </div>
+                </a>
               ))}
             </div>
+
+            <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" className="ig-btn">
+              INSTAGRAM'DA TAKİP ET
+            </a>
           </section>
         )}
       </div>
@@ -110,26 +124,22 @@ export default function Home({ properties, posts, igPosts }) {
 }
 
 export async function getStaticProps() {
-  // 1. Sanity'den blog postlarını çek
   const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc)[0...1]`);
 
-  // 2. Instagram'dan postları çek (Vercel'deki gizli anahtarları kullanır)
   let igPosts = [];
   try {
     const igId = process.env.NEXT_PUBLIC_IG_ID;
     const token = process.env.IG_ACCESS_TOKEN;
+    // Limit 6 olarak ayarlandı, en şık 3x2 grid için idealdir
     const response = await fetch(`https://graph.facebook.com/v20.0/${igId}/media?fields=id,media_url,permalink,media_type&limit=6&access_token=${token}`);
     const igData = await response.json();
     igPosts = igData.data || [];
   } catch (err) {
-    console.error("Instagram verisi çekilemedi:", err);
+    console.error("Instagram çekilemedi:", err);
   }
 
   return { 
-    props: { 
-      posts,
-      igPosts 
-    }, 
-    revalidate: 10 
+    props: { posts, igPosts }, 
+    revalidate: 60 // 60 saniyede bir kontrol etmesi yeterli
   };
 }
