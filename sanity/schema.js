@@ -191,6 +191,69 @@ const post = {
   ],
 };
 
+// 3. Bölge Analizleri (Region) Şeması
+const region = {
+  name: 'region',
+  title: 'Bölge Analizleri',
+  type: 'document',
+  fields: [
+    {
+      name: 'name',
+      title: 'Bölge Adı',
+      type: 'string',
+      description: 'Örn: Mavişehir, İncek, Girne',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'Bölge Linki (Slug)',
+      type: 'slug',
+      options: { source: 'name', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'avgPrice',
+      title: 'Ortalama m² Birim Fiyatı',
+      type: 'string',
+      description: 'Örn: 85.000 TL',
+    },
+    {
+      name: 'annualGrowth',
+      title: 'Yıllık Değer Artışı (%)',
+      type: 'number',
+      description: 'Sadece rakam girin (Örn: 45)',
+    },
+    {
+      name: 'roi',
+      title: 'Amortisman Süresi (Yıl)',
+      type: 'number',
+      description: 'Örn: 18',
+    },
+    {
+      name: 'popGrowth',
+      title: 'Nüfus Artış Oranı (%)',
+      type: 'number',
+      description: 'Örn: 5.2',
+    },
+    {
+      name: 'mainImage',
+      title: 'Bölge Görseli',
+      type: 'image',
+      options: { hotspot: true },
+    },
+    {
+      name: 'body',
+      title: 'Detaylı Analiz Raporu',
+      type: 'array',
+      description: 'Bölgeye dair derinlemesine rasyonel analiz metni.',
+      of: [
+        { type: 'block' },
+        { type: 'image', options: { hotspot: true } }
+      ],
+    },
+  ],
+};
+
 // Şemaları dışa aktar
-const schemaTypes = [property, post];
+const schemaTypes = [property, post, region];
 export default schemaTypes;
