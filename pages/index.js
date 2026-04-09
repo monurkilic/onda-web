@@ -36,101 +36,108 @@ export default function Home({ posts, igPosts }) {
         .blog-preview-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 25px; text-decoration: none; display: block; transition: 0.3s; margin-top: 25px; }
         .blog-preview-card:hover { border-color: #d4af37; }
 
-        /* Yeni Optimize Edilmiş Instagram Vitrini */
-        .ig-window { 
-          max-width: 850px; /* Pencereyi 3 postun rahat sığacağı ideal genişliğe çektim */
+        /* Milimetrik Instagram Vitrini */
+        .ig-outer-container { 
           margin: 100px auto; 
           padding: 0 20px; 
-        }
-        .ig-header { margin-bottom: 25px; text-align: center; }
-        .ig-title { color: #d4af37; font-size: 1.1rem; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; }
-        
-        .ig-grid-window { 
-          display: grid !important; 
-          grid-template-cols: repeat(3, 1fr) !important; /* Masaüstünde zorunlu 3'lü dizilim */
-          gap: 15px; 
-          padding: 15px;
-          background: rgba(13,34,63,0.2);
-          border: 1px solid rgba(212,175,55,0.1);
+          text-align: center;
         }
         
-        .ig-post-item { 
-          position: relative; 
-          overflow: hidden; 
-          display: block;
-          background: #000;
-        }
-        
-        .ig-post-item img, .ig-post-item video { 
-          width: 100%; 
-          height: auto; /* Orijinal boyutu koruması için */
-          display: block;
-          object-fit: contain; /* Kırpmayı engellemek için */
-          transition: 0.4s ease;
-        }
-        
-        .ig-post-item:hover img, .ig-post-item:hover video { 
-          filter: brightness(1.1);
+        .ig-header-text {
+          color: #d4af37; 
+          font-size: 1rem; 
+          font-weight: 300; 
+          letter-spacing: 4px; 
+          margin-bottom: 30px; 
+          text-transform: uppercase;
         }
 
-        .ig-follow-link {
+        .ig-fixed-grid { 
+          display: flex; 
+          flex-wrap: wrap; 
+          justify-content: center; /* Merkeze hizalar */
+          gap: 20px; /* Postlar arası boşluk */
+        }
+        
+        .ig-post-wrapper { 
+          width: 300px; /* TAM 300PX GENİŞLİK */
+          background: #0d223f; 
+          border: 1px solid rgba(212,175,55,0.15);
+          overflow: hidden;
+          transition: 0.3s;
+        }
+
+        .ig-post-wrapper:hover {
+          border-color: #d4af37;
+          transform: translateY(-5px);
+        }
+        
+        .ig-post-wrapper img, .ig-post-wrapper video { 
+          width: 100%; 
+          height: auto; 
+          display: block;
+          object-fit: contain; /* ASLA KIRPMA YAPMAZ, TAMAMI GÖRÜNÜR */
+        }
+
+        .ig-footer-link {
           display: inline-block;
-          margin-top: 20px;
-          color: #d4af37;
+          margin-top: 30px;
+          color: #666;
           text-decoration: none;
           font-size: 0.7rem;
           letter-spacing: 2px;
-          opacity: 0.6;
+          transition: 0.3s;
         }
+        .ig-footer-link:hover { color: #d4af37; }
 
         @media (max-width: 768px) { 
-          .ig-grid-window { grid-template-cols: repeat(2, 1fr) !important; gap: 8px; } /* Mobilde 2'li */
+          .ig-post-wrapper { width: 140px; } /* Mobilde yan yana 2 tane sığması için küçülttüm */
+          .ig-fixed-grid { gap: 10px; }
           .hero-t { font-size: 2.2rem !important; }
         }
       `}} />
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="hero-container">
         {heroImages.map((img, index) => (
           <div key={index} className={`hero-slide ${index === currentImg ? 'active' : ''}`} style={{ backgroundImage: `url(${img})` }} />
         ))}
         <div className="hero-overlay" />
-        <div className="hero-content"><h1 className="hero-t">ARADIĞINIZ HER ŞEY <span>ONDA</span></h1></div>
+        <div className="hero-content">
+          <h1 className="hero-t">ARADIĞINIZ HER ŞEY <span>ONDA</span></h1>
+        </div>
       </section>
 
       <div style={{ textAlign: 'center', padding: '0 20px 80px 20px' }}>
-        {/* CTA Box */}
         <div className="cta-box">
           <h2 style={{color: '#d4af37', fontSize: '1.8rem', fontWeight: '300', marginBottom: '25px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
           <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
         </div>
 
-        {/* Blog Section */}
+        {/* Blog */}
         {posts && posts.length > 0 && (
           <div style={{ maxWidth: '950px', margin: '120px auto 40px auto' }}>
-            <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px' }}>GÜNCEL ANALİZLER</h3>
+            <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', marginBottom: '40px' }}>GÜNCEL ANALİZLER</h3>
             <a href={`/blog/${posts[0].slug.current}`} className="blog-preview-card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '35px', textAlign: 'left', flexWrap: 'wrap' }}>
                 <img src={urlFor(posts[0].mainImage).width(400).url()} style={{ width: '250px', height: '160px', objectFit: 'cover' }} alt="Blog" />
                 <div style={{ flex: 1 }}>
-                  <h4 style={{ color: '#fff', fontSize: '1.5rem' }}>{posts[0].title}</h4>
-                  <p style={{ color: '#8e8e8e' }}>{posts[0].excerpt}</p>
+                  <h4 style={{ color: '#fff', fontSize: '1.5rem', marginBottom: '15px' }}>{posts[0].title}</h4>
+                  <p style={{ color: '#8e8e8e', lineHeight: '1.6' }}>{posts[0].excerpt}</p>
                 </div>
               </div>
             </a>
           </div>
         )}
 
-        {/* Instagram Section */}
+        {/* Hassas Ayarlı Instagram Bölümü */}
         {igPosts && igPosts.length > 0 && (
-          <section className="ig-window">
-            <div className="ig-header">
-              <h3 className="ig-title">ONDA YAŞAM</h3>
-            </div>
+          <section className="ig-outer-container">
+            <h3 className="ig-header-text">ONDA YAŞAM</h3>
             
-            <div className="ig-grid-window">
-              {igPosts.slice(0, 3).map((post) => ( // Sadece en taze 3 postu yan yana gösteriyoruz
-                <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-post-item">
+            <div className="ig-fixed-grid">
+              {igPosts.slice(0, 3).map((post) => (
+                <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-post-wrapper">
                   {post.media_type === "VIDEO" ? (
                     <video src={post.media_url} autoPlay muted loop playsInline />
                   ) : (
@@ -140,8 +147,8 @@ export default function Home({ posts, igPosts }) {
               ))}
             </div>
 
-            <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" className="ig-follow-link">
-              INSTAGRAM'DA TAKİP ET
+            <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" className="ig-footer-link">
+              @ondayatirim →
             </a>
           </section>
         )}
