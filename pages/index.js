@@ -20,27 +20,29 @@ export default function Home({ posts, igPosts }) {
   return (
     <>
       <Head>
-        {/* Tarayıcı Sekme Bilgileri */}
         <title>Onda Yatırım | Aradığınız her şey ONDA</title>
         <meta name="description" content="İzmir ve Ankara merkezli lüks gayrimenkul yatırımında rasyonel analiz ve kurumsal güven." />
-        <link rel="icon" href="/favicon.ico" />
-
-        {/* WhatsApp & Sosyal Medya Paylaşım Kartı (Open Graph) */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ondayatirim.com/" />
-        <meta property="og:title" content="Onda Yatırım | Aradığınız her şey ONDA" />
-        <meta property="og:description" content="Gayrimenkul yatırımında rasyonel analiz ve kurumsal güven. İzmir ve Ankara'nın en özel portföyleri." />
-        {/* Burayı senin 'logo.png' dosyana göre güncelledim */}
         <meta property="og:image" content="https://ondayatirim.com/logo.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Onda Yatırım" />
-        <meta name="twitter:image" content="https://ondayatirim.com/logo.png" />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        /* Global Font ve ONDA Stili Entegrasyonu */
+        body { 
+          background: #0a192f; 
+          color: #fff; 
+          font-family: 'Inter', sans-serif; 
+          margin: 0; 
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero'daki 'ONDA' font karakteristiği */
+        .onda-style-title {
+          color: #d4af37 !important;
+          font-weight: 800 !important;
+          letter-spacing: 8px !important;
+          text-transform: uppercase;
+        }
+
         .hero-container { position: relative; height: 85vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; background: #0a192f; }
         .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: opacity 2.5s ease-in-out; opacity: 0; }
         .hero-slide.active { opacity: 1; }
@@ -48,25 +50,52 @@ export default function Home({ posts, igPosts }) {
         .hero-content { position: relative; z-index: 3; padding: 0 20px; }
         .hero-t { font-size: 3.8rem; font-weight: 300; letter-spacing: 12px; color: #fff; line-height: 1.1; text-shadow: 2px 2px 15px rgba(0,0,0,0.8); }
         .hero-t span { color: #d4af37; display: block; font-size: 1.5em; letter-spacing: 20px; margin-top: 25px; font-weight: bold; }
+        
         .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 60px 40px; background: rgba(13,34,63,0.92); width: 100%; max-width: 900px; margin: -80px auto 60px auto; backdrop-filter: blur(12px); position: relative; z-index: 10; }
-        .blog-preview-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 25px; text-decoration: none; display: block; transition: 0.3s; margin-top: 25px; }
-        .blog-preview-card:hover { border-color: #d4af37; }
+        
+        /* 3'lü Blog Grid Tasarımı */
+        .section-title { margin: 100px 0 50px 0; text-align: center; }
+        .blog-grid { 
+          display: grid; 
+          grid-template-cols: repeat(3, 1fr); 
+          gap: 30px; 
+          max-width: 1200px; 
+          margin: 0 auto; 
+          padding: 0 20px;
+        }
+        .blog-card { 
+          background: #0d223f; 
+          border: 1px solid rgba(212,175,55,0.1); 
+          transition: 0.4s; 
+          text-decoration: none;
+          display: flex;
+          flex-direction: column;
+        }
+        .blog-card:hover { border-color: #d4af37; transform: translateY(-10px); }
+        .blog-card-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid rgba(212,175,55,0.1); }
+        .blog-card-content { padding: 25px; }
+        .blog-card-title { color: #fff; font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; line-height: 1.4; }
+        .blog-card-excerpt { color: #8e8e8e; font-size: 0.9rem; line-height: 1.6; }
 
-        /* Instagram Alanı */
-        .ig-outer-container { margin: 100px auto; padding: 0 20px; text-align: center; }
-        .ig-header-text { color: #d4af37; font-size: 1rem; font-weight: 300; letter-spacing: 4px; margin-bottom: 30px; text-transform: uppercase; }
+        /* Instagram Bölümü */
+        .ig-outer-container { margin: 120px auto; padding: 0 20px; text-align: center; }
         .ig-fixed-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
         .ig-post-wrapper { width: 300px; background: #0d223f; border: 1px solid rgba(212,175,55,0.15); overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }
-        .ig-post-wrapper:hover { border-color: #d4af37; transform: translateY(-5px); }
-        .ig-media-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #000; }
-        .ig-media-box img, .ig-media-box video { width: 100%; height: 100%; object-fit: contain; transition: 0.4s; }
-        .ig-caption-container { padding: 15px; text-align: left; background: #0d223f; }
-        .ig-caption-text { color: #ccc; font-size: 0.8rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+        .ig-post-wrapper:hover { border-color: #d4af37; }
+        .ig-media-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; }
+        .ig-caption-container { padding: 15px; text-align: left; }
+        .ig-caption-text { color: #ccc; font-size: 0.8rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        @media (max-width: 768px) { .ig-post-wrapper { width: 140px; } .hero-t { font-size: 2.2rem !important; } }
+        @media (max-width: 1024px) { .blog-grid { grid-template-cols: repeat(2, 1fr); } }
+        @media (max-width: 768px) { 
+          .hero-t { font-size: 2.2rem !important; } 
+          .blog-grid { grid-template-cols: 1fr; } 
+          .ig-post-wrapper { width: 140px; }
+          .about-title { font-size: 2.5rem !important; }
+        }
       `}} />
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="hero-container">
         {heroImages.map((img, index) => (
           <div key={index} className={`hero-slide ${index === currentImg ? 'active' : ''}`} style={{ backgroundImage: `url(${img})` }} />
@@ -77,35 +106,41 @@ export default function Home({ posts, igPosts }) {
 
       <div style={{ textAlign: 'center', padding: '0 20px 80px 20px' }}>
         <div className="cta-box">
-          <h2 style={{color: '#d4af37', fontSize: '1.8rem', fontWeight: '300', marginBottom: '25px'}}>ONDA ANALİZİ İLE MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
-          <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
+          <h2 className="onda-style-title" style={{fontSize: '1.4rem', marginBottom: '25px'}}>MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
+          <p style={{color: '#ccc', marginBottom: '40px', fontWeight: '500'}}>Mülkünüzün gerçek piyasa değerini rasyonel analiz ve teknik verilerle raporlayalım.</p>
+          <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: '900', letterSpacing: '2px'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
         </div>
 
-        {/* Blog Section */}
+        {/* 3'lü Blog Listesi (Perspektif & Gündem) */}
         {posts && posts.length > 0 && (
-          <div style={{ maxWidth: '950px', margin: '120px auto 40px auto' }}>
-            <h3 style={{ color: '#d4af37', fontWeight: '300', letterSpacing: '3px', marginBottom: '40px' }}>GÜNCEL ANALİZLER</h3>
-            <a href={`/blog/${posts[0].slug.current}`} className="blog-preview-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '35px', textAlign: 'left', flexWrap: 'wrap' }}>
-                <img src={urlFor(posts[0].mainImage).width(400).url()} style={{ width: '250px', height: '160px', objectFit: 'cover' }} alt="Blog" />
-                <div style={{ flex: 1 }}>
-                  <h4 style={{ color: '#fff', fontSize: '1.5rem' }}>{posts[0].title}</h4>
-                  <p style={{ color: '#8e8e8e' }}>{posts[0].excerpt}</p>
-                </div>
-              </div>
-            </a>
-          </div>
+          <section style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <div className="section-title">
+              <h3 className="onda-style-title" style={{ fontSize: '1.8rem' }}>PERSPEKTİF & GÜNDEM</h3>
+            </div>
+            <div className="blog-grid">
+              {posts.map((post) => (
+                <a key={post._id} href={`/blog/${post.slug.current}`} className="blog-card">
+                  <img src={urlFor(post.mainImage).width(600).url()} className="blog-card-img" alt={post.title} />
+                  <div className="blog-card-content">
+                    <h4 className="blog-card-title">{post.title}</h4>
+                    <p className="blog-card-excerpt">{post.excerpt}</p>
+                    <span style={{ color: '#d4af37', fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '2px', marginTop: '20px', display: 'block' }}>DEVAMINI OKU →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
         )}
 
-        {/* Instagram Section */}
+        {/* Instagram Vitrini */}
         {igPosts && igPosts.length > 0 && (
           <section className="ig-outer-container">
-            <h3 className="ig-header-text">ONDA YAŞAM</h3>
+            <h3 className="onda-style-title" style={{ fontSize: '1.2rem', marginBottom: '40px' }}>ONDA YAŞAM</h3>
             <div className="ig-fixed-grid">
               {igPosts.slice(0, 3).map((post) => (
                 <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-post-wrapper">
                   <div className="ig-media-box">
-                    {post.media_type === "VIDEO" ? <video src={post.media_url} autoPlay muted loop playsInline /> : <img src={post.media_url} alt="Onda Yatırım" />}
+                    {post.media_type === "VIDEO" ? <video src={post.media_url} autoPlay muted loop playsInline style={{width: '100%', height:'100%', objectFit: 'cover'}} /> : <img src={post.media_url} alt="Onda Yatırım" style={{width: '100%', height:'100%', objectFit: 'cover'}} />}
                   </div>
                   <div className="ig-caption-container">
                     <p className="ig-caption-text">{post.caption || "Onda Yatırım ile rasyonel analizler..."}</p>
@@ -113,6 +148,7 @@ export default function Home({ posts, igPosts }) {
                 </a>
               ))}
             </div>
+            <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" style={{display: 'inline-block', marginTop: '40px', color: '#666', textDecoration: 'none', fontSize: '0.7rem', letterSpacing: '3px'}}>@ondayatirim →</a>
           </section>
         )}
       </div>
@@ -121,7 +157,9 @@ export default function Home({ posts, igPosts }) {
 }
 
 export async function getStaticProps() {
-  const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc)[0...1]`);
+  // Sorguyu 3 yazı çekecek şekilde güncelledik
+  const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc)[0...3]`);
+  
   let igPosts = [];
   try {
     const igId = process.env.NEXT_PUBLIC_IG_ID;
@@ -130,5 +168,6 @@ export async function getStaticProps() {
     const igData = await response.json();
     igPosts = igData.data || [];
   } catch (err) { console.error(err); }
+
   return { props: { posts, igPosts }, revalidate: 60 };
 }
