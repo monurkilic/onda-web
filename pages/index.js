@@ -9,7 +9,7 @@ const urlFor = (source) => builder.image(source);
 
 const heroImages = ["/hero1.jpg", "/hero2.jpg", "/hero3.jpg"];
 
-export default function Home({ posts, igPosts }) {
+export default function Home({ posts, igPosts, properties }) {
   const [currentImg, setCurrentImg] = useState(0);
   
   useEffect(() => {
@@ -26,91 +26,45 @@ export default function Home({ posts, igPosts }) {
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        body { background: #0a192f; color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
+        body { background: #0a192f; color: #fff; font-family: 'Inter', sans-serif; margin: 0; -webkit-font-smoothing: antialiased; }
 
-        /* ONDA İmza Fontu */
         .onda-style-title {
           color: #d4af37 !important;
           font-weight: 800 !important;
           letter-spacing: 6px !important;
           text-transform: uppercase;
+          text-align: center;
         }
 
-        .hero-container { position: relative; height: 85vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; }
+        /* Hero */
+        .hero-container { position: relative; height: 85vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: opacity 2.5s ease-in-out; opacity: 0; }
         .hero-slide.active { opacity: 1; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.45); z-index: 2; }
-        .hero-content { position: relative; z-index: 3; padding: 0 20px; }
+        .hero-content { position: relative; z-index: 3; padding: 0 20px; text-align: center; }
         .hero-t { font-size: 3.8rem; font-weight: 300; letter-spacing: 12px; color: #fff; line-height: 1.1; }
         .hero-t span { color: #d4af37; display: block; font-size: 1.5em; letter-spacing: 20px; margin-top: 25px; font-weight: bold; }
-        
-        .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 60px 40px; background: rgba(13,34,63,0.92); width: 100%; max-width: 900px; margin: -80px auto 60px auto; backdrop-filter: blur(12px); position: relative; z-index: 10; }
 
-        /* Kompakt Vitrin Düzeni (Hem Blog Hem Instagram İçin) */
-        .window-section { margin: 100px auto; padding: 0 20px; text-align: center; }
-        .window-grid { 
-          display: flex; 
-          flex-wrap: wrap; 
-          justify-content: center; 
-          gap: 20px; 
-        }
-
-        .window-card { 
-          width: 300px; /* SABİT 300PX */
-          background: #0d223f; 
-          border: 1px solid rgba(212,175,55,0.15); 
-          overflow: hidden; 
-          transition: 0.3s;
-          display: flex;
-          flex-direction: column;
-          text-decoration: none;
-        }
+        /* Ortak Pencere Kart Yapısı (300px) */
+        .window-section { margin: 120px auto; padding: 0 20px; max-width: 1200px; text-align: center; }
+        .window-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .window-card { width: 300px; background: #0d223f; border: 1px solid rgba(212,175,55,0.15); transition: 0.3s; display: flex; flex-direction: column; text-decoration: none; }
         .window-card:hover { border-color: #d4af37; transform: translateY(-5px); }
-
-        .window-media { 
-          width: 100%; 
-          background: #000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-        }
-        .window-media img, .window-media video { 
-          width: 100%; 
-          height: auto; 
-          object-fit: contain; /* KIRPMAYI ENGELLER */
-          display: block;
-        }
-
+        .window-media { width: 100%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .window-media img, .window-media video { width: 100%; height: auto; object-fit: contain; display: block; }
         .window-info { padding: 20px; text-align: left; }
-        .window-title { 
-          color: #d4af37; 
-          font-size: 0.9rem; 
-          font-weight: 800; 
-          letter-spacing: 1px; 
-          text-transform: uppercase; 
-          margin-bottom: 10px;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        .window-text { 
-          color: #ccc; 
-          font-size: 0.8rem; 
-          line-height: 1.5; 
-          display: -webkit-box;
-          -webkit-line-clamp: 2; /* 2 SATIR SINIRI */
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
+        .window-card-title { color: #d4af37; font-size: 0.9rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+        .window-card-meta { color: #fff; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; opacity: 0.9; }
+        .window-card-text { color: #ccc; font-size: 0.75rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* Değerleme Kutusu (CTA) */
+        .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 70px 40px; background: rgba(13,34,63,0.92); width: 100%; max-width: 900px; margin: 0 auto; backdrop-filter: blur(12px); text-align: center; }
 
         @media (max-width: 768px) { 
           .window-card { width: 145px; } 
           .window-info { padding: 10px; }
-          .window-title { font-size: 0.7rem; letter-spacing: 0; }
-          .window-text { display: none; } /* Mobilde sadece başlık kalsın */
           .hero-t { font-size: 2.2rem !important; }
+          .window-card-text { display: none; }
         }
       `}} />
 
@@ -120,67 +74,90 @@ export default function Home({ posts, igPosts }) {
           <div key={index} className={`hero-slide ${index === currentImg ? 'active' : ''}`} style={{ backgroundImage: `url(${img})` }} />
         ))}
         <div className="hero-overlay" />
-        <div className="hero-content">
-          <h1 className="hero-t">ARADIĞINIZ HER ŞEY <span>ONDA</span></h1>
+        <div className="hero-content"><h1 className="hero-t">ARADIĞINIZ HER ŞEY <span>ONDA</span></h1></div>
+      </section>
+
+      {/* 1. PORTFÖY ONDA */}
+      {properties && properties.length > 0 && (
+        <section className="window-section">
+          <h3 className="onda-style-title" style={{ fontSize: '1.6rem', marginBottom: '40px' }}>PORTFÖYÜMÜZE BAKIN</h3>
+          <div className="window-grid">
+            {properties.slice(0, 3).map((prop) => (
+              <a key={prop._id} href={`/portfolio/${prop.slug.current}`} className="window-card">
+                <div className="window-media">
+                  <img src={urlFor(prop.mainImage).width(600).url()} alt={prop.title} />
+                </div>
+                <div className="window-info">
+                  <h4 className="window-card-title">{prop.title}</h4>
+                  <p className="window-card-meta">{prop.location}</p>
+                  <p className="window-card-meta" style={{color: '#d4af37'}}>{prop.price} {prop.currency}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 2. MÜLKÜNÜZÜ DEĞERLENDİRİN */}
+      <section style={{ padding: '0 20px' }}>
+        <div className="cta-box">
+          <h2 className="onda-style-title" style={{fontSize: '1.3rem', marginBottom: '25px'}}>MÜLKÜNÜZÜ DEĞERLENDİRİN</h2>
+          <p style={{color: '#ccc', marginBottom: '40px', fontWeight: '500', maxWidth: '600px', margin: '0 auto 40px auto'}}>Mülkünüzün gerçek değerini rasyonel analiz ve teknik verilerle raporlayalım.</p>
+          <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: '900', letterSpacing: '2px'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
         </div>
       </section>
 
-      <div style={{ textAlign: 'center', padding: '0 20px 80px 20px' }}>
-        <div className="cta-box">
-          <h2 className="onda-style-title" style={{fontSize: '1.2rem', marginBottom: '25px'}}>MÜLKÜNÜZÜN DEĞERİNİ KEŞFEDİN</h2>
-          <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: '900', letterSpacing: '2px'}}>ÜCRETSİZ ANALİZ TALEBİ</a>
-        </div>
+      {/* 3. INSTAGRAM ONDA */}
+      {igPosts && igPosts.length > 0 && (
+        <section className="window-section">
+          <h3 className="onda-style-title" style={{ fontSize: '1.4rem', marginBottom: '40px' }}>INSTAGRAM ONDA</h3>
+          <div className="window-grid">
+            {igPosts.slice(0, 3).map((post) => (
+              <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="window-card">
+                <div className="window-media" style={{aspectRatio: '1/1'}}>
+                  {post.media_type === "VIDEO" ? (
+                    <video src={post.media_url} autoPlay muted loop playsInline />
+                  ) : (
+                    <img src={post.media_url} alt="Onda Yatırım" />
+                  )}
+                </div>
+                <div className="window-info">
+                  <p className="window-card-text">{post.caption || "Onda Yatırım ile rasyonel süreçler..."}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+          <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" style={{display: 'inline-block', marginTop: '40px', color: '#666', textDecoration: 'none', fontSize: '0.7rem', letterSpacing: '3px'}}>@ondayatirim →</a>
+        </section>
+      )}
 
-        {/* Blog Vitrini - Perspektif & Gündem */}
-        {posts && posts.length > 0 && (
-          <section className="window-section">
-            <h3 className="onda-style-title" style={{ fontSize: '1.6rem', marginBottom: '40px' }}>PERSPEKTİF & GÜNDEM</h3>
-            <div className="window-grid">
-              {posts.map((post) => (
-                <a key={post._id} href={`/blog/${post.slug.current}`} className="window-card">
-                  <div className="window-media">
-                    <img src={urlFor(post.mainImage).width(600).url()} alt={post.title} />
-                  </div>
-                  <div className="window-info">
-                    <h4 className="window-title">{post.title}</h4>
-                    <p className="window-text">{post.excerpt}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Instagram Vitrini - Onda Yaşam */}
-        {igPosts && igPosts.length > 0 && (
-          <section className="window-section">
-            <h3 className="onda-style-title" style={{ fontSize: '1.2rem', marginBottom: '40px' }}>ONDA YAŞAM</h3>
-            <div className="window-grid">
-              {igPosts.slice(0, 3).map((post) => (
-                <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="window-card">
-                  <div className="window-media" style={{aspectRatio: '1/1'}}>
-                    {post.media_type === "VIDEO" ? (
-                      <video src={post.media_url} autoPlay muted loop playsInline />
-                    ) : (
-                      <img src={post.media_url} alt="Onda Yatırım" />
-                    )}
-                  </div>
-                  <div className="window-info">
-                    <p className="window-text" style={{WebkitLineClamp: 2}}>{post.caption || "Onda Yatırım ile rasyonel süreçler..."}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
-            <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" style={{display: 'inline-block', marginTop: '40px', color: '#666', textDecoration: 'none', fontSize: '0.7rem', letterSpacing: '3px'}}>@ondayatirim →</a>
-          </section>
-        )}
-      </div>
+      {/* 4. PERSPEKTİF & GÜNDEM */}
+      {posts && posts.length > 0 && (
+        <section className="window-section" style={{ borderTop: '1px solid rgba(212,175,55,0.1)', paddingTop: '100px' }}>
+          <h3 className="onda-style-title" style={{ fontSize: '1.5rem', marginBottom: '40px' }}>PERSPEKTİF & GÜNDEM</h3>
+          <div className="window-grid">
+            {posts.slice(0, 3).map((post) => (
+              <a key={post._id} href={`/blog/${post.slug.current}`} className="window-card">
+                <div className="window-media">
+                  <img src={urlFor(post.mainImage).width(600).url()} alt={post.title} />
+                </div>
+                <div className="window-info">
+                  <h4 className="window-card-title">{post.title}</h4>
+                  <p className="window-card-text">{post.excerpt}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }
 
 export async function getStaticProps() {
   const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc)[0...3]`);
+  const properties = await client.fetch(`*[_type == "property"] | order(_createdAt desc)[0...3]`);
+  
   let igPosts = [];
   try {
     const igId = process.env.NEXT_PUBLIC_IG_ID;
@@ -189,5 +166,6 @@ export async function getStaticProps() {
     const igData = await response.json();
     igPosts = igData.data || [];
   } catch (err) { console.error(err); }
-  return { props: { posts, igPosts }, revalidate: 60 };
+
+  return { props: { posts, igPosts, properties }, revalidate: 60 };
 }
