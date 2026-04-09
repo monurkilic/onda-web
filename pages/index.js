@@ -55,7 +55,21 @@ export default function Home({ posts, igPosts, properties }) {
         .window-info { padding: 20px; text-align: left; }
         .window-card-title { color: #d4af37; font-size: 0.9rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
         .window-card-meta { color: #fff; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; opacity: 0.9; }
-        .window-card-text { color: #ccc; font-size: 0.75rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* Tamamını İncele Butonu */
+        .view-all-btn { 
+          display: inline-block; 
+          margin-top: 50px; 
+          padding: 15px 40px; 
+          border: 1px solid #d4af37; 
+          color: #d4af37; 
+          text-decoration: none; 
+          font-weight: 700; 
+          letter-spacing: 3px; 
+          font-size: 0.8rem; 
+          transition: 0.3s; 
+        }
+        .view-all-btn:hover { background: #d4af37; color: #0a192f; }
 
         /* Değerleme Kutusu (CTA) */
         .cta-box { border: 1px solid rgba(212,175,55,0.3); padding: 70px 40px; background: rgba(13,34,63,0.92); width: 100%; max-width: 900px; margin: 0 auto; backdrop-filter: blur(12px); text-align: center; }
@@ -64,7 +78,6 @@ export default function Home({ posts, igPosts, properties }) {
           .window-card { width: 145px; } 
           .window-info { padding: 10px; }
           .hero-t { font-size: 2.2rem !important; }
-          .window-card-text { display: none; }
         }
       `}} />
 
@@ -80,7 +93,7 @@ export default function Home({ posts, igPosts, properties }) {
       {/* 1. PORTFÖY ONDA */}
       {properties && properties.length > 0 && (
         <section className="window-section">
-          <h3 className="onda-style-title" style={{ fontSize: '1.6rem', marginBottom: '40px' }}>PORTFÖYÜMÜZE BAKIN</h3>
+          <h3 className="onda-style-title" style={{ fontSize: '1.6rem', marginBottom: '40px' }}>PORTFÖY ONDA</h3>
           <div className="window-grid">
             {properties.slice(0, 3).map((prop) => (
               <a key={prop._id} href={`/portfolio/${prop.slug.current}`} className="window-card">
@@ -95,6 +108,7 @@ export default function Home({ posts, igPosts, properties }) {
               </a>
             ))}
           </div>
+          <a href="/portfolio" className="view-all-btn">TAMAMINI İNCELE</a>
         </section>
       )}
 
@@ -116,25 +130,27 @@ export default function Home({ posts, igPosts, properties }) {
               <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="window-card">
                 <div className="window-media" style={{aspectRatio: '1/1'}}>
                   {post.media_type === "VIDEO" ? (
-                    <video src={post.media_url} autoPlay muted loop playsInline />
+                    <video src={post.media_url} autoPlay muted loop playsInline style={{width:'100%', height:'100%', objectFit:'cover'}} />
                   ) : (
-                    <img src={post.media_url} alt="Onda Yatırım" />
+                    <img src={post.media_url} alt="Onda Yatırım" style={{width:'100%', height:'100%', objectFit:'cover'}} />
                   )}
                 </div>
                 <div className="window-info">
-                  <p className="window-card-text">{post.caption || "Onda Yatırım ile rasyonel süreçler..."}</p>
+                  <p style={{ color: '#ccc', fontSize: '0.75rem', lineHeight: '1.5', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {post.caption || "Onda Yatırım ile rasyonel süreçler..."}
+                  </p>
                 </div>
               </a>
             ))}
           </div>
-          <a href="https://instagram.com/ondayatirim" target="_blank" rel="noreferrer" style={{display: 'inline-block', marginTop: '40px', color: '#666', textDecoration: 'none', fontSize: '0.7rem', letterSpacing: '3px'}}>@ondayatirim →</a>
+          {/* Instagram linki isteğin üzerine kaldırıldı */}
         </section>
       )}
 
-      {/* 4. PERSPEKTİF & GÜNDEM */}
+      {/* 4. PERSPEKTİF & GÜNDEM ONDA */}
       {posts && posts.length > 0 && (
         <section className="window-section" style={{ borderTop: '1px solid rgba(212,175,55,0.1)', paddingTop: '100px' }}>
-          <h3 className="onda-style-title" style={{ fontSize: '1.5rem', marginBottom: '40px' }}>PERSPEKTİF & GÜNDEM</h3>
+          <h3 className="onda-style-title" style={{ fontSize: '1.5rem', marginBottom: '40px' }}>PERSPEKTİF & GÜNDEM ONDA</h3>
           <div className="window-grid">
             {posts.slice(0, 3).map((post) => (
               <a key={post._id} href={`/blog/${post.slug.current}`} className="window-card">
@@ -143,7 +159,9 @@ export default function Home({ posts, igPosts, properties }) {
                 </div>
                 <div className="window-info">
                   <h4 className="window-card-title">{post.title}</h4>
-                  <p className="window-card-text">{post.excerpt}</p>
+                  <p style={{ color: '#ccc', fontSize: '0.75rem', lineHeight: '1.5', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {post.excerpt}
+                  </p>
                 </div>
               </a>
             ))}
