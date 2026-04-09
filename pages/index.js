@@ -36,62 +36,50 @@ export default function Home({ posts, igPosts }) {
         .blog-preview-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); padding: 25px; text-decoration: none; display: block; transition: 0.3s; margin-top: 25px; }
         .blog-preview-card:hover { border-color: #d4af37; }
 
-        /* Milimetrik Instagram Vitrini */
-        .ig-outer-container { 
-          margin: 100px auto; 
-          padding: 0 20px; 
-          text-align: center;
-        }
-        
-        .ig-header-text {
-          color: #d4af37; 
-          font-size: 1rem; 
-          font-weight: 300; 
-          letter-spacing: 4px; 
-          margin-bottom: 30px; 
-          text-transform: uppercase;
-        }
-
-        .ig-fixed-grid { 
-          display: flex; 
-          flex-wrap: wrap; 
-          justify-content: center; /* Merkeze hizalar */
-          gap: 20px; /* Postlar arası boşluk */
-        }
+        /* Instagram Vitrini */
+        .ig-outer-container { margin: 100px auto; padding: 0 20px; text-align: center; }
+        .ig-header-text { color: #d4af37; font-size: 1rem; font-weight: 300; letter-spacing: 4px; margin-bottom: 30px; text-transform: uppercase; }
+        .ig-fixed-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
         
         .ig-post-wrapper { 
-          width: 300px; /* TAM 300PX GENİŞLİK */
+          width: 300px; 
           background: #0d223f; 
-          border: 1px solid rgba(212,175,55,0.15);
-          overflow: hidden;
+          border: 1px solid rgba(212,175,55,0.15); 
+          overflow: hidden; 
           transition: 0.3s;
+          display: flex;
+          flex-direction: column;
         }
 
-        .ig-post-wrapper:hover {
-          border-color: #d4af37;
-          transform: translateY(-5px);
-        }
+        .ig-post-wrapper:hover { border-color: #d4af37; transform: translateY(-5px); }
         
-        .ig-post-wrapper img, .ig-post-wrapper video { 
-          width: 100%; 
-          height: auto; 
-          display: block;
-          object-fit: contain; /* ASLA KIRPMA YAPMAZ, TAMAMI GÖRÜNÜR */
+        .ig-media-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #000; }
+        .ig-media-box img, .ig-media-box video { width: 100%; height: 100%; object-fit: contain; transition: 0.4s; }
+
+        /* Yeni Caption Alanı */
+        .ig-caption-container {
+          padding: 15px;
+          text-align: left;
+          background: #0d223f;
+        }
+        .ig-caption-text {
+          color: #ccc;
+          font-size: 0.8rem;
+          line-height: 1.5;
+          display: -webkit-box;
+          -webkit-line-clamp: 2; /* Sadece 2 satır gösterir */
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
-        .ig-footer-link {
-          display: inline-block;
-          margin-top: 30px;
-          color: #666;
-          text-decoration: none;
-          font-size: 0.7rem;
-          letter-spacing: 2px;
-          transition: 0.3s;
-        }
+        .ig-footer-link { display: inline-block; margin-top: 30px; color: #666; text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; }
         .ig-footer-link:hover { color: #d4af37; }
 
         @media (max-width: 768px) { 
-          .ig-post-wrapper { width: 140px; } /* Mobilde yan yana 2 tane sığması için küçülttüm */
+          .ig-post-wrapper { width: 140px; } 
+          .ig-caption-container { padding: 8px; }
+          .ig-caption-text { font-size: 0.7rem; }
           .ig-fixed-grid { gap: 10px; }
           .hero-t { font-size: 2.2rem !important; }
         }
@@ -130,7 +118,7 @@ export default function Home({ posts, igPosts }) {
           </div>
         )}
 
-        {/* Hassas Ayarlı Instagram Bölümü */}
+        {/* Instagram Vitrini */}
         {igPosts && igPosts.length > 0 && (
           <section className="ig-outer-container">
             <h3 className="ig-header-text">ONDA YAŞAM</h3>
@@ -138,11 +126,17 @@ export default function Home({ posts, igPosts }) {
             <div className="ig-fixed-grid">
               {igPosts.slice(0, 3).map((post) => (
                 <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-post-wrapper">
-                  {post.media_type === "VIDEO" ? (
-                    <video src={post.media_url} autoPlay muted loop playsInline />
-                  ) : (
-                    <img src={post.media_url} alt="Onda Yatırım" loading="lazy" />
-                  )}
+                  <div className="ig-media-box">
+                    {post.media_type === "VIDEO" ? (
+                      <video src={post.media_url} autoPlay muted loop playsInline />
+                    ) : (
+                      <img src={post.media_url} alt="Onda Yatırım" loading="lazy" />
+                    )}
+                  </div>
+                  {/* Caption Alanı */}
+                  <div className="ig-caption-container">
+                    <p className="ig-caption-text">{post.caption || "Onda Yatırım ile rasyonel analizler..."}</p>
+                  </div>
                 </a>
               ))}
             </div>
@@ -163,7 +157,8 @@ export async function getStaticProps() {
   try {
     const igId = process.env.NEXT_PUBLIC_IG_ID;
     const token = process.env.IG_ACCESS_TOKEN;
-    const response = await fetch(`https://graph.facebook.com/v20.0/${igId}/media?fields=id,media_url,permalink,media_type&limit=3&access_token=${token}`);
+    // Caption alanını da çektiğimizden emin oluyoruz
+    const response = await fetch(`https://graph.facebook.com/v20.0/${igId}/media?fields=id,media_url,permalink,media_type,caption&limit=3&access_token=${token}`);
     const igData = await response.json();
     igPosts = igData.data || [];
   } catch (err) {
