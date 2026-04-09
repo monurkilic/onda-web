@@ -39,10 +39,10 @@ export default function Layout({ children }) {
 
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
-        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px; transform: translateX(100%); transition: 0.4s; }
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; transform: translateX(100%); transition: 0.4s; }
         .mobile-overlay.active { transform: translateX(0); }
         
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: flex !important; }
         }
@@ -53,11 +53,12 @@ export default function Layout({ children }) {
           <img src="/logo.png" style={{height: '40px'}} alt="Logo" />
           <span style={{color: '#d4af37', fontWeight: '900', letterSpacing: '3px', fontSize: '1.2rem', textTransform: 'uppercase'}}>ONDA</span>
         </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.85rem'}}>
-          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY ONDA</a>
+        <div className="desktop-nav" style={{display: 'flex', gap: '20px', fontSize: '0.8rem'}}>
+          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
+          <a href="/regions" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
           <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PERSPEKTİF & GÜNDEM ONDA</a>
+          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PERSPEKTİF & GÜNDEM</a>
           <a href="/tools" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
         </div>
@@ -70,7 +71,8 @@ export default function Layout({ children }) {
 
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
         <a href="/" style={{color: getLinkColor('/'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
-        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY ONDA</a>
+        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
+        <a href="/regions" style={{color: getLinkColor('/regions'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>BÖLGE ANALİZLERİ</a>
         <a href="/valuation" style={{color: getLinkColor('/valuation'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
         <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
         <a href="/blog" style={{color: getLinkColor('/blog'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PERSPEKTİF & GÜNDEM</a>
@@ -82,8 +84,9 @@ export default function Layout({ children }) {
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.75rem', flexWrap: 'wrap', marginBottom: '20px'}}>
-          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY ONDA</a>
+        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.75rem', flexWrap: 'wrap', marginBottom: '20px'}}>
+          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
+          <a href="/regions" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
           <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
           <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PERSPEKTİF & GÜNDEM</a>
