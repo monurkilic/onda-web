@@ -29,26 +29,20 @@ export default function Layout({ children }) {
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        /* YENİ NESİL RASYONEL FONT: INTER */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
         html, body, #__next, * { 
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+          font-family: 'Inter', sans-serif !important;
           box-sizing: border-box;
           -webkit-font-smoothing: antialiased;
         }
 
-        /* Tüm metin elementlerini Inter ile mühürlüyoruz */
-        p, span, div, a, h1, h2, h3, h4, h5, h6, li, button, input, select, textarea {
-          font-family: 'Inter', sans-serif !important;
-        }
-
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
         .hamburger div { width: 25px; height: 3px; background: #d4af37; transition: 0.3s; }
-        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; transform: translateX(100%); transition: 0.4s; }
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0a192f; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px; transform: translateX(100%); transition: 0.4s; }
         .mobile-overlay.active { transform: translateX(0); }
         
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: flex !important; }
         }
@@ -59,11 +53,11 @@ export default function Layout({ children }) {
           <img src="/logo.png" style={{height: '40px'}} alt="Logo" />
           <span style={{color: '#d4af37', fontWeight: '900', letterSpacing: '3px', fontSize: '1.2rem', textTransform: 'uppercase'}}>ONDA</span>
         </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '30px', fontSize: '0.9rem'}}>
+        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.85rem'}}>
           <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY ONDA</a>
           <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          {/* Yeni Link: ANALİZ ARAÇLARI */}
+          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PERSPEKTİF & GÜNDEM ONDA</a>
           <a href="/tools" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
         </div>
@@ -75,23 +69,24 @@ export default function Layout({ children }) {
       </nav>
 
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
-        <a href="/" style={{color: getLinkColor('/'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
-        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
-        <a href="/valuation" style={{color: getLinkColor('/valuation'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
-        <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
-        <a href="/tools" style={{color: getLinkColor('/tools'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>ANALİZ ARAÇLARI</a>
-        <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.5rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
+        <a href="/" style={{color: getLinkColor('/'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
+        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY ONDA</a>
+        <a href="/valuation" style={{color: getLinkColor('/valuation'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
+        <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
+        <a href="/blog" style={{color: getLinkColor('/blog'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PERSPEKTİF & GÜNDEM</a>
+        <a href="/tools" style={{color: getLinkColor('/tools'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>ANALİZ ARAÇLARI</a>
+        <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
       </div>
 
       <main style={{flex: 1}}>{children}</main>
 
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(212,175,55,0.1)', textAlign: 'center', background: '#0a192f', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '30px', fontSize: '0.8rem', flexWrap: 'wrap', marginBottom: '20px'}}>
-          <a href="/" style={{color: getLinkColor('/'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>GİRİŞ</a>
-          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
+        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.75rem', flexWrap: 'wrap', marginBottom: '20px'}}>
+          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY ONDA</a>
           <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
+          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PERSPEKTİF & GÜNDEM</a>
           <a href="/tools" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
         </div>
