@@ -15,165 +15,138 @@ const builder = imageUrlBuilder(client);
 const urlFor = (source) => (source ? builder.image(source) : null);
 
 export default function PropertyDetail({ property }) {
-  const [activeImg, setActiveImg] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
-  if (!property) return <div style={{ color: '#fff', textAlign: 'center', padding: '100px' }}>İlan yükleniyor...</div>;
+  if (!property) return <div style={{ color: '#fff', textAlign: 'center', padding: '100px' }}>Yükleniyor...</div>;
 
-  // Tüm fotoğrafları tek bir dizide toplayalım (Ana resim + Galeri)
-  const allImages = [property.mainImage, ...(property.gallery || [])].filter(Boolean);
-  const currentDisplayImg = activeImg || property.mainImage;
+  const images = [property.mainImage, ...(property.gallery || [])].filter(Boolean);
 
-  const whatsappUrl = `https://wa.me/905326466909?text=${encodeURIComponent(`Merhaba, ondayatirim.com üzerindeki "${property.title}" ilanınız hakkında bilgi almak istiyorum.`)}`;
+  const nextPhoto = () => setPhotoIndex((prev) => (prev + 1) % images.length);
+  const prevPhoto = () => setPhotoIndex((prev) => (prev - 1 + images.length) % images.length);
+
+  const whatsappUrl = `https://wa.me/905326466909?text=${encodeURIComponent(`Merhaba, "${property.title}" ilanınız hakkında detaylı bilgi rica ediyorum.`)}`;
 
   return (
     <>
       <Head>
         <title>{property.title} | Onda Yatırım</title>
-        <meta name="description" content={`${property.location} lokasyonunda ${property.propertyType} fırsatı.`} />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .detail-page { max-width: 1100px; margin: 120px auto; padding: 0 20px; color: #fff; font-family: 'Inter', sans-serif; }
+        .container { max-width: 1100px; margin: 120px auto; padding: 0 20px; font-family: 'Inter', sans-serif; color: #fff; }
         
-        /* Başlık Alanı */
-        .header-section { margin-bottom: 40px; border-left: 4px solid #d4af37; padding-left: 20px; }
-        .header-title { font-size: 2.4rem; font-weight: 300; letter-spacing: 1px; margin-bottom: 10px; color: #fff; }
-        .header-loc { color: #d4af37; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; }
+        /* Premium Galeri Dizaynı */
+        .gallery-window { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; height: 500px; margin-bottom: 40px; border-radius: 8px; overflow: hidden; }
+        .main-feat { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: 0.3s; }
+        .side-grid { display: grid; grid-template-rows: 1fr 1fr; gap: 10px; }
+        .side-img { width: 100%; height: 245px; object-fit: cover; cursor: pointer; transition: 0.3s; }
+        .main-feat:hover, .side-img:hover { filter: brightness(0.8); }
 
-        /* Görsel Alanı (Stage) */
-        .visual-stage { display: flex; flex-direction: column; gap: 15px; margin-bottom: 50px; }
-        .main-view-container { width: 100%; height: 65vh; overflow: hidden; border: 1px solid rgba(212,175,55,0.2); background: #000; position: relative; }
-        .main-view-img { width: 100%; height: 100%; object-fit: contain; }
-        
-        /* Thumbnails (Film Şeridi) */
-        .thumb-grid { display: grid; grid-template-cols: repeat(6, 1fr); gap: 10px; }
-        .thumb-item { aspect-ratio: 1/1; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; overflow: hidden; }
-        .thumb-item:hover { border-color: #d4af37; transform: scale(1.05); }
-        .thumb-item.active { border: 2px solid #d4af37; }
-        .thumb-img { width: 100%; height: 100%; object-fit: cover; }
+        /* Lightbox (Fotoğraf Büyütme) */
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .lightbox-content { position: relative; width: 90%; height: 80vh; display: flex; align-items: center; justify-content: center; }
+        .lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .close-btn { position: absolute; top: -50px; right: 0; color: #fff; font-size: 2rem; cursor: pointer; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(212,175,55,0.2); color: #d4af37; border: 1px solid #d4af37; padding: 15px; cursor: pointer; transition: 0.3s; }
+        .nav-btn:hover { background: #d4af37; color: #0a192f; }
+        .prev-btn { left: -60px; }
+        .next-btn { right: -60px; }
 
-        /* Teknik Bilgi Kartları */
-        .specs-container { display: grid; grid-template-cols: repeat(4, 1fr); gap: 1px; background: rgba(212,175,55,0.2); border: 1px solid rgba(212,175,55,0.2); margin-bottom: 60px; }
-        .spec-card { background: #0a192f; padding: 25px; text-align: center; }
-        .spec-label { display: block; color: #8e8e8e; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-        .spec-value { color: #d4af37; font-size: 1.2rem; font-weight: bold; }
+        /* Bilgi Alanları */
+        .spec-bar { display: flex; justify-content: space-between; background: #0d223f; padding: 30px; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 40px; }
+        .spec-item { text-align: center; }
+        .spec-label { display: block; color: #8e8e8e; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px; }
+        .spec-val { color: #d4af37; font-size: 1.1rem; font-weight: bold; }
 
-        /* Rasyonel Analiz Raporu */
-        .analysis-wrapper { background: #fff; color: #0a192f; padding: 60px; border-radius: 2px; margin-bottom: 60px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .analysis-wrapper::before { content: ""; position: absolute; top: 0; left: 0; width: 8px; height: 100%; background: #d4af37; }
-        .analysis-badge { background: #0a192f; color: #d4af37; padding: 5px 15px; font-size: 0.7rem; letter-spacing: 3px; position: absolute; top: 20px; right: 20px; }
-        .analysis-content h2 { font-size: 1.8rem; margin-bottom: 30px; border-bottom: 2px solid #0a192f; padding-bottom: 10px; }
-        .analysis-text { line-height: 1.8; font-size: 1.05rem; }
+        /* Onda Analizi Raporu */
+        .report-box { background: #fff; color: #0a192f; padding: 50px; border-left: 10px solid #d4af37; margin-bottom: 60px; }
+        .report-title { font-size: 1.5rem; font-weight: 800; border-bottom: 2px solid #0a192f; display: inline-block; margin-bottom: 30px; }
 
-        /* Harita ve İletişim */
-        .map-box { width: 100%; height: 450px; margin-bottom: 40px; border: 1px solid rgba(212,175,55,0.2); filter: grayscale(1) invert(0.9) contrast(1.1); }
-        .cta-footer { display: flex; gap: 20px; }
-        .wa-btn { flex: 1; background: #25D366; color: #fff; padding: 22px; text-align: center; text-decoration: none; font-weight: bold; letter-spacing: 2px; border-radius: 4px; transition: 0.3s; }
-        .wa-btn:hover { background: #128c7e; transform: translateY(-3px); }
+        /* Harita Bölümü */
+        .map-wrapper { width: 100%; height: 400px; border: 1px solid rgba(212,175,55,0.3); margin-bottom: 40px; overflow: hidden; border-radius: 4px; }
+        .map-frame { width: 100%; height: 100%; border: 0; filter: grayscale(1) invert(0.9); }
+
+        .wa-footer-btn { display: block; background: #25D366; color: #fff; padding: 25px; text-align: center; text-decoration: none; font-weight: bold; font-size: 1rem; border-radius: 4px; letter-spacing: 1px; transition: 0.3s; }
+        .wa-footer-btn:hover { background: #128c7e; transform: scale(1.02); }
 
         @media (max-width: 768px) {
-          .header-title { font-size: 1.8rem; }
-          .main-view-container { height: 40vh; }
-          .thumb-grid { grid-template-cols: repeat(4, 1fr); }
-          .specs-container { grid-template-cols: repeat(2, 1fr); }
-          .analysis-wrapper { padding: 40px 20px; }
-          .cta-footer { flex-direction: column; }
+          .gallery-window { grid-template-cols: 1fr; height: auto; }
+          .side-grid { display: none; }
+          .spec-bar { flex-wrap: wrap; gap: 20px; }
+          .spec-item { width: 45%; }
+          .nav-btn { padding: 10px; }
+          .prev-btn { left: 0; }
+          .next-btn { right: 0; }
         }
       `}} />
 
-      <main className="detail-page">
-        {/* Başlık Bölümü */}
-        <section className="header-section">
-          <h1 className="header-title">{property.title}</h1>
-          <p className="header-loc">{property.location}</p>
-        </section>
+      <main className="container">
+        <h1 style={{ fontSize: '2.5rem', fontWeight: '300', marginBottom: '10px' }}>{property.title}</h1>
+        <p style={{ color: '#d4af37', letterSpacing: '2px', marginBottom: '30px' }}>{property.location}</p>
 
-        {/* Galeri Bölümü */}
-        <section className="visual-stage">
-          <div className="main-view-container">
-            <img 
-              src={urlFor(currentDisplayImg).url()} 
-              className="main-view-img" 
-              alt={property.title} 
-            />
-          </div>
-          
-          <div className="thumb-grid">
-            {allImages.map((img, i) => (
-              <div 
-                key={i} 
-                className={`thumb-item ${currentDisplayImg === img ? 'active' : ''}`}
-                onClick={() => setActiveImg(img)}
-              >
-                <img src={urlFor(img).width(200).url()} className="thumb-img" alt="Küçük resim" />
-              </div>
+        {/* Galeri Vitrini */}
+        <div className="gallery-window">
+          <img src={urlFor(images[0]).url()} className="main-feat" onClick={() => { setPhotoIndex(0); setIsOpen(true); }} />
+          <div className="side-grid">
+            {images.slice(1, 3).map((img, i) => (
+              <img key={i} src={urlFor(img).url()} className="side-img" onClick={() => { setPhotoIndex(i + 1); setIsOpen(true); }} />
             ))}
           </div>
-        </section>
+        </div>
+        <p style={{ textAlign: 'right', fontSize: '0.8rem', color: '#8e8e8e', cursor: 'pointer' }} onClick={() => setIsOpen(true)}>+ Tüm Fotoğrafları Gör</p>
 
-        {/* Teknik Bilgiler */}
-        <section className="specs-container">
-          <div className="spec-card">
-            <span className="spec-label">Fiyat</span>
-            <span className="spec-value">{property.price} {property.currency}</span>
-          </div>
-          <div className="spec-card">
-            <span className="spec-label">Mülk Tipi</span>
-            <span className="spec-value">{property.propertyType}</span>
-          </div>
-          <div className="spec-card">
-            <span className="spec-label">Net Alan</span>
-            <span className="spec-value">{property.area} m²</span>
-          </div>
-          <div className="spec-card">
-            <span className="spec-label">Oda Sayısı</span>
-            <span className="spec-value">{property.rooms}</span>
-          </div>
-        </section>
+        {/* Teknik Bilgi Çubuğu */}
+        <div className="spec-bar">
+          <div className="spec-item"><span className="spec-label">FİYAT</span><span className="spec-val">{property.price} {property.currency}</span></div>
+          <div className="spec-item"><span className="spec-label">TİP</span><span className="spec-val" style={{textTransform:'uppercase'}}>{property.propertyType}</span></div>
+          <div className="spec-item"><span className="spec-label">NET ALAN</span><span className="spec-val">{property.area} m²</span></div>
+          <div className="spec-item"><span className="spec-label">ODA</span><span className="spec-val">{property.rooms}</span></div>
+        </div>
 
-        {/* Onda Analizi Bölümü */}
+        {/* Onda Analizi */}
         {property.analysis && (
-          <section className="analysis-wrapper">
-            <div className="analysis-badge">RASYONEL ANALİZ</div>
-            <div className="analysis-content">
-              <h2>ONDA ANALİZİ</h2>
-              <div className="analysis-text">
-                <PortableText value={property.analysis} />
-              </div>
-            </div>
+          <section className="report-box">
+            <h2 className="report-title">ONDA ANALİZİ</h2>
+            <PortableText value={property.analysis} />
           </section>
         )}
 
-        {/* Harita Bölümü */}
-        <section style={{ marginBottom: '60px' }}>
-          <h3 style={{ color: '#d4af37', letterSpacing: '3px', marginBottom: '20px', fontSize: '0.9rem' }}>KONUM VE ULAŞIM</h3>
+        {/* Harita */}
+        <div className="map-wrapper">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3126.311756538183!2d27.091176575306657!3d38.41113097519961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd9006c09a89b%3A0xc392cae69d769623!2sOnda%20Yat%C4%B1r%C4%B1m!5e0!3m2!1str!2str!4v1740431268615!5m2!1str!2str" 
-            className="map-box"
+            src={property.googleMapsUrl || `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d195603.62681534968!2d32.60744655513543!3d39.91220473155708!2m3!1f0!2f0!3f0!3m2!1i1024!2i1024!4f13.1!3m3!1m2!1s0x14d347d520732db1%3A0xbdc57d0c08351f0!2sAnkara!5e0!3m2!1str!2str!4v1711200000000!5m2!1str!2str`}
+            className="map-frame" 
             allowFullScreen="" 
-            loading="lazy" 
-            referrerPolicy="no-referrer-when-downgrade"
+            loading="lazy"
           ></iframe>
-        </section>
-
-        {/* İletişim Butonu */}
-        <div className="cta-footer">
-          <a href={whatsappUrl} target="_blank" rel="noreferrer" className="wa-btn">
-            WHATSAPP İLE DETAYLI BİLGİ AL
-          </a>
         </div>
+
+        <a href={whatsappUrl} target="_blank" rel="noreferrer" className="wa-footer-btn">
+          WHATSAPP İLE BİLGİ AL (+90 532 646 69 09)
+        </a>
       </main>
+
+      {/* Fotoğraf Geçişli Pencere (Lightbox) */}
+      {isOpen && (
+        <div className="lightbox">
+          <div className="lightbox-content">
+            <span className="close-btn" onClick={() => setIsOpen(false)}>✕</span>
+            <button className="nav-btn prev-btn" onClick={prevPhoto}>←</button>
+            <img src={urlFor(images[photoIndex]).url()} className="lightbox-img" />
+            <button className="nav-btn next-btn" onClick={nextPhoto}>→</button>
+            <p style={{ position: 'absolute', bottom: '-40px', color: '#fff' }}>{photoIndex + 1} / {images.length}</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
 
 export async function getServerSideProps({ params }) {
   const { slug } = params;
-  const property = await client.fetch(`
-    *[_type == "property" && slug.current == $slug][0]{
-      title, location, price, currency, propertyType, area, rooms, mainImage, gallery, analysis
-    }
-  `, { slug });
-
+  const property = await client.fetch(`*[_type == "property" && slug.current == $slug][0]{
+    title, location, price, currency, propertyType, area, rooms, mainImage, gallery, analysis, googleMapsUrl
+  }`, { slug });
   return { props: { property } };
 }
