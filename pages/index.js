@@ -30,9 +30,9 @@ export default function Home({ posts, igPosts, properties }) {
         <meta property="og:url" content="https://www.monurkilic.com" />
         <meta property="og:type" content="website" />
         
-        {/* Önbellek Patlatıcı (?v=1) Eklenmiş Güvenli Görsel Tanımlamaları */}
-        <meta property="og:image" content="https://www.monurkilic.com/paylasim.jpg?v=1" />
-        <meta property="og:image:secure_url" content="https://www.monurkilic.com/paylasim.jpg?v=1" />
+        {/* Imgur Doğrudan CDN Linki ile Saniyelik Çözüm */}
+        <meta property="og:image" content="https://i.imgur.com/1RQcqPW.jpeg" />
+        <meta property="og:image:secure_url" content="https://i.imgur.com/1RQcqPW.jpeg" />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="900" />
@@ -51,7 +51,7 @@ export default function Home({ posts, igPosts, properties }) {
 
         /* Hero */
         .hero-container { position: relative; height: 85vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: opacity 2.5s ease-in-out; opacity: 0; }
+        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: size: cover; background-position: center; transition: opacity 2.5s ease-in-out; opacity: 0; }
         .hero-slide.active { opacity: 1; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 17, 0.6); z-index: 2; }
         .hero-content { position: relative; z-index: 3; padding: 0 20px; text-align: center; }
