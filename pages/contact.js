@@ -81,10 +81,10 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* GOOGLE MAPS - KW BORSA RESMİ EMBED HARİTASI */}
+          {/* GOOGLE MAPS - KW BORSA RESMİ EMBED HARİTASI (Uyuşmazlık Çözüldü) */}
           <div className="map-wrapper">
              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m3!1d3062.247833580456!2d32.70239607655655!3d39.869554489146194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d338ba6187a03f%3A0xe79dad9905c7add5!2sKW%20Borsa!5e0!3m2!1str!2str!4v1716208900000!5m2!1str!2str" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m4!1s0x0%3A0xed9dad99c5c7adc5!2sLevent+Korkut+Keller+Williams+Borsa!5m2!1str!2str" 
                 allowFullScreen="" 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade">
