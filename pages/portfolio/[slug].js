@@ -25,12 +25,13 @@ export default function PropertyDetail({ property }) {
   const nextPhoto = () => setPhotoIndex((prev) => (prev + 1) % images.length);
   const prevPhoto = () => setPhotoIndex((prev) => (prev - 1 + images.length) % images.length);
 
-  const whatsappUrl = `https://wa.me/905326466909?text=${encodeURIComponent(`Merhaba, "${property.title}" ilanınız hakkında detaylı bilgi rica ediyorum.`)}`;
+  // WhatsApp numarası güncel iş telefonun olan 905416406909 ile revize edildi
+  const whatsappUrl = `https://wa.me/905416406909?text=${encodeURIComponent(`Merhaba Onur Bey, "${property.title}" ilanınız hakkında detaylı bilgi rica ediyorum.`)}`;
 
   return (
     <>
       <Head>
-        <title>{property.title} | Onda Yatırım</title>
+        <title>{property.title} | M. Onur Kılıç - Keller Williams</title>
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
@@ -48,23 +49,23 @@ export default function PropertyDetail({ property }) {
         .lightbox-content { position: relative; width: 90%; height: 80vh; display: flex; align-items: center; justify-content: center; }
         .lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .close-btn { position: absolute; top: -50px; right: 0; color: #fff; font-size: 2rem; cursor: pointer; }
-        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(212,175,55,0.2); color: #d4af37; border: 1px solid #d4af37; padding: 15px; cursor: pointer; transition: 0.3s; }
-        .nav-btn:hover { background: #d4af37; color: #0a192f; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(189,30,36,0.15); color: #bd1e24; border: 1px solid #bd1e24; padding: 15px; cursor: pointer; transition: 0.3s; }
+        .nav-btn:hover { background: #bd1e24; color: #fff; }
         .prev-btn { left: -60px; }
         .next-btn { right: -60px; }
 
-        /* Bilgi Alanları */
-        .spec-bar { display: flex; justify-content: space-between; background: #0d223f; padding: 30px; border: 1px solid rgba(212,175,55,0.2); margin-bottom: 40px; }
+        /* Bilgi Alanları - KW Siyahı ve Kırmızısı */
+        .spec-bar { display: flex; justify-content: space-between; background: #1a1a1a; padding: 30px; border: 1px solid rgba(189,30,36,0.2); margin-bottom: 40px; }
         .spec-item { text-align: center; }
         .spec-label { display: block; color: #8e8e8e; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 5px; }
-        .spec-val { color: #d4af37; font-size: 1.1rem; font-weight: bold; }
+        .spec-val { color: #bd1e24; font-size: 1.1rem; font-weight: bold; }
 
-        /* Onda Analizi Raporu */
-        .report-box { background: #fff; color: #0a192f; padding: 50px; border-left: 10px solid #d4af37; margin-bottom: 60px; }
-        .report-title { font-size: 1.5rem; font-weight: 800; border-bottom: 2px solid #0a192f; display: inline-block; margin-bottom: 30px; }
+        /* Rasyonel Pazar Analizi Raporu */
+        .report-box { background: #1a1a1a; color: #ffffff; padding: 50px; border-left: 10px solid #bd1e24; border: 1px solid rgba(189,30,36,0.15); margin-bottom: 60px; }
+        .report-title { font-size: 1.5rem; font-weight: 800; border-bottom: 2px solid #bd1e24; color: #bd1e24; display: inline-block; margin-bottom: 30px; letter-spacing: 1px; }
 
         /* Harita Bölümü */
-        .map-wrapper { width: 100%; height: 400px; border: 1px solid rgba(212,175,55,0.3); margin-bottom: 40px; overflow: hidden; border-radius: 4px; }
+        .map-wrapper { width: 100%; height: 400px; border: 1px solid rgba(189,30,36,0.25); margin-bottom: 40px; overflow: hidden; border-radius: 4px; }
         .map-frame { width: 100%; height: 100%; border: 0; filter: grayscale(1) invert(0.9); }
 
         .wa-footer-btn { display: block; background: #25D366; color: #fff; padding: 25px; text-align: center; text-decoration: none; font-weight: bold; font-size: 1rem; border-radius: 4px; letter-spacing: 1px; transition: 0.3s; }
@@ -82,8 +83,8 @@ export default function PropertyDetail({ property }) {
       `}} />
 
       <main className="container">
-        <h1 style={{ fontSize: '2.5rem', fontWeight: '300', marginBottom: '10px' }}>{property.title}</h1>
-        <p style={{ color: '#d4af37', letterSpacing: '2px', marginBottom: '30px' }}>{property.location}</p>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '10px' }}>{property.title}</h1>
+        <p style={{ color: '#bd1e24', letterSpacing: '2px', marginBottom: '30px', fontWeight: '600' }}>{property.location}</p>
 
         {/* Galeri Vitrini */}
         <div className="gallery-window">
@@ -96,7 +97,7 @@ export default function PropertyDetail({ property }) {
         </div>
         <p style={{ textAlign: 'right', fontSize: '0.8rem', color: '#8e8e8e', cursor: 'pointer' }} onClick={() => setIsOpen(true)}>+ Tüm Fotoğrafları Gör</p>
 
-        {/* Teknik Bilgi Çubuğu */}
+        /* Teknik Bilgi Çubuğu */
         <div className="spec-bar">
           <div className="spec-item"><span className="spec-label">FİYAT</span><span className="spec-val">{property.price} {property.currency}</span></div>
           <div className="spec-item"><span className="spec-label">TİP</span><span className="spec-val" style={{textTransform:'uppercase'}}>{property.propertyType}</span></div>
@@ -104,10 +105,10 @@ export default function PropertyDetail({ property }) {
           <div className="spec-item"><span className="spec-label">ODA</span><span className="spec-val">{property.rooms}</span></div>
         </div>
 
-        {/* Onda Analizi */}
+        {/* Rasyonel Analiz Bloğu */}
         {property.analysis && (
           <section className="report-box">
-            <h2 className="report-title">ONDA ANALİZİ</h2>
+            <h2 className="report-title">RASYONEL PAZAR ANALİZİ</h2>
             <PortableText value={property.analysis} />
           </section>
         )}
@@ -119,11 +120,12 @@ export default function PropertyDetail({ property }) {
             className="map-frame" 
             allowFullScreen="" 
             loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
 
         <a href={whatsappUrl} target="_blank" rel="noreferrer" className="wa-footer-btn">
-          WHATSAPP İLE BİLGİ AL (+90 532 646 69 09)
+          WHATSAPP İLE BİLGİ AL (+90 541 640 69 09)
         </a>
       </main>
 
