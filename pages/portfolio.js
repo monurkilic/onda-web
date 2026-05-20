@@ -15,22 +15,22 @@ export default function Portfolio({ properties }) {
   return (
     <>
       <Head>
-        <title>Portföy | ONDA YATIRIM</title>
-        <meta name="description" content="İzmir ve Ankara merkezli lüks gayrimenkul portföyü." />
+        <title>Güncel Portföyler | M. Onur Kılıç - Keller Williams</title>
+        <meta name="description" content="Ege Bölgesi ve Ankara merkezli nitelikli arsa, arazi og lüks gayrimenkul portföyü." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .p-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; max-width: 1200px; margin: 60px auto; padding: 0 20px; }
-        .p-card { background: #0d223f; border: 1px solid rgba(212,175,55,0.1); text-decoration: none; transition: 0.4s; position: relative; overflow: hidden; }
-        .p-card:hover { border-color: #d4af37; transform: translateY(-10px); }
+        .p-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; max-width: 1200px; margin: 120px auto 60px auto; padding: 0 20px; }
+        .p-card { background: #1a1a1a; border: 1px solid rgba(189, 30, 36, 0.15); text-decoration: none; transition: 0.4s; position: relative; overflow: hidden; }
+        .p-card:hover { border-color: #bd1e24; transform: translateY(-10px); }
         .p-img { width: 100%; height: 250px; object-fit: cover; }
         .p-info { padding: 30px; }
-        .p-tag { position: absolute; top: 20px; right: 20px; background: #d4af37; color: #0a192f; padding: 5px 15px; font-weight: bold; font-size: 0.7rem; letter-spacing: 1px; }
-        @media (max-width: 768px) { .p-grid { grid-template-columns: 1fr; } }
+        .p-tag { position: absolute; top: 20px; right: 20px; background: #bd1e24; color: #ffffff; padding: 5px 15px; font-weight: bold; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; }
+        @media (max-width: 768px) { .p-grid { grid-template-columns: 1fr; margin-top: 60px; } }
       `}} />
 
-      <h1 style={{ textAlign: 'center', color: '#d4af37', fontSize: '3rem', fontWeight: '300', margin: '60px 0 20px 0', letterSpacing: '5px' }}>PORTFÖY</h1>
-      <p style={{ textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', letterSpacing: '1px' }}>Rasyonel analizlerle seçilmiş seçkin mülkler.</p>
+      <h1 style={{ textAlign: 'center', color: '#bd1e24', fontSize: '3rem', fontWeight: '800', margin: '120px 0 20px 0', letterSpacing: '5px' }}>PORTFÖYÜMÜZ</h1>
+      <p style={{ textAlign: 'center', color: '#f8f8f8', marginBottom: '40px', letterSpacing: '1px', opacity: 0.8, fontWeight: '500' }}>Rasyonel analizler ve teknik verilerle seçilmiş seçkin mülkler.</p>
 
       <div className="p-grid">
         {properties && properties.map((prop) => (
@@ -38,9 +38,9 @@ export default function Portfolio({ properties }) {
             <div className="p-tag">İNCELE</div>
             {prop.mainImage && <img src={urlFor(prop.mainImage).width(600).url()} className="p-img" alt={prop.title} />}
             <div className="p-info">
-              <h3 style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '10px' }}>{prop.title}</h3>
-              <p style={{ color: '#8e8e8e', fontSize: '0.9rem', lineHeight: '1.6' }}>{prop.excerpt}</p>
-              <div style={{ marginTop: '20px', color: '#d4af37', fontWeight: 'bold', fontSize: '0.8rem' }}>DETAYLARI GÖR →</div>
+              <h3 style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '10px', fontWeight: '700' }}>{prop.title}</h3>
+              <p style={{ color: '#ccc', fontSize: '0.9rem', lineHeight: '1.6', fontWeight: '500' }}>{prop.excerpt}</p>
+              <div style={{ marginTop: '20px', color: '#bd1e24', fontWeight: 'bold', fontSize: '0.8rem', letterSpacing: '1px' }}>DETAYLARI GÖR →</div>
             </div>
           </a>
         ))}
