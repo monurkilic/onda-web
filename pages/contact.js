@@ -49,7 +49,7 @@ export default function Contact() {
 
             <div className="info-item">
               <h3>TELEFON</h3>
-              <a href="tel:+905326466909">0532 646 69 09</a>
+              <a href="tel:+905416406909">0541 640 69 09</a>
             </div>
 
             <div className="info-item">
@@ -58,7 +58,7 @@ export default function Contact() {
             </div>
 
             <div style={{ marginTop: '40px' }}>
-              <a href="https://wa.me/905326466909?text=Merhaba%20Onur%20Bey,%20bir%20mülk%20analizi%20için%20iletişime%20geçiyorum." 
+              <a href="https://wa.me/905416406909?text=Merhaba%20Onur%20Bey,%20bir%20mülk%20analizi%20için%20iletişime%20geçiyorum." 
                  target="_blank" 
                  rel="noreferrer" 
                  style={{ display: 'inline-block', padding: '15px 35px', background: '#d4af37', color: '#0a192f', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.9rem', letterSpacing: '1px' }}>
