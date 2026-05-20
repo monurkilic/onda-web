@@ -10,29 +10,29 @@ export default function BlogIndex({ posts }) {
   return (
     <>
       <Head>
-        <title>Onda Analizleri | Blog</title>
-        <meta name="description" content="Gayrimenkul dünyasına rasyonel, teknik ve faydacı bir bakış." />
+        <title>Perspektif & Gündem | M. Onur Kılıç - Keller Williams</title>
+        <meta name="description" content="Gayrimenkul ve toprak yatırımlarına dair rasyonel, teknik ve piyasa odaklı analizler." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 40px auto; padding: 0 20px; width: 100%; }
-        .blog-card { text-decoration: none; background: #0d223f; border: 1px solid rgba(212,175,55,0.1); overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
-        .blog-card:hover { border-color: #d4af37; transform: translateY(-5px); }
-        @media (max-width: 768px) { .blog-grid { grid-template-columns: 1fr; } }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 60px auto 120px auto; padding: 0 20px; width: 100%; }
+        .blog-card { text-decoration: none; background: #1a1a1a; border: 1px solid rgba(189, 30, 36, 0.15); overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
+        .blog-card:hover { border-color: #bd1e24; transform: translateY(-5px); }
+        @media (max-width: 768px) { .blog-grid { grid-template-columns: 1fr; margin-top: 40px; } }
       `}} />
 
       <main style={{ flex: 1 }}>
-        <h1 style={{ textAlign: 'center', color: '#d4af37', margin: '60px 0 20px 0', letterSpacing: '4px', fontWeight: '300', fontSize: '2.5rem' }}>ONDA ANALİZLERİ</h1>
-        <p style={{ textAlign: 'center', color: '#8e8e8e', marginBottom: '40px', padding: '0 20px', letterSpacing: '1px' }}>Rasyonel veriler ve teknik analizler.</p>
+        <h1 style={{ textAlign: 'center', color: '#bd1e24', margin: '120px 0 20px 0', letterSpacing: '4px', fontWeight: '800', fontSize: '2.5rem' }}>PERSPEKTİF & GÜNDEM</h1>
+        <p style={{ textAlign: 'center', color: '#f8f8f8', marginBottom: '40px', padding: '0 20px', letterSpacing: '1px', opacity: 0.8, fontWeight: '500' }}>Gayrimenkul ve arsa yatırımlarına dair analitik yaklaşımlar, rasyonel veriler.</p>
         
         <div className="blog-grid">
           {posts && posts.map((post) => (
             <a href={`/blog/${post.slug?.current}`} key={post._id} className="blog-card">
               <img src={urlFor(post.mainImage).width(600).url()} style={{ width: '100%', height: '220px', objectFit: 'cover' }} alt={post.title} />
               <div style={{ padding: '25px', flex: 1 }}>
-                <h3 style={{ color: '#d4af37', marginBottom: '15px', fontSize: '1.4rem', lineHeight: '1.4' }}>{post.title}</h3>
-                <p style={{ color: '#ccc', fontSize: '1rem', lineHeight: '1.6', marginBottom: '20px' }}>{post.excerpt}</p>
-                <span style={{ color: '#d4af37', fontSize: '0.9rem', fontWeight: 'bold' }}>DEVAMINI OKU →</span>
+                <h3 style={{ color: '#ffffff', marginBottom: '15px', fontSize: '1.4rem', lineHeight: '1.4', fontWeight: '700' }}>{post.title}</h3>
+                <p style={{ color: '#ccc', fontSize: '1rem', lineHeight: '1.6', marginBottom: '20px', fontWeight: '500' }}>{post.excerpt}</p>
+                <span style={{ color: '#bd1e24', fontSize: '0.9rem', fontWeight: 'bold', letterSpacing: '1px' }}>DEVAMINI OKU →</span>
               </div>
             </a>
           ))}
