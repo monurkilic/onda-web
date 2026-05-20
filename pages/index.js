@@ -22,7 +22,7 @@ export default function Home({ posts, igPosts, properties }) {
     <>
       <Head>
         <title>M. Onur Kılıç | Keller Williams Gayrimenkul Danışmanı</title>
-        <meta name="description" content="Ege Bölgesi og Ankara merkezli nitelikli arsa, arazi ve lüks gayrimenkul yatırımında Keller Williams güvencesi ve rasyonel analiz." />
+        <meta name="description" content="Ege Bölgesi ve Ankara merkezli nitelikli arsa, arazi ve lüks gayrimenkul yatırımında Keller Williams güvencesi ve rasyonel analiz." />
         
         {/* WhatsApp, Facebook ve Sosyal Medya Ön İzleme (Open Graph) Ayarları */}
         <meta property="og:title" content="M. Onur Kılıç | Keller Williams Gayrimenkul Danışmanı" />
@@ -30,9 +30,9 @@ export default function Home({ posts, igPosts, properties }) {
         <meta property="og:url" content="https://www.monurkilic.com" />
         <meta property="og:type" content="website" />
         
-        {/* paylasim.jpg için Meta Tanımlamaları */}
-        <meta property="og:image" content="https://www.monurkilic.com/paylasim.jpg" />
-        <meta property="og:image:secure_url" content="https://www.monurkilic.com/paylasim.jpg" />
+        {/* Önbellek Patlatıcı (?v=1) Eklenmiş Güvenli Görsel Tanımlamaları */}
+        <meta property="og:image" content="https://www.monurkilic.com/paylasim.jpg?v=1" />
+        <meta property="og:image:secure_url" content="https://www.monurkilic.com/paylasim.jpg?v=1" />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="900" />
@@ -160,7 +160,7 @@ export default function Home({ posts, igPosts, properties }) {
       <section style={{ padding: '0 20px', margin: '120px 0' }}>
         <div className="cta-box">
           <h2 className="kw-style-title" style={{fontSize: '1.4rem', marginBottom: '25px'}}>MÜLKÜNÜZÜN GERÇEK DEĞERİNİ RAPORLAYALIM</h2>
-          <p style={{color: '#ccc', marginBottom: '40px', fontWeight: '500', maxWidth: '600px', margin: '0 auto 40px auto'}}>Ege Bölgesi ve Ankara bölgelerindeki arsa, arazi og konut yatırımlarınızın gerçek pazar değerini rasyonel tekniklerle analiz edelim.</p>
+          <p style={{color: '#ccc', marginBottom: '40px', fontWeight: '500', maxWidth: '600px', margin: '0 auto 40px auto'}}>Ege Bölgesi ve Ankara bölgelerindeki arsa, arazi ve konut yatırımlarınızın gerçek pazar değerini rasyonel tekniklerle analiz edelim.</p>
           <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#bd1e24', color: '#fff', textDecoration: 'none', fontWeight: '900', letterSpacing: '2px', borderRadius: '4px'}}>ÜCRETSİZ ANALİZ TALEBİ OLUŞTUR</a>
         </div>
       </section>
