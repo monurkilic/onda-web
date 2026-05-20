@@ -19,9 +19,10 @@ export default function Contact() {
         
         .map-wrapper { 
           margin-top: 50px; 
-          border: 1px solid rgba(189,30,36,0.2); 
+          border: 1px solid rgba(189,30,36,0.25); 
           height: 450px; 
           overflow: hidden;
+          border-radius: 4px;
           filter: grayscale(1) invert(0.9) contrast(1.2); /* Karanlık tema uyumu */
         }
         .map-wrapper iframe { width: 100% !important; height: 100% !important; border: 0; }
@@ -80,10 +81,10 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* GOOGLE MAPS */}
+          {/* GOOGLE MAPS - KW BORSA RESMİ EMBED HARİTASI */}
           <div className="map-wrapper">
              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d200065.48496980694!2d26.91490673767374!3d38.41782866471503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd862a762cacd%3A0x628cbba1a59ce8fe!2zxLB6bWly!5e0!3m2!1sen!2str!4v1774513376905!5m2!1sen!2str" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m3!1d3062.247833580456!2d32.70239607655655!3d39.869554489146194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d338ba6187a03f%3A0xe79dad9905c7add5!2sKW%20Borsa!5e0!3m2!1str!2str!4v1716208900000!5m2!1str!2str" 
                 allowFullScreen="" 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade">
