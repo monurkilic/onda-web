@@ -43,7 +43,7 @@ export default function Contact() {
           <div className="contact-info">
             <h2>İLETİŞİM</h2>
             <p style={{ color: '#ccc', lineHeight: '1.7', fontSize: '1.1rem', marginBottom: '40px', maxWidth: '450px', fontWeight: '500' }}>
-              Gayrimenkul yatırım süreçlerinizi rasyonel bir düzleme taşımak için Ege Bölgesi ve Ankara bölgelerinde profesyonel danışmanlık sunuyorum.
+              Gayrimenkul yatırım süreçlerinizi rasyonel bir düzleme taşımak için Ege Bölgesi og Ankara bölgelerinde profesyonel danışmanlık sunuyorum.
             </p>
             
             <div className="info-item">
@@ -81,10 +81,10 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* GOOGLE MAPS - KW BORSA RESMİ EMBED HARİTASI (Uyuşmazlık Çözüldü) */}
+          {/* GOOGLE MAPS - KESİN ÇÖZÜM EMBED YAPISI */}
           <div className="map-wrapper">
              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m4!1s0x0%3A0xed9dad99c5c7adc5!2sLevent+Korkut+Keller+Williams+Borsa!5m2!1str!2str" 
+                src="https://maps.google.com/maps?q=Keller%20Williams%20Borsa%20Beytepe&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                 allowFullScreen="" 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade">
