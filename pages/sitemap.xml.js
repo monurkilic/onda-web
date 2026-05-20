@@ -7,33 +7,34 @@ const client = createClient({
   useCdn: false
 });
 
+// Eski domaini sildik, yeni KW uyumlu domaini bıraktık
 const BASE_URL = 'https://monurkilic.com';
 
 function generateSiteMap(properties, posts) {
   return `<?xml version="1.0" encoding="UTF-8"?>
-   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-     {/* Statik Sayfalar */}
-     <url><loc>${BASE_URL}</loc></url>
-     <url><loc>${BASE_URL}/about</loc></url>
-     <url><loc>${BASE_URL}/contact</loc></url>
-     <url><loc>${BASE_URL}/portfolio</loc></url>
-     <url><loc>${BASE_URL}/blog</loc></url>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {/* Statik Sayfalar */}
+    <url><loc>${BASE_URL}</loc></url>
+    <url><loc>${BASE_URL}/about</loc></url>
+    <url><loc>${BASE_URL}/contact</loc></url>
+    <url><loc>${BASE_URL}/portfolio</loc></url>
+    <url><loc>${BASE_URL}/blog</loc></url>
 
-     {/* Dinamik İlanlar (Portfolio) */}
-     ${properties.map(({ slug }) => `
-       <url>
-         <loc>${BASE_URL}/portfolio/${slug.current}</loc>
-       </url>
-     `).join('')}
+    {/* Dinamik İlanlar (Portfolio) */}
+    ${properties.map(({ slug }) => `
+      <url>
+        <loc>${BASE_URL}/portfolio/${slug.current}</loc>
+      </url>
+    `).join('')}
 
      {/* Dinamik Blog Yazıları */}
-     ${posts.map(({ slug }) => `
-       <url>
-         <loc>${BASE_URL}/blog/${slug.current}</loc>
-       </url>
-     `).join('')}
-   </urlset>
- `;
+    ${posts.map(({ slug }) => `
+      <url>
+        <loc>${BASE_URL}/blog/${slug.current}</loc>
+      </url>
+    `).join('')}
+  </urlset>
+`;
 }
 
 export async function getServerSideProps({ res }) {
@@ -52,4 +53,5 @@ export async function getServerSideProps({ res }) {
   return { props: {} };
 }
 
+// Çift olan fonksiyon teke düşürüldü
 export default function SiteMap() {}
