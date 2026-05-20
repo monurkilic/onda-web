@@ -19,9 +19,9 @@ export default function PostDetail({ post }) {
   return (
     <>
       <Head>
-        <title>{post.title} | Onda Yatırım Analiz</title>
+        <title>{post.title} | M. Onur Kılıç - Keller Williams</title>
         <meta name="description" content={post.excerpt} />
-        {/* Open Graph / WhatsApp Paylaşımı İçin */}
+        {/* Open Graph / Sosyal Medya Paylaşımları İçin */}
         <meta property="og:title" content={post.title} />
         <meta property="og:image" content={urlFor(post.mainImage).url()} />
       </Head>
@@ -37,13 +37,13 @@ export default function PostDetail({ post }) {
         }
 
         .post-header { margin-bottom: 50px; text-align: left; }
-        .post-category { color: #d4af37; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 15px; display: block; }
+        .post-category { color: #bd1e24; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 15px; display: block; }
         .post-title { font-size: 3rem; font-weight: 800; line-height: 1.2; letter-spacing: -1px; margin-bottom: 20px; }
         .post-date { color: #8e8e8e; font-size: 0.9rem; font-weight: 500; }
 
-        .main-hero-img { width: 100%; height: auto; border-radius: 4px; margin-bottom: 60px; border: 1px solid rgba(212,175,55,0.2); }
+        .main-hero-img { width: 100%; height: auto; border-radius: 4px; margin-bottom: 60px; border: 1px solid rgba(189, 30, 36, 0.2); }
 
-        /* Blog İçerik Fontları (Hakkımızda Stili) */
+        /* Blog İçerik Fontları */
         .post-content { 
           font-size: 1.25rem; 
           line-height: 1.9; 
@@ -54,11 +54,11 @@ export default function PostDetail({ post }) {
         .post-content p { margin-bottom: 30px; }
         
         .post-content h2 { 
-          color: #d4af37; 
+          color: #bd1e24; 
           font-size: 2rem; 
           font-weight: 800; 
           margin: 60px 0 30px 0; 
-          border-left: 5px solid #d4af37;
+          border-left: 5px solid #bd1e24;
           padding-left: 20px;
         }
 
@@ -69,13 +69,13 @@ export default function PostDetail({ post }) {
           margin-bottom: 20px; 
           text-decoration: underline;
           text-underline-offset: 8px;
-          text-decoration-color: rgba(212,175,55,0.5);
+          text-decoration-color: rgba(189, 30, 36, 0.5);
         }
 
         .post-content ul, .post-content ol { margin-bottom: 30px; padding-left: 20px; }
         .post-content li { margin-bottom: 15px; }
 
-        .post-content img { width: 100%; height: auto; margin: 40px 0; border: 1px solid rgba(212,175,55,0.1); }
+        .post-content img { width: 100%; height: auto; margin: 40px 0; border: 1px solid rgba(189, 30, 36, 0.15); }
 
         /* Alt Bölüm */
         .post-footer { 
@@ -86,7 +86,8 @@ export default function PostDetail({ post }) {
           justify-content: space-between; 
           align-items: center; 
         }
-        .back-btn { color: #d4af37; text-decoration: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
+        .back-btn { color: #bd1e24; text-decoration: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; transition: 0.3s; }
+        .back-btn:hover { color: #ffffff; }
 
         @media (max-width: 768px) {
           .post-title { font-size: 2rem; }
@@ -111,8 +112,8 @@ export default function PostDetail({ post }) {
         </article>
 
         <footer className="post-footer">
-          <a href="/" className="back-btn">← ANA SAYFAYA DÖN</a>
-          <div style={{ color: '#d4af37', fontWeight: 'bold', letterSpacing: '2px' }}>ONDA YATIRIM</div>
+          <a href="/blog" className="back-btn">← GÜNDEME GERİ DÖN</a>
+          <div style={{ color: '#bd1e24', fontWeight: '800', letterSpacing: '2px', fontSize: '0.9rem' }}>M. ONUR KILIÇ</div>
         </footer>
       </main>
     </>
