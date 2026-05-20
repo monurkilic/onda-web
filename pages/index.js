@@ -23,7 +23,19 @@ export default function Home({ posts, igPosts, properties }) {
       <Head>
         <title>M. Onur Kılıç | Keller Williams Gayrimenkul Danışmanı</title>
         <meta name="description" content="Ege Bölgesi ve Ankara merkezli nitelikli arsa, arazi ve lüks gayrimenkul yatırımında Keller Williams güvencesi ve rasyonel analiz." />
-        <meta property="og:image" content="https://monurkilic.com/KellerWilliams_Prim_Logo_RGB-rev.png" />
+        
+        {/* WhatsApp, Facebook ve Sosyal Medya Ön İzleme (Open Graph) Ayarları */}
+        <meta property="og:title" content="M. Onur Kılıç | Keller Williams Gayrimenkul Danışmanı" />
+        <meta property="og:description" content="Ege Bölgesi ve Ankara merkezli nitelikli arsa, arazi ve lüks gayrimenkul yatırımında Keller Williams güvencesi ve rasyonel analiz." />
+        <meta property="og:url" content="https://www.monurkilic.com" />
+        <meta property="og:type" content="website" />
+        
+        {/* Ön izlemede KW kurumsal logonun görünmesi için mutlak URL tanımlamaları */}
+        <meta property="og:image" content="https://www.monurkilic.com/KellerWilliams_Prim_Logo_RGB-rev.png" />
+        <meta property="og:image:secure_url" content="https://www.monurkilic.com/KellerWilliams_Prim_Logo_RGB-rev.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="500" />
+        <meta property="og:image:height" content="200" />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
@@ -108,7 +120,7 @@ export default function Home({ posts, igPosts, properties }) {
         </div>
       </section>
 
-      {/* YENİ: PROFESYONEL PROFİL BÖLÜMÜ */}
+      {/* PROFESYONEL PROFİL BÖLÜMÜ */}
       <section className="profile-section">
         <div className="profile-img-box">
           <img src="/onur-kilic.jpg" className="profile-img" alt="M. Onur Kılıç" onError={(e) => { e.target.src = "/hero1.jpg"; }} />
@@ -116,7 +128,7 @@ export default function Home({ posts, igPosts, properties }) {
         <div className="profile-content">
           <h2>Rasyonel Yatırım Ortaklığı</h2>
           <p>
-            Gayrimenkul ve toprak yatırımlarını geleneksel ezberlerden arındırarak; tamamen teknik verilere, rasyonel pazar analizlerine ve bölge projeksiyonlarına dayandırıyorum. Keller Williams güvencesiyle, Ege Bölgesi ve Ankara pazarlarında sermayenizi en doğru mülk ve konumlarda büyütecek nitelikli danışmanlık süreçleri yürütüyorum.
+            Gayrimenkul og toprak yatırımlarını geleneksel ezberlerden arındırarak; tamamen teknik verilere, rasyonel pazar analizlerine ve bölge projeksiyonlarına dayandırıyorum. Keller Williams güvencesiyle, Ege Bölgesi ve Ankara pazarlarında sermayenizi en doğru mülk ve konumlarda büyütecek nitelikli danışmanlık süreçleri yürütüyorum.
           </p>
           <a href="/about" className="view-all-btn" style={{ marginTop: 0 }}>HAKKIMIZDA DAHA FAZLASI</a>
         </div>
