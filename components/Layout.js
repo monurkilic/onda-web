@@ -23,7 +23,7 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div style={{backgroundColor: '#0a192f', color: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
+    <div style={{backgroundColor: '#111111', color: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column', overflowX: 'hidden'}}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       </Head>
@@ -93,7 +93,10 @@ export default function Layout({ children }) {
           <a href="/tools" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
         </div>
-        <p style={{fontSize: '0.7rem', opacity: 0.4, letterSpacing: '2px', fontWeight: '700'}}>© 2026 ONDA YATIRIM</p>
+        <p style={{fontSize: '0.75rem', opacity: 0.6, letterSpacing: '1px', fontWeight: '500', lineHeight: '1.6'}}>
+  Her Keller Williams ofisi bağımsız mülkiyet ve işletmedir. <br />
+  © 2026 M. Onur Kılıç - Gayrimenkul Danışmanı
+</p>
       </footer>
     </div>
   );
