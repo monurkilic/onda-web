@@ -3,7 +3,7 @@ import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 import Head from 'next/head';
 
-const client = createClient({ projectId: 'k8cd67dp', dataset: "production", apiVersion: "2023-01-01", useCdn: false });
+const client = createClient({ projectId: 'k8cd67dp', dataset: "production", apiVersion: "2023-01-01", useCNav: false });
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => builder.image(source);
 
@@ -93,7 +93,7 @@ export default function Home({ posts, igPosts, properties }) {
       {/* 1. PORTFÖY ONDA */}
       {properties && properties.length > 0 && (
         <section className="window-section">
-          <h3 className="onda-style-title" style={{ fontSize: '1.6rem', marginBottom: '40px' }}>PORTFÖY ONDA</h3>
+          <h3 className="onda-style-title" style={{ fontSize: '1.6rem', marginBottom: '40px' }}>PORTFÖYÜMÜZ</h3>
           <div className="window-grid">
             {properties.slice(0, 3).map((prop) => (
               <a key={prop._id} href={`/portfolio/${prop.slug.current}`} className="window-card">
@@ -121,10 +121,10 @@ export default function Home({ posts, igPosts, properties }) {
         </div>
       </section>
 
-      {/* 3. INSTAGRAM ONDA */}
+      {/* 3. INSTAGRAM FEED */}
       {igPosts && igPosts.length > 0 && (
         <section className="window-section">
-          <h3 className="onda-style-title" style={{ fontSize: '1.4rem', marginBottom: '40px' }}>INSTAGRAM ONDA</h3>
+          <h3 className="onda-style-title" style={{ fontSize: '1.4rem', marginBottom: '40px' }}>INSTAGRAM GÜNCEL</h3>
           <div className="window-grid">
             {igPosts.slice(0, 3).map((post) => (
               <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="window-card">
@@ -132,25 +132,24 @@ export default function Home({ posts, igPosts, properties }) {
                   {post.media_type === "VIDEO" ? (
                     <video src={post.media_url} autoPlay muted loop playsInline style={{width:'100%', height:'100%', objectFit:'cover'}} />
                   ) : (
-                    <img src={post.media_url} alt="Onda Yatırım" style={{width:'100%', height:'100%', objectFit:'cover'}} />
+                    <img src={post.media_url} alt="M. Onur Kılıç Gayrimenkul" style={{width:'100%', height:'100%', objectFit:'cover'}} />
                   )}
                 </div>
                 <div className="window-info">
                   <p style={{ color: '#ccc', fontSize: '0.75rem', lineHeight: '1.5', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {post.caption || "Onda Yatırım ile rasyonel süreçler..."}
+                    {post.caption || "Gayrimenkul yatırım süreçlerinde profesyonel analizler..."}
                   </p>
                 </div>
               </a>
             ))}
           </div>
-          {/* Instagram linki isteğin üzerine kaldırıldı */}
         </section>
       )}
 
       {/* 4. PERSPEKTİF & GÜNDEM ONDA */}
       {posts && posts.length > 0 && (
         <section className="window-section" style={{ borderTop: '1px solid rgba(212,175,55,0.1)', paddingTop: '100px' }}>
-          <h3 className="onda-style-title" style={{ fontSize: '1.5rem', marginBottom: '40px' }}>PERSPEKTİF & GÜNDEM ONDA</h3>
+          <h3 className="onda-style-title" style={{ fontSize: '1.5rem', marginBottom: '40px' }}>PERSPEKTİF & GÜNDEM</h3>
           <div className="window-grid">
             {posts.slice(0, 3).map((post) => (
               <a key={post._id} href={`/blog/${post.slug.current}`} className="window-card">
