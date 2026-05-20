@@ -7,7 +7,7 @@ const client = createClient({
   useCdn: false
 });
 
-const BASE_URL = 'https://ondayatirim.com';
+const BASE_URL = 'https://monurkilic.com';
 
 function generateSiteMap(properties, posts) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -26,7 +26,7 @@ function generateSiteMap(properties, posts) {
        </url>
      `).join('')}
 
-     {/* Dinamik Blog Yazıları (Onda Analizleri) */}
+     {/* Dinamik Blog Yazıları */}
      ${posts.map(({ slug }) => `
        <url>
          <loc>${BASE_URL}/blog/${slug.current}</loc>
