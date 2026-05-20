@@ -19,7 +19,7 @@ export default function Valuation() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const message = `*ONDA ANALİZ TALEBİ*%0A
+    const message = `*MÜLK ANALİZ TALEBİ*%0A
 *Müşteri:* ${formData.name}%0A
 *Tel:* ${formData.phone}%0A
 *Analiz Amacı:* ${formData.purpose}%0A%0A
@@ -34,7 +34,8 @@ export default function Valuation() {
 *Ek Özellikler:* ${formData.features}%0A
 *Notlar:* ${formData.notes}`;
 
-    window.open(`https://wa.me/905326466909?text=${message}`, '_blank');
+    // Numara güncel iş telefonu olan 905416406909 olarak ayarlandı
+    window.open(`https://wa.me/905416406909?text=${message}`, '_blank');
   };
 
   const handleChange = (e) => {
@@ -44,14 +45,14 @@ export default function Valuation() {
   return (
     <>
       <Head>
-        <title>Mülk Değerleme ONDA | Rasyonel Analiz</title>
-        <meta name="description" content="Mülkünüzün gerçek piyasa değerini rasyonel veriler ve teknik analizlerle keşfedin." />
+        <title>Mülk Değerleme | M. Onur Kılıç - Keller Williams</title>
+        <meta name="description" content="Mülkünüzün gerçek piyasa değerini Keller Williams pazar verileri ve rasyonel analizlerle keşfedin." />
       </Head>
 
       <style dangerouslySetInnerHTML={{ __html: `
         .val-page { 
           max-width: 900px; 
-          margin: 100px auto; 
+          margin: 120px auto; 
           padding: 0 20px; 
           font-family: 'Inter', sans-serif;
           color: #ffffff;
@@ -59,7 +60,7 @@ export default function Valuation() {
         }
 
         .onda-title {
-          color: #d4af37 !important;
+          color: #bd1e24 !important;
           font-size: 3rem;
           font-weight: 800;
           letter-spacing: 6px;
@@ -79,14 +80,14 @@ export default function Valuation() {
         }
 
         .val-card { 
-          background: rgba(13, 34, 63, 0.8); 
-          border: 2px solid #d4af37; 
+          background: #1a1a1a; 
+          border: 2px solid rgba(189, 30, 36, 0.2); 
           padding: 50px;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
         .section-label {
-          color: #d4af37;
+          color: #bd1e24;
           font-size: 0.75rem;
           font-weight: 800;
           letter-spacing: 3px;
@@ -96,7 +97,7 @@ export default function Valuation() {
           align-items: center;
           gap: 10px;
         }
-        .section-label::after { content: ""; flex: 1; height: 1px; background: rgba(212,175,55,0.2); }
+        .section-label::after { content: ""; flex: 1; height: 1px; background: rgba(189, 30, 36, 0.2); }
 
         .form-group { margin-bottom: 25px; text-align: left; }
         .form-group label { 
@@ -111,8 +112,8 @@ export default function Valuation() {
         .form-group input, .form-group select, .form-group textarea { 
           width: 100%; 
           padding: 15px; 
-          background: #0a192f; 
-          border: 1px solid rgba(212,175,55,0.3); 
+          background: #111111; 
+          border: 1px solid rgba(189, 30, 36, 0.2); 
           color: #ffffff; 
           font-size: 1rem;
           font-weight: 500;
@@ -120,9 +121,9 @@ export default function Valuation() {
           transition: 0.3s;
         }
 
-        .form-group input:focus, .form-group select:focus { 
-          border-color: #d4af37;
-          background: #0d223f;
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { 
+          border-color: #bd1e24;
+          background: #1a1a1a;
         }
 
         .grid-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -130,8 +131,8 @@ export default function Valuation() {
         .submit-btn { 
           width: 100%; 
           padding: 22px; 
-          background: #d4af37; 
-          color: #0a192f; 
+          background: #bd1e24; 
+          color: #ffffff; 
           border: none; 
           font-size: 1.1rem;
           font-weight: 900; 
@@ -144,10 +145,12 @@ export default function Valuation() {
 
         .submit-btn:hover { 
           background: #ffffff; 
+          color: #bd1e24;
           transform: translateY(-3px);
         }
 
         @media (max-width: 768px) { 
+          .val-page { margin: 60px auto; }
           .onda-title { font-size: 2rem; }
           .val-card { padding: 30px 20px; }
           .grid-row { grid-template-columns: 1fr; gap: 0; }
@@ -155,7 +158,7 @@ export default function Valuation() {
       `}} />
 
       <main className="val-page">
-        <h1 className="onda-title">MÜLK DEĞERLEME ONDA</h1>
+        <h1 className="onda-title">MÜLK DEĞERLEME</h1>
         <p className="val-subtitle">Rasyonel Analiz Raporu İçin Ön Bilgi Formu</p>
 
         <div className="val-card">
@@ -169,7 +172,7 @@ export default function Valuation() {
               </div>
               <div className="form-group">
                 <label>TELEFON</label>
-                <input type="tel" name="phone" required placeholder="0532..." onChange={handleChange} />
+                <input type="tel" name="phone" required placeholder="0541..." onChange={handleChange} />
               </div>
             </div>
 
@@ -198,7 +201,7 @@ export default function Valuation() {
 
             <div className="form-group">
               <label>KONUM (İLÇE / MAHALLE / SİTE ADI)</label>
-              <input type="text" name="location" required placeholder="Örn: İzmir, Güzelbahçe, Çelebi Mah." onChange={handleChange} />
+              <input type="text" name="location" required placeholder="Örn: Ankara, Çankaya, Beytepe veya Bodrum, Ortakent" onChange={handleChange} />
             </div>
 
             <div className="grid-row">
