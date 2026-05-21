@@ -26,6 +26,21 @@ const property = {
       initialValue: false,
     },
     {
+      name: 'category',
+      title: 'Portföy Kategorisi / Segment',
+      type: 'string',
+      description: 'Mülkün web sitesinde hangi segmentte listeleneceğini seçin.',
+      options: {
+        list: [
+          { title: '🏖️ Yaşam & Yazlık (Lifestyle)', value: 'lifestyle' },
+          { title: '🚜 Toprak & Arsa Yatırımı', value: 'land' },
+          { title: '🏢 Kurumsal & Proje Pazarlama', value: 'project' }
+        ],
+        layout: 'dropdown'
+      },
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: 'status',
       title: 'İlan Durumu',
       type: 'string',
