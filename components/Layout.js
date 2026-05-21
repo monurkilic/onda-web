@@ -37,7 +37,7 @@ export default function Layout({ children }) {
           -webkit-font-smoothing: antialiased;
         }
 
-        /* Nav Link Pürüzsüz Geçiş Efektleri */
+        /* Tüm Menü Linkleri İçin Pürüzsüz Geçiş Efekti (Header & Footer Ortak) */
         .nav-item-link {
           transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -80,7 +80,6 @@ export default function Layout({ children }) {
           <span style={{color: '#ffffff', fontWeight: '900', letterSpacing: '2px', fontSize: '1.05rem', textTransform: 'uppercase'}}>M. ONUR KILIÇ</span>
         </a>
         
-        {/* Sadeleştirilmiş ve Güçlendirilmiş Masaüstü Menüsü */}
         <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.78rem', alignItems: 'center'}}>
           <a href="/portfolio" className="nav-item-link" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
           <a href="/regions" className="nav-item-link" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
@@ -89,7 +88,6 @@ export default function Layout({ children }) {
           <a href="/tools" className="nav-item-link" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
           <a href="/contact" className="nav-item-link" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
           
-          {/* Dikkat Çeken Premium Mülk Analizi Butonu */}
           <a href="/valuation" className="nav-cta-button" style={{color: router.pathname === '/valuation' ? '#ffffff' : '#bd1e24', background: router.pathname === '/valuation' ? '#bd1e24' : 'transparent'}}>
             MÜLK ANALİZİ
           </a>
@@ -102,7 +100,7 @@ export default function Layout({ children }) {
         </div>
       </nav>
 
-      {/* MOBİL PANEL (OVERLAY) */}
+      {/* MOBİL PANEL */}
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
         <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
         <a href="/regions" style={{color: getLinkColor('/regions'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>BÖLGE ANALİZLERİ</a>
@@ -110,8 +108,6 @@ export default function Layout({ children }) {
         <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
         <a href="/tools" style={{color: getLinkColor('/tools'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>ANALİZ ARAÇLARI</a>
         <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
-        
-        {/* Mobil Panelde En Altta Ayrıcalıklı Duran Büyük Buton */}
         <a href="/valuation" style={{display: 'block', width: '80%', textAlign: 'center', padding: '16px', background: '#bd1e24', color: '#ffffff', textDecoration: 'none', fontWeight: '900', fontSize: '1.1rem', borderRadius: '4px', marginTop: '20px', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>
           MÜLK ANALİZİ
         </a>
@@ -120,20 +116,23 @@ export default function Layout({ children }) {
       {/* SAYFA İÇERİKLERİ */}
       <main style={{flex: 1}}>{children}</main>
 
-      {/* FOOTER SECTION */}
+      {/* FOOTER SECTION - Bütünsel ve Senkronize Yeni Yapı */}
       <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(189,30,36,0.1)', textAlign: 'center', background: '#161616', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.75rem', flexWrap: 'wrap', marginBottom: '25px'}}>
-          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
-          <a href="/regions" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
-          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>YATIRIM PERSPEKTİFİ</a>
-          <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          <a href="/tools" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
-          <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
-          <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK ANALİZİ</a>
+        
+        {/* İsimleri senkronize edilmiş, pürüzsüz animasyonlu şık footer sitemapi */}
+        <div style={{display: 'flex', justifyContent: 'center', gap: '25px', fontSize: '0.75rem', flexWrap: 'wrap', marginBottom: '25px'}}>
+          <a href="/portfolio" className="nav-item-link" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
+          <a href="/regions" className="nav-item-link" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
+          <a href="/blog" className="nav-item-link" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>YATIRIM PERSPEKTİFİ</a>
+          <a href="/about" className="nav-item-link" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
+          <a href="/tools" className="nav-item-link" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
+          <a href="/contact" className="nav-item-link" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
+          <a href="/valuation" className="nav-item-link" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK ANALİZİ</a>
         </div>
+        
         <p style={{fontSize: '0.72rem', opacity: 0.5, letterSpacing: '1px', fontWeight: '500', lineHeight: '1.7'}}>
-          Her Keller Williams ofisi bağımsız mülkiyet og işletmedir. <br />
+          Her Keller Williams ofisi bağımsız mülkiyet ve işletmedir. <br />
           © 2026 M. Onur Kılıç - Gayrimenkul Danışmanı
         </p>
       </footer>
