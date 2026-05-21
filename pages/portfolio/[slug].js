@@ -25,8 +25,9 @@ export default function PropertyDetail({ property }) {
   const nextPhoto = () => setPhotoIndex((prev) => (prev + 1) % images.length);
   const prevPhoto = () => setPhotoIndex((prev) => (prev - 1 + images.length) % images.length);
 
-  // WhatsApp numarası güncel iş telefonun olan 905416406909 ile revize edildi
-  const whatsappUrl = `https://wa.me/905416406909?text=${encodeURIComponent(`Merhaba Onur Bey, "${property.title}" ilanınız hakkında detaylı bilgi rica ediyorum.`)}`;
+  // Akıllı WhatsApp Mesaj Kurgusu: İlan başlığını ve konumunu otomatik çeker
+  const whatsappMessage = `Merhaba Onur Bey, web sitenizdeki "${property.title} (${property.location})" ilanınızla ilgili detaylı bilgi ve yatırım analizlerini almak istiyorum.`;
+  const whatsappUrl = `https://wa.me/905416406909?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <>
@@ -72,7 +73,7 @@ export default function PropertyDetail({ property }) {
         .wa-footer-btn:hover { background: #128c7e; transform: scale(1.02); }
 
         @media (max-width: 768px) {
-          .gallery-window { grid-template-cols: 1fr; height: auto; }
+          .gallery-window { grid-template-columns: 1fr; height: auto; }
           .side-grid { display: none; }
           .spec-bar { flex-wrap: wrap; gap: 20px; }
           .spec-item { width: 45%; }
@@ -97,7 +98,7 @@ export default function PropertyDetail({ property }) {
         </div>
         <p style={{ textAlign: 'right', fontSize: '0.8rem', color: '#8e8e8e', cursor: 'pointer' }} onClick={() => setIsOpen(true)}>+ Tüm Fotoğrafları Gör</p>
 
-        /* Teknik Bilgi Çubuğu */
+        {/* Teknik Bilgi Çubuğu */}
         <div className="spec-bar">
           <div className="spec-item"><span className="spec-label">FİYAT</span><span className="spec-val">{property.price} {property.currency}</span></div>
           <div className="spec-item"><span className="spec-label">TİP</span><span className="spec-val" style={{textTransform:'uppercase'}}>{property.propertyType}</span></div>
@@ -116,7 +117,7 @@ export default function PropertyDetail({ property }) {
         {/* Harita */}
         <div className="map-wrapper">
           <iframe 
-            src={property.googleMapsUrl || `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d195603.62681534968!2d32.60744655513543!3d39.91220473155708!2m3!1f0!2f0!3f0!3m2!1i1024!2i1024!4f13.1!3m3!1m2!1s0x14d347d520732db1%3A0xbdc57d0c08351f0!2sAnkara!5e0!3m2!1str!2str!4v1711200000000!5m2!1str!2str`}
+            src={property.googleMapsUrl || `https://maps.google.com`}
             className="map-frame" 
             allowFullScreen="" 
             loading="lazy"
