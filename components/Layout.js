@@ -37,9 +37,34 @@ export default function Layout({ children }) {
           -webkit-font-smoothing: antialiased;
         }
 
+        /* Nav Link Pürüzsüz Geçiş Efektleri */
+        .nav-item-link {
+          transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .nav-item-link:hover {
+          color: #bd1e24 !important;
+        }
+
+        /* Kurumsal İnce Çizgili Menü Butonu (CTA) */
+        .nav-cta-button {
+          border: 1px solid #bd1e24;
+          padding: 8px 18px;
+          border-radius: 4px;
+          font-weight: 800;
+          letter-spacing: 1px;
+          transition: background 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+          text-decoration: none;
+          margin-left: 10px;
+        }
+        .nav-cta-button:hover {
+          background: #bd1e24;
+          color: #ffffff !important;
+          transform: translateY(-1px);
+        }
+
         .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; z-index: 9999; }
         .hamburger div { width: 25px; height: 3px; background: #bd1e24; transition: 0.3s; }
-        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111111; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; transform: translateX(100%); transition: 0.4s; }
+        .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111111; z-index: 9000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transform: translateX(100%); transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
         .mobile-overlay.active { transform: translateX(0); }
         
         @media (max-width: 1200px) {
@@ -48,21 +73,28 @@ export default function Layout({ children }) {
         }
       `}} />
 
-      <nav style={{padding: '25px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(189,30,36,0.15)', background: '#111111', position: 'sticky', top: 0, zIndex: 1000}}>
+      {/* HEADER SECTION */}
+      <nav style={{padding: '20px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(189,30,36,0.1)', background: '#111111', position: 'sticky', top: 0, zIndex: 1000}}>
         <a href="/" style={{display: 'flex', alignItems: 'center', gap: '15px', textDecoration: 'none'}}>
-          {/* Yeni Keller Williams Kurumsal Logosu buraya entegre edildi */}
-          <img src="/KellerWilliams_Prim_Logo_RGB-rev.png" style={{height: '35px', objectFit: 'contain'}} alt="Keller Williams" />
-          <span style={{color: '#ffffff', fontWeight: '900', letterSpacing: '2px', fontSize: '1.1rem', textTransform: 'uppercase'}}>M. ONUR KILIÇ</span>
+          <img src="/KellerWilliams_Prim_Logo_RGB-rev.png" style={{height: '32px', objectFit: 'contain'}} alt="Keller Williams" />
+          <span style={{color: '#ffffff', fontWeight: '900', letterSpacing: '2px', fontSize: '1.05rem', textTransform: 'uppercase'}}>M. ONUR KILIÇ</span>
         </a>
-        <div className="desktop-nav" style={{display: 'flex', gap: '20px', fontSize: '0.8rem'}}>
-          <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
-          <a href="/regions" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
-          <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
-          <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PERSPEKTİF & GÜNDEM</a>
-          <a href="/tools" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
-          <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
+        
+        {/* Sadeleştirilmiş ve Güçlendirilmiş Masaüstü Menüsü */}
+        <div className="desktop-nav" style={{display: 'flex', gap: '25px', fontSize: '0.78rem', alignItems: 'center'}}>
+          <a href="/portfolio" className="nav-item-link" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
+          <a href="/regions" className="nav-item-link" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
+          <a href="/blog" className="nav-item-link" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>YATIRIM PERSPEKTİFİ</a>
+          <a href="/about" className="nav-item-link" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
+          <a href="/tools" className="nav-item-link" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
+          <a href="/contact" className="nav-item-link" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
+          
+          {/* Dikkat Çeken Premium Mülk Analizi Butonu */}
+          <a href="/valuation" className="nav-cta-button" style={{color: router.pathname === '/valuation' ? '#ffffff' : '#bd1e24', background: router.pathname === '/valuation' ? '#bd1e24' : 'transparent'}}>
+            MÜLK ANALİZİ
+          </a>
         </div>
+
         <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <div style={{transform: isMenuOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none'}}></div>
           <div style={{opacity: isMenuOpen ? 0 : 1}}></div>
@@ -70,32 +102,38 @@ export default function Layout({ children }) {
         </div>
       </nav>
 
+      {/* MOBİL PANEL (OVERLAY) */}
       <div className={`mobile-overlay ${isMenuOpen ? 'active' : ''}`}>
-        <a href="/" style={{color: getLinkColor('/'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>GİRİŞ</a>
-        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
-        <a href="/regions" style={{color: getLinkColor('/regions'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>BÖLGE ANALİZLERİ</a>
-        <a href="/valuation" style={{color: getLinkColor('/valuation'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>MÜLK DEĞERLEME</a>
-        <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
-        <a href="/blog" style={{color: getLinkColor('/blog'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>PERSPEKTİF & GÜNDEM</a>
-        <a href="/tools" style={{color: getLinkColor('/tools'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>ANALİZ ARAÇLARI</a>
-        <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.3rem', textDecoration: 'none', fontWeight: '900'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
+        <a href="/portfolio" style={{color: getLinkColor('/portfolio'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>PORTFÖY</a>
+        <a href="/regions" style={{color: getLinkColor('/regions'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>BÖLGE ANALİZLERİ</a>
+        <a href="/blog" style={{color: getLinkColor('/blog'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>YATIRIM PERSPEKTİFİ</a>
+        <a href="/about" style={{color: getLinkColor('/about'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>HAKKIMIZDA</a>
+        <a href="/tools" style={{color: getLinkColor('/tools'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>ANALİZ ARAÇLARI</a>
+        <a href="/contact" style={{color: getLinkColor('/contact'), fontSize: '1.25rem', textDecoration: 'none', fontWeight: '900', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>İLETİŞİM</a>
+        
+        {/* Mobil Panelde En Altta Ayrıcalıklı Duran Büyük Buton */}
+        <a href="/valuation" style={{display: 'block', width: '80%', textAlign: 'center', padding: '16px', background: '#bd1e24', color: '#ffffff', textDecoration: 'none', fontWeight: '900', fontSize: '1.1rem', borderRadius: '4px', marginTop: '20px', letterSpacing: '1px'}} onClick={() => setIsMenuOpen(false)}>
+          MÜLK ANALİZİ
+        </a>
       </div>
 
+      {/* SAYFA İÇERİKLERİ */}
       <main style={{flex: 1}}>{children}</main>
 
-      <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(189,30,36,0.15)', textAlign: 'center', background: '#1a1a1a', marginTop: '40px'}}>
+      {/* FOOTER SECTION */}
+      <footer style={{padding: '60px 20px', borderTop: '1px solid rgba(189,30,36,0.1)', textAlign: 'center', background: '#161616', marginTop: '40px'}}>
         <div style={{marginBottom: '30px'}}><SocialIcons size={24} /></div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.75rem', flexWrap: 'wrap', marginBottom: '20px'}}>
+        <div style={{display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.75rem', flexWrap: 'wrap', marginBottom: '25px'}}>
           <a href="/portfolio" style={{color: getLinkColor('/portfolio'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PORTFÖY</a>
           <a href="/regions" style={{color: getLinkColor('/regions'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>BÖLGE ANALİZLERİ</a>
-          <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK DEĞERLEME</a>
+          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>YATIRIM PERSPEKTİFİ</a>
           <a href="/about" style={{color: getLinkColor('/about'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>HAKKIMIZDA</a>
-          <a href="/blog" style={{color: getLinkColor('/blog'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>PERSPEKTİF & GÜNDEM</a>
           <a href="/tools" style={{color: getLinkColor('/tools'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>ANALİZ ARAÇLARI</a>
           <a href="/contact" style={{color: getLinkColor('/contact'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>İLETİŞİM</a>
+          <a href="/valuation" style={{color: getLinkColor('/valuation'), textDecoration: 'none', fontWeight: '800', letterSpacing: '1px'}}>MÜLK ANALİZİ</a>
         </div>
-        <p style={{fontSize: '0.75rem', opacity: 0.6, letterSpacing: '1px', fontWeight: '500', lineHeight: '1.6'}}>
-          Her Keller Williams ofisi bağımsız mülkiyet ve işletmedir. <br />
+        <p style={{fontSize: '0.72rem', opacity: 0.5, letterSpacing: '1px', fontWeight: '500', lineHeight: '1.7'}}>
+          Her Keller Williams ofisi bağımsız mülkiyet og işletmedir. <br />
           © 2026 M. Onur Kılıç - Gayrimenkul Danışmanı
         </p>
       </footer>
