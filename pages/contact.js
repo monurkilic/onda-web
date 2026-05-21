@@ -43,7 +43,7 @@ export default function Contact() {
           <div className="contact-info">
             <h2>İLETİŞİM</h2>
             <p style={{ color: '#ccc', lineHeight: '1.7', fontSize: '1.1rem', marginBottom: '40px', maxWidth: '450px', fontWeight: '500' }}>
-              Gayrimenkul yatırım süreçlerinizi rasyonel bir düzleme taşımak için Ege Bölgesi og Ankara bölgelerinde profesyonel danışmanlık sunuyorum.
+              Gayrimenkul yatırım süreçlerinizi rasyonel bir düzleme taşımak için Ege Bölgesi ve Ankara bölgelerinde profesyonel danışmanlık sunuyorum.
             </p>
             
             <div className="info-item">
@@ -68,7 +68,7 @@ export default function Contact() {
 
             <div className="info-item">
               <h3>E-POSTA</h3>
-              <a href="mailto:m.onur.kilic@gmail.com">m.onur.kilic@gmail.com</a>
+              <a href="mailto:hello@monurkilic.com">hello@monurkilic.com</a>
             </div>
 
             <div style={{ marginTop: '40px' }}>
@@ -81,7 +81,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* GOOGLE MAPS - KESİN ÇÖZÜM EMBED YAPISI */}
+          {/* GOOGLE MAPS */}
           <div className="map-wrapper">
              <iframe 
                 src="https://maps.google.com/maps?q=Keller%20Williams%20Borsa%20Beytepe&t=&z=15&ie=UTF8&iwloc=&output=embed" 
