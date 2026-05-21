@@ -18,6 +18,24 @@ export default function Home({ posts, igPosts, properties }) {
     return () => clearInterval(timer);
   }, []);
 
+  // Animasyonlu Scroll Reveal (Aşağı kaydırdıkça zarifçe beliren bölümler)
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 }); // Bölümün %15'i göründüğü an animasyon tetiklenir
+
+    const elements = document.querySelectorAll('.reveal-sec');
+    elements.forEach(el => observer.observe(el));
+
+    return () => {
+      elements.forEach(el => observer.unobserve(el));
+    };
+  }, [properties, posts, igPosts]); // Dinamik veriler yüklendiğinde observer'ı güncel tutar
+
   return (
     <>
       <Head>
@@ -30,7 +48,7 @@ export default function Home({ posts, igPosts, properties }) {
         <meta property="og:url" content="https://www.monurkilic.com" />
         <meta property="og:type" content="website" />
         
-        {/* Imgur Doğrudan CDN Linki ile Saniyelik Çözüm */}
+        {/* Imgur Doğrudan CDN Linki */}
         <meta property="og:image" content="https://i.imgur.com/1RQcqPW.jpeg" />
         <meta property="og:image:secure_url" content="https://i.imgur.com/1RQcqPW.jpeg" />
         <meta property="og:image:type" content="image/jpeg" />
@@ -49,32 +67,100 @@ export default function Home({ posts, igPosts, properties }) {
           text-align: center;
         }
 
+        /* Premium Scroll Reveal Alt Yapısı */
+        .reveal-sec {
+          opacity: 0;
+          transform: translateY(40px);
+          transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal-sec.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Giriş Efektleri (Hero Animations) */
+        @keyframes heroFadeIn {
+          0% { opacity: 0; transform: translateY(30px); letter-spacing: 2px; }
+          100% { opacity: 1; transform: translateY(0); letter-spacing: 6px; }
+        }
+        @keyframes subtitleFadeIn {
+          0% { opacity: 0; transform: translateY(15px); letter-spacing: 6px; }
+          100% { opacity: 1; transform: translateY(0); letter-spacing: 12px; }
+        }
+
         /* Hero */
         .hero-container { position: relative; height: 85vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: size: cover; background-position: center; transition: opacity 2.5s ease-in-out; opacity: 0; }
+        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: opacity 2.5s ease-in-out; opacity: 0; }
         .hero-slide.active { opacity: 1; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 17, 0.6); z-index: 2; }
         .hero-content { position: relative; z-index: 3; padding: 0 20px; text-align: center; }
-        .hero-t { font-size: 3.5rem; font-weight: 800; letter-spacing: 6px; color: #fff; line-height: 1.2; text-transform: uppercase; margin: 0; }
-        .hero-t span { color: #bd1e24; display: block; font-size: 1.4rem; letter-spacing: 12px; margin-top: 20px; font-weight: 900; }
+        
+        .hero-t { 
+          font-size: 3.5rem; 
+          font-weight: 800; 
+          line-height: 1.2; 
+          text-transform: uppercase; 
+          margin: 0;
+          color: #fff;
+          opacity: 0;
+          animation: heroFadeIn 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        .hero-t span { 
+          color: #bd1e24; 
+          display: block; 
+          font-size: 1.4rem; 
+          margin-top: 20px; 
+          font-weight: 900;
+          opacity: 0;
+          animation: subtitleFadeIn 2s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+        }
 
         /* Kişisel Profil Bölümü */
         .profile-section { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; margin: 120px auto; padding: 0 20px; max-width: 1200px; }
-        .profile-img-box { width: 100%; height: 500px; overflow: hidden; border: 1px solid rgba(189,30,36,0.15); border-radius: 4px; background: #1a1a1a; }
-        .profile-img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-img-box { width: 100%; height: 500px; overflow: hidden; border: 1px solid rgba(189,30,36,0.15); border-radius: 4px; background: #1a1a1a; position: relative; }
+        .profile-img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); }
+        .profile-img-box:hover .profile-img { transform: scale(1.04); }
         .profile-content { text-align: left; }
         .profile-content h2 { color: #bd1e24; font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; letter-spacing: 2px; text-transform: uppercase; }
         .profile-content p { color: #ccc; font-size: 1.1rem; line-height: 1.8; font-weight: 500; margin-bottom: 30px; }
 
-        /* Ortak Kart Yapıları */
+        /* Ortak Kart Yapıları ve Sinematik Hover */
         .window-section { margin: 120px auto; padding: 0 20px; max-width: 1200px; text-align: center; }
         .window-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
-        .window-card { width: 300px; background: #1a1a1a; border: 1px solid rgba(189,30,36,0.15); transition: 0.3s; display: flex; flex-direction: column; text-decoration: none; }
-        .window-card:hover { border-color: #bd1e24; transform: translateY(-5px); }
-        .window-media { width: 100%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .window-media img, .window-media video { width: 100%; height: auto; object-fit: contain; display: block; }
+        
+        .window-card { 
+          width: 300px; 
+          background: #1a1a1a; 
+          border: 1px solid rgba(189,30,36,0.1); 
+          transition: border-color 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
+          display: flex; 
+          flex-direction: column; 
+          text-decoration: none;
+          overflow: hidden;
+          border-radius: 4px;
+        }
+        .window-card:hover { 
+          border-color: rgba(189,30,36,0.4); 
+          transform: translateY(-5px); 
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+        
+        .window-media { width: 100%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        
+        .window-media img, .window-media video { 
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+          display: block; 
+          transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        /* İlanın üzerine gelindiğinde resmi kendi içinde yavaşça büyütür */
+        .window-card:hover .window-media img, .window-card:hover .window-media video { 
+          transform: scale(1.06); 
+        }
+        
         .window-info { padding: 20px; text-align: left; }
-        .window-card-title { color: #fff; font-size: 0.95rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; transition: 0.3s; line-height: 1.4; }
+        .window-card-title { color: #fff; font-size: 0.95rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; transition: color 0.3s ease; line-height: 1.4; }
         .window-card:hover .window-card-title { color: #bd1e24; }
         .window-card-meta { color: #fff; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; opacity: 0.8; }
         
@@ -88,13 +174,15 @@ export default function Home({ posts, igPosts, properties }) {
           font-weight: 800; 
           letter-spacing: 3px; 
           font-size: 0.8rem; 
-          transition: 0.3s; 
+          transition: background 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
           border-radius: 4px;
         }
-        .view-all-btn:hover { background: #bd1e24; color: #fff; }
+        .view-all-btn:hover { background: #bd1e24; color: #fff; transform: scale(1.02); }
 
         /* Değerleme Kutusu (CTA) */
-        .cta-box { border: 1px solid rgba(189,30,36,0.2); padding: 70px 40px; background: #1a1a1a; width: 100%; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .cta-box { border: 1px solid rgba(189,30,36,0.2); padding: 70px 40px; background: #1a1a1a; width: 100%; max-width: 1200px; margin: 0 auto; text-align: center; border-radius: 4px; }
+        .cta-btn { display: inline-block; padding: 20px 50px; background: #bd1e24; color: #fff; text-decoration: none; font-weight: 900; letter-spacing: 2px; border-radius: 4px; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(189,30,36,0.4); }
 
         @media (max-width: 768px) { 
           .profile-section { grid-template-columns: 1fr; gap: 30px; margin: 60px auto; }
@@ -121,14 +209,14 @@ export default function Home({ posts, igPosts, properties }) {
       </section>
 
       {/* PROFESYONEL PROFİL BÖLÜMÜ */}
-      <section className="profile-section">
+      <section className="profile-section reveal-sec">
         <div className="profile-img-box">
           <img src="/onur-kilic.jpg" className="profile-img" alt="M. Onur Kılıç" onError={(e) => { e.target.src = "/hero1.jpg"; }} />
         </div>
         <div className="profile-content">
           <h2>Rasyonel Yatırım Ortaklığı</h2>
           <p>
-            Gayrimenkul ve toprak yatırımlarını geleneksel ezberlerden arındırarak; tamamen teknik verilere, rasyonel pazar analizlerine ve bölge projeksiyonlarına dayandırıyorum. Keller Williams güvencesiyle, Ege Bölgesi ve Ankara pazarlarında sermayenizi en doğru mülk ve konumlarda büyütecek nitelikli danışmanlık süreçleri yürütüyorum.
+            Gayrimenkul ve toprak yatırımlarını geleneksel ezberlerden arındırarak; tamamen teknik verilere, rasyonel pazar analizlerine og bölge projeksiyonlarına dayandırıyorum. Keller Williams güvencesiyle, Ege Bölgesi ve Ankara pazarlarında sermayenizi en doğru mülk ve konumlarda büyütecek nitelikli danışmanlık süreçleri yürütüyorum.
           </p>
           <a href="/about" className="view-all-btn" style={{ marginTop: 0 }}>HAKKIMIZDA DAHA FAZLASI</a>
         </div>
@@ -136,13 +224,13 @@ export default function Home({ posts, igPosts, properties }) {
 
       {/* PORTFÖYLERİMİZ */}
       {properties && properties.length > 0 && (
-        <section className="window-section" style={{ borderTop: '1px solid rgba(189,30,36,0.1)', paddingTop: '100px' }}>
+        <section className="window-section reveal-sec" style={{ borderTop: '1px solid rgba(189,30,36,0.1)', paddingTop: '100px' }}>
           <h3 className="kw-style-title" style={{ fontSize: '1.6rem', marginBottom: '40px' }}>GÜNCEL PORTFÖYLERİMİZ</h3>
           <div className="window-grid">
             {properties.slice(0, 3).map((prop) => (
               <a key={prop._id} href={`/portfolio/${prop.slug.current}`} className="window-card">
                 <div className="window-media" style={{ height: '220px' }}>
-                  <img src={urlFor(prop.mainImage).width(600).url()} alt={prop.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={urlFor(prop.mainImage).width(600).url()} alt={prop.title} />
                 </div>
                 <div className="window-info">
                   <h4 className="window-card-title">{prop.title}</h4>
@@ -157,26 +245,26 @@ export default function Home({ posts, igPosts, properties }) {
       )}
 
       {/* MÜLK DEĞERLEME (CTA) */}
-      <section style={{ padding: '0 20px', margin: '120px 0' }}>
+      <section className="reveal-sec" style={{ padding: '0 20px', margin: '120px 0' }}>
         <div className="cta-box">
           <h2 className="kw-style-title" style={{fontSize: '1.4rem', marginBottom: '25px'}}>MÜLKÜNÜZÜN GERÇEK DEĞERİNİ RAPORLAYALIM</h2>
           <p style={{color: '#ccc', marginBottom: '40px', fontWeight: '500', maxWidth: '600px', margin: '0 auto 40px auto'}}>Ege Bölgesi ve Ankara bölgelerindeki arsa, arazi ve konut yatırımlarınızın gerçek pazar değerini rasyonel tekniklerle analiz edelim.</p>
-          <a href="/valuation" style={{display: 'inline-block', padding: '20px 50px', background: '#bd1e24', color: '#fff', textDecoration: 'none', fontWeight: '900', letterSpacing: '2px', borderRadius: '4px'}}>ÜCRETSİZ ANALİZ TALEBİ OLUŞTUR</a>
+          <a href="/valuation" className="cta-btn">ÜCRETSİZ ANALİZ TALEBİ OLUŞTUR</a>
         </div>
       </section>
 
       {/* INSTAGRAM FEED */}
       {igPosts && igPosts.length > 0 && (
-        <section className="window-section" style={{ borderTop: '1px solid rgba(189,30,36,0.1)', paddingTop: '100px' }}>
+        <section className="window-section reveal-sec" style={{ borderTop: '1px solid rgba(189,30,36,0.1)', paddingTop: '100px' }}>
           <h3 className="kw-style-title" style={{ fontSize: '1.4rem', marginBottom: '40px' }}>INSTAGRAM'DA BİZ</h3>
           <div className="window-grid">
             {igPosts.slice(0, 3).map((post) => (
               <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="window-card">
                 <div className="window-media" style={{aspectRatio: '1/1', height: '300px'}}>
                   {post.media_type === "VIDEO" ? (
-                    <video src={post.media_url} autoPlay muted loop playsInline style={{width:'100%', height:'100%', objectFit:'cover'}} />
+                    <video src={post.media_url} autoPlay muted loop playsInline />
                   ) : (
-                    <img src={post.media_url} alt="M. Onur Kılıç" style={{width:'100%', height:'100%', objectFit:'cover'}} />
+                    <img src={post.media_url} alt="M. Onur Kılıç" />
                   )}
                 </div>
                 <div className="window-info">
@@ -192,13 +280,13 @@ export default function Home({ posts, igPosts, properties }) {
 
       {/* PERSPEKTİF & GÜNDEM */}
       {posts && posts.length > 0 && (
-        <section className="window-section" style={{ borderTop: '1px solid rgba(189,30,36,0.1)', paddingTop: '100px', marginBottom: '120px' }}>
+        <section className="window-section reveal-sec" style={{ borderTop: '1px solid rgba(189,30,36,0.1)', paddingTop: '100px', marginBottom: '120px' }}>
           <h3 className="kw-style-title" style={{ fontSize: '1.5rem', marginBottom: '40px' }}>GÜNCEL YATIRIM PERSPEKTİFİ</h3>
           <div className="window-grid">
             {posts.slice(0, 3).map((post) => (
               <a key={post._id} href={`/blog/${post.slug.current}`} className="window-card">
                 <div className="window-media" style={{ height: '200px' }}>
-                  <img src={urlFor(post.mainImage).width(600).url()} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={urlFor(post.mainImage).width(600).url()} alt={post.title} />
                 </div>
                 <div className="window-info">
                   <h4 className="window-card-title">{post.title}</h4>
