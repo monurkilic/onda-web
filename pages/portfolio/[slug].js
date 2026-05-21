@@ -14,6 +14,13 @@ const client = createClient({
 const builder = imageUrlBuilder(client);
 const urlFor = (source) => (source ? builder.image(source) : null);
 
+// Kategorilerin web sitesindeki şık Türkçe karşılıkları
+const categoryLabels = {
+  lifestyle: '🏖️ Yaşam & Yazlık',
+  land: '🚜 Toprak & Arsa Yatırımı',
+  project: '🏢 Kurumsal & Proje Pazarlama'
+};
+
 export default function PropertyDetail({ property }) {
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -25,7 +32,7 @@ export default function PropertyDetail({ property }) {
   const nextPhoto = () => setPhotoIndex((prev) => (prev + 1) % images.length);
   const prevPhoto = () => setPhotoIndex((prev) => (prev - 1 + images.length) % images.length);
 
-  // Akıllı WhatsApp Mesaj Kurgusu: İlan başlığını ve konumunu otomatik çeker
+  // Akıllı WhatsApp Mesaj Kurgusu
   const whatsappMessage = `Merhaba Onur Bey, web sitenizdeki "${property.title} (${property.location})" ilanınızla ilgili detaylı bilgi ve yatırım analizlerini almak istiyorum.`;
   const whatsappUrl = `https://wa.me/905416406909?text=${encodeURIComponent(whatsappMessage)}`;
 
@@ -85,7 +92,27 @@ export default function PropertyDetail({ property }) {
 
       <main className="container">
         <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '10px' }}>{property.title}</h1>
-        <p style={{ color: '#bd1e24', letterSpacing: '2px', marginBottom: '30px', fontWeight: '600' }}>{property.location}</p>
+        <p style={{ color: '#bd1e24', letterSpacing: '2px', marginBottom: '15px', fontWeight: '600' }}>{property.location}</p>
+
+        {/* Ziyaretçilerin Göreceği Şık Kategori Rozeti */}
+        {property.category && (
+          <div style={{ marginBottom: '30px' }}>
+            <span style={{
+              display: 'inline-block',
+              background: 'rgba(189,30,36,0.15)',
+              color: '#bd1e24',
+              border: '1px solid #bd1e24',
+              padding: '6px 14px',
+              fontSize: '0.75rem',
+              fontWeight: '800',
+              letterSpacing: '1px',
+              borderRadius: '20px',
+              textTransform: 'uppercase'
+            }}>
+              {categoryLabels[property.category]}
+            </span>
+          </div>
+        )}
 
         {/* Galeri Vitrini */}
         <div className="gallery-window">
@@ -117,7 +144,7 @@ export default function PropertyDetail({ property }) {
         {/* Harita */}
         <div className="map-wrapper">
           <iframe 
-            src={property.googleMapsUrl || `https://maps.google.com`}
+            src={property.googleMapsUrl || `http://googleusercontent.com/maps.google.com/3`}
             className="map-frame" 
             allowFullScreen="" 
             loading="lazy"
@@ -148,8 +175,9 @@ export default function PropertyDetail({ property }) {
 
 export async function getServerSideProps({ params }) {
   const { slug } = params;
+  // Sorgunun en sonuna 'category' alanı eklendi
   const property = await client.fetch(`*[_type == "property" && slug.current == $slug][0]{
-    title, location, price, currency, propertyType, area, rooms, mainImage, gallery, analysis, googleMapsUrl
+    title, location, price, currency, propertyType, area, rooms, mainImage, gallery, analysis, googleMapsUrl, category
   }`, { slug });
   return { props: { property } };
 }
